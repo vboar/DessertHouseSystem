@@ -91,4 +91,5 @@ public class User {
         result = 31 * result + (int) role;
         return result;
     }
+
 }

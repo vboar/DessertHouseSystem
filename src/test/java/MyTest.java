@@ -9,6 +9,5 @@ public class MyTest {
     public void test() {
         ApplicationContext ctx = new FileSystemXmlApplicationContext(
                 "src/main/webapp/WEB-INF/applicationContext.xml");
-        UserService userService = ctx.getBean(UserService.class);
     }
 }
