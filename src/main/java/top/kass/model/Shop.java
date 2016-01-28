@@ -1,9 +1,7 @@
 package top.kass.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by Vboar on 2016/1/26.
@@ -15,6 +13,7 @@ public class Shop {
     private String description;
     private String address;
     private byte status;
+    private Set<UserShop> userShops;
 
     @Id
     @Column(name = "id")
@@ -64,6 +63,15 @@ public class Shop {
 
     public void setStatus(byte status) {
         this.status = status;
+    }
+
+    @OneToMany(mappedBy = "shop", fetch = FetchType.EAGER)
+    public Set<UserShop> getUserShops() {
+        return userShops;
+    }
+
+    public void setUserShops(Set<UserShop> userShops) {
+        this.userShops = userShops;
     }
 
     @Override

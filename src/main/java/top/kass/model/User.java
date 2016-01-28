@@ -1,9 +1,6 @@
 package top.kass.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by Vboar on 2016/1/26.
@@ -15,6 +12,8 @@ public class User {
     private String name;
     private String password;
     private byte role;
+
+    private UserShop userShop;
 
     @Id
     @Column(name = "id")
@@ -64,6 +63,16 @@ public class User {
 
     public void setRole(byte role) {
         this.role = role;
+    }
+
+    @OneToOne
+    @PrimaryKeyJoinColumn
+    public UserShop getUserShop() {
+        return userShop;
+    }
+
+    public void setUserShop(UserShop userShop) {
+        this.userShop = userShop;
     }
 
     @Override

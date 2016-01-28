@@ -9,7 +9,8 @@ import javax.persistence.*;
 @Table(name = "user_shop", schema = "dhs", catalog = "")
 public class UserShop {
     private int userId;
-    private int shopId;
+    private User user;
+    private Shop shop;
 
     @Id
     @Column(name = "user_id")
@@ -21,14 +22,23 @@ public class UserShop {
         this.userId = userId;
     }
 
-    @Basic
-    @Column(name = "shop_id")
-    public int getShopId() {
-        return shopId;
+    @OneToOne(mappedBy = "userShop")
+    public User getUser() {
+        return user;
     }
 
-    public void setShopId(int shopId) {
-        this.shopId = shopId;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     @Override
@@ -39,7 +49,7 @@ public class UserShop {
         UserShop userShop = (UserShop) o;
 
         if (userId != userShop.userId) return false;
-        if (shopId != userShop.shopId) return false;
+        if (shop.getId() != userShop.getShop().getId()) return false;
 
         return true;
     }
@@ -47,7 +57,7 @@ public class UserShop {
     @Override
     public int hashCode() {
         int result = userId;
-        result = 31 * result + shopId;
+        result = 31 * result + shop.getId();
         return result;
     }
 }
