@@ -65,7 +65,7 @@ public class Shop {
         this.status = status;
     }
 
-    @OneToMany(mappedBy = "shop", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<UserShop> getUserShops() {
         return userShops;
     }

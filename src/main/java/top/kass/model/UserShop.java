@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Vboar on 2016/1/26.
  */
 @Entity
-@Table(name = "user_shop", schema = "dhs", catalog = "")
+@Table(name = "user_shop", schema = "dhs")
 public class UserShop {
     private int userId;
     private User user;
@@ -31,7 +31,7 @@ public class UserShop {
         this.user = user;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "shop_id")
     public Shop getShop() {
         return shop;
