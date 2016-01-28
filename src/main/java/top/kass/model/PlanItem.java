@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * Created by Vboar on 2016/1/26.
+ * Created by Vboar on 2016/1/28.
  */
 @Entity
 @Table(name = "plan_item", schema = "dhs", catalog = "")
 public class PlanItem {
     private int id;
-    private int planId;
-    private int productId;
+    private Plan plan;
+    private Product product;
     private double price;
     private int number;
     private int remaining;
@@ -28,24 +28,24 @@ public class PlanItem {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "plan_id")
-    public int getPlanId() {
-        return planId;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "plan_id")
+    public Plan getPlan() {
+        return plan;
     }
 
-    public void setPlanId(int planId) {
-        this.planId = planId;
+    public void setPlan(Plan plan) {
+        this.plan = plan;
     }
 
-    @Basic
-    @Column(name = "product_id")
-    public int getProductId() {
-        return productId;
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     @Basic
@@ -106,8 +106,8 @@ public class PlanItem {
         PlanItem planItem = (PlanItem) o;
 
         if (id != planItem.id) return false;
-        if (planId != planItem.planId) return false;
-        if (productId != planItem.productId) return false;
+        if (plan.getId() != planItem.getPlan().getId()) return false;
+        if (product.getId() != planItem.getProduct().getId()) return false;
         if (Double.compare(planItem.price, price) != 0) return false;
         if (number != planItem.number) return false;
         if (remaining != planItem.remaining) return false;
@@ -122,8 +122,8 @@ public class PlanItem {
         int result;
         long temp;
         result = id;
-        result = 31 * result + planId;
-        result = 31 * result + productId;
+        result = 31 * result + plan.getId();
+        result = 31 * result + product.getId();
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + number;

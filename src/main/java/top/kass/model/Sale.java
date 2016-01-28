@@ -1,10 +1,10 @@
 package top.kass.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
- * Created by Vboar on 2016/1/26.
+ * Created by Vboar on 2016/1/28.
  */
 @Entity
 public class Sale {
@@ -12,8 +12,8 @@ public class Sale {
     private int shopId;
     private int userId;
     private Integer customerId;
-    private Integer bookId;
-    private Date time;
+    private Book book;
+    private Timestamp time;
     private Double discount;
     private double originalTotal;
     private double actualTotal;
@@ -58,23 +58,23 @@ public class Sale {
         this.customerId = customerId;
     }
 
-    @Basic
-    @Column(name = "book_id")
-    public Integer getBookId() {
-        return bookId;
+    @OneToOne
+    @JoinColumn(name = "book_id")
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     @Basic
     @Column(name = "time")
-    public Date getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 
@@ -121,7 +121,7 @@ public class Sale {
         if (Double.compare(sale.originalTotal, originalTotal) != 0) return false;
         if (Double.compare(sale.actualTotal, actualTotal) != 0) return false;
         if (customerId != null ? !customerId.equals(sale.customerId) : sale.customerId != null) return false;
-        if (bookId != null ? !bookId.equals(sale.bookId) : sale.bookId != null) return false;
+        if (book != null ? !book.equals(sale.book) : sale.book != null) return false;
         if (time != null ? !time.equals(sale.time) : sale.time != null) return false;
         if (discount != null ? !discount.equals(sale.discount) : sale.discount != null) return false;
 
@@ -136,7 +136,7 @@ public class Sale {
         result = 31 * result + shopId;
         result = 31 * result + userId;
         result = 31 * result + (customerId != null ? customerId.hashCode() : 0);
-        result = 31 * result + (bookId != null ? bookId.hashCode() : 0);
+        result = 31 * result + (book != null ? book.hashCode() : 0);
         result = 31 * result + (time != null ? time.hashCode() : 0);
         result = 31 * result + (discount != null ? discount.hashCode() : 0);
         temp = Double.doubleToLongBits(originalTotal);

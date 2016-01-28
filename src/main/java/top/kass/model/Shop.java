@@ -14,6 +14,7 @@ public class Shop {
     private String address;
     private byte status;
     private Set<UserShop> userShops;
+    private Set<Product> products;
 
     @Id
     @Column(name = "id")
@@ -65,13 +66,22 @@ public class Shop {
         this.status = status;
     }
 
-    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
     public Set<UserShop> getUserShops() {
         return userShops;
     }
 
     public void setUserShops(Set<UserShop> userShops) {
         this.userShops = userShops;
+    }
+
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 
     @Override

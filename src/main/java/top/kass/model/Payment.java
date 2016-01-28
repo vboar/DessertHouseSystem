@@ -4,17 +4,17 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
- * Created by Vboar on 2016/1/26.
+ * Created by Vboar on 2016/1/28.
  */
 @Entity
 public class Payment {
     private int id;
     private int customerId;
     private double money;
-    private Date time;
+    private Timestamp time;
 
     @Id
     @Column(name = "id")
@@ -48,11 +48,11 @@ public class Payment {
 
     @Basic
     @Column(name = "time")
-    public Date getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 

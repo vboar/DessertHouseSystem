@@ -1,25 +1,22 @@
 package top.kass.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
- * Created by Vboar on 2016/1/26.
+ * Created by Vboar on 2016/1/28.
  */
 @Entity
 public class Consumption {
     private int id;
     private int customerId;
     private byte type;
-    private Integer bookId;
-    private Integer saleId;
+    private Book book;
+    private Sale sale;
     private double money;
     private byte payType;
     private int point;
-    private Date time;
+    private Timestamp time;
 
     @Id
     @Column(name = "id")
@@ -51,24 +48,24 @@ public class Consumption {
         this.type = type;
     }
 
-    @Basic
-    @Column(name = "book_id")
-    public Integer getBookId() {
-        return bookId;
+    @OneToOne
+    @JoinColumn(name = "book_id")
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(Integer bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
-    @Basic
-    @Column(name = "sale_id")
-    public Integer getSaleId() {
-        return saleId;
+    @OneToOne
+    @JoinColumn(name = "sale_id")
+    public Sale getSale() {
+        return sale;
     }
 
-    public void setSaleId(Integer saleId) {
-        this.saleId = saleId;
+    public void setSale(Sale sale) {
+        this.sale = sale;
     }
 
     @Basic
@@ -103,11 +100,11 @@ public class Consumption {
 
     @Basic
     @Column(name = "time")
-    public Date getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 
@@ -124,8 +121,8 @@ public class Consumption {
         if (Double.compare(that.money, money) != 0) return false;
         if (payType != that.payType) return false;
         if (point != that.point) return false;
-        if (bookId != null ? !bookId.equals(that.bookId) : that.bookId != null) return false;
-        if (saleId != null ? !saleId.equals(that.saleId) : that.saleId != null) return false;
+        if (book != null ? !book.equals(that.getBook()) : that.getBook() != null) return false;
+        if (sale != null ? !sale.equals(that.sale) : that.sale != null) return false;
         if (time != null ? !time.equals(that.time) : that.time != null) return false;
 
         return true;
@@ -138,8 +135,8 @@ public class Consumption {
         result = id;
         result = 31 * result + customerId;
         result = 31 * result + (int) type;
-        result = 31 * result + (bookId != null ? bookId.hashCode() : 0);
-        result = 31 * result + (saleId != null ? saleId.hashCode() : 0);
+        result = 31 * result + (book != null ? book.hashCode() : 0);
+        result = 31 * result + (sale != null ? sale.hashCode() : 0);
         temp = Double.doubleToLongBits(money);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (int) payType;

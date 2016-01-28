@@ -3,16 +3,16 @@ package top.kass.model;
 import javax.persistence.*;
 
 /**
- * Created by Vboar on 2016/1/26.
+ * Created by Vboar on 2016/1/28.
  */
 @Entity
-@Table(name = "book_item", schema = "dhs", catalog = "")
+@Table(name = "book_item", schema = "dhs")
 public class BookItem {
     private int id;
-    private int bookId;
-    private int productId;
+    private Book book;
     private int number;
     private double price;
+    private Product product;
 
     @Id
     @Column(name = "id")
@@ -24,24 +24,14 @@ public class BookItem {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "book_id")
-    public int getBookId() {
-        return bookId;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "book_id")
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
-
-    @Basic
-    @Column(name = "product_id")
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     @Basic
@@ -64,6 +54,16 @@ public class BookItem {
         this.price = price;
     }
 
+    @OneToOne
+    @JoinColumn(name = "product_id")
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -72,8 +72,8 @@ public class BookItem {
         BookItem bookItem = (BookItem) o;
 
         if (id != bookItem.id) return false;
-        if (bookId != bookItem.bookId) return false;
-        if (productId != bookItem.productId) return false;
+        if (book.getId() != bookItem.getBook().getId()) return false;
+        if (product.getId() != bookItem.getProduct().getId()) return false;
         if (number != bookItem.number) return false;
         if (Double.compare(bookItem.price, price) != 0) return false;
 
@@ -85,8 +85,8 @@ public class BookItem {
         int result;
         long temp;
         result = id;
-        result = 31 * result + bookId;
-        result = 31 * result + productId;
+        result = 31 * result + book.getId();
+        result = 31 * result + product.getId();
         result = 31 * result + number;
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));

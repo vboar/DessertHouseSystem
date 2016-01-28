@@ -2,21 +2,25 @@ package top.kass.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Set;
 
 /**
- * Created by Vboar on 2016/1/26.
+ * Created by Vboar on 2016/1/28.
  */
 @Entity
 public class Book {
     private int id;
     private int customerId;
     private int shopId;
-    private Date time;
+    private Timestamp time;
     private double discount;
     private double originalTotal;
     private double actualTotal;
     private Date buyDate;
     private byte status;
+
+    private Set<BookItem> bookItems;
 
     @Id
     @Column(name = "id")
@@ -50,11 +54,11 @@ public class Book {
 
     @Basic
     @Column(name = "time")
-    public Date getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 
@@ -106,6 +110,15 @@ public class Book {
 
     public void setStatus(byte status) {
         this.status = status;
+    }
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    public Set<BookItem> getBookItems() {
+        return bookItems;
+    }
+
+    public void setBookItems(Set<BookItem> bookItems) {
+        this.bookItems = bookItems;
     }
 
     @Override

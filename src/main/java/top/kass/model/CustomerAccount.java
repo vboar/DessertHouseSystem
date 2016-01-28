@@ -12,7 +12,7 @@ public class CustomerAccount {
     private String bankId;
     private double balance;
     private int point;
-    private byte vipLevel;
+    private VipLevel vipLevel;
 
     @Id
     @Column(name = "customer_id")
@@ -54,13 +54,13 @@ public class CustomerAccount {
         this.point = point;
     }
 
-    @Basic
-    @Column(name = "vip_level")
-    public byte getVipLevel() {
+    @ManyToOne
+    @JoinColumn(name = "vip_level")
+    public VipLevel getVipLevel() {
         return vipLevel;
     }
 
-    public void setVipLevel(byte vipLevel) {
+    public void setVipLevel(VipLevel vipLevel) {
         this.vipLevel = vipLevel;
     }
 
@@ -74,7 +74,7 @@ public class CustomerAccount {
         if (customerId != that.customerId) return false;
         if (Double.compare(that.balance, balance) != 0) return false;
         if (point != that.point) return false;
-        if (vipLevel != that.vipLevel) return false;
+        if (vipLevel.getLevel() != that.vipLevel.getLevel()) return false;
         if (bankId != null ? !bankId.equals(that.bankId) : that.bankId != null) return false;
 
         return true;
@@ -89,7 +89,7 @@ public class CustomerAccount {
         temp = Double.doubleToLongBits(balance);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + point;
-        result = 31 * result + (int) vipLevel;
+        result = 31 * result + (int) vipLevel.getLevel();
         return result;
     }
 }

@@ -1,9 +1,6 @@
 package top.kass.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by Vboar on 2016/1/28.
@@ -13,7 +10,7 @@ public class Product {
     private int id;
     private String name;
     private String description;
-    private int shopId;
+    private Shop shop;
 
     @Id
     @Column(name = "id")
@@ -45,14 +42,14 @@ public class Product {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "shop_id")
-    public int getShopId() {
-        return shopId;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "shop_id")
+    public Shop getShop() {
+        return shop;
     }
 
-    public void setShopId(int shopId) {
-        this.shopId = shopId;
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     @Override
@@ -63,7 +60,7 @@ public class Product {
         Product product = (Product) o;
 
         if (id != product.id) return false;
-        if (shopId != product.shopId) return false;
+        if (shop.getId() != product.getShop().getId()) return false;
         if (name != null ? !name.equals(product.name) : product.name != null) return false;
         if (description != null ? !description.equals(product.description) : product.description != null) return false;
 
@@ -75,7 +72,7 @@ public class Product {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + shopId;
+        result = 31 * result + shop.getId();
         return result;
     }
 }

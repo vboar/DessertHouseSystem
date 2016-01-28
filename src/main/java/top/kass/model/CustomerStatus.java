@@ -2,6 +2,7 @@ package top.kass.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * Created by Vboar on 2016/1/26.
@@ -10,9 +11,9 @@ import java.sql.Date;
 @Table(name = "customer_status", schema = "dhs", catalog = "")
 public class CustomerStatus {
     private int customerId;
-    private Date startTime;
-    private Date pauseTime;
-    private Date stopTime;
+    private Timestamp startTime;
+    private Timestamp pauseTime;
+    private Timestamp stopTime;
 
     @Id
     @Column(name = "customer_id")
@@ -26,31 +27,31 @@ public class CustomerStatus {
 
     @Basic
     @Column(name = "start_time")
-    public Date getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
     @Basic
     @Column(name = "pause_time")
-    public Date getPauseTime() {
+    public Timestamp getPauseTime() {
         return pauseTime;
     }
 
-    public void setPauseTime(Date pauseTime) {
+    public void setPauseTime(Timestamp pauseTime) {
         this.pauseTime = pauseTime;
     }
 
     @Basic
     @Column(name = "stop_time")
-    public Date getStopTime() {
+    public Timestamp getStopTime() {
         return stopTime;
     }
 
-    public void setStopTime(Date stopTime) {
+    public void setStopTime(Timestamp stopTime) {
         this.stopTime = stopTime;
     }
 

@@ -1,21 +1,20 @@
 package top.kass.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Date;
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Set;
 
 /**
- * Created by Vboar on 2016/1/26.
+ * Created by Vboar on 2016/1/28.
  */
 @Entity
 public class Plan {
     private int id;
     private int shopId;
-    private Date startTime;
-    private Date endTime;
+    private Timestamp startTime;
+    private Timestamp endTime;
     private byte status;
+    private Set<PlanItem> planItems;
 
     @Id
     @Column(name = "id")
@@ -39,21 +38,21 @@ public class Plan {
 
     @Basic
     @Column(name = "start_time")
-    public Date getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
     @Basic
     @Column(name = "end_time")
-    public Date getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
     }
 
@@ -65,6 +64,15 @@ public class Plan {
 
     public void setStatus(byte status) {
         this.status = status;
+    }
+
+    @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL)
+    public Set<PlanItem> getPlanItems() {
+        return planItems;
+    }
+
+    public void setPlanItems(Set<PlanItem> planItems) {
+        this.planItems = planItems;
     }
 
     @Override

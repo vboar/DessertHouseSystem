@@ -65,7 +65,7 @@ public class User {
         this.role = role;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     public UserShop getUserShop() {
         return userShop;

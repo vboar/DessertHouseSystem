@@ -1,9 +1,6 @@
 package top.kass.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by Vboar on 2016/1/26.
@@ -15,6 +12,10 @@ public class Customer {
     private String phone;
     private String password;
     private byte status;
+
+    private CustomerInfo customerInfo;
+    private CustomerAccount customerAccount;
+    private CustomerStatus customerStatus;
 
     @Id
     @Column(name = "id")
@@ -64,6 +65,36 @@ public class Customer {
 
     public void setStatus(byte status) {
         this.status = status;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public CustomerInfo getCustomerInfo() {
+        return customerInfo;
+    }
+
+    public void setCustomerInfo(CustomerInfo customerInfo) {
+        this.customerInfo = customerInfo;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public CustomerAccount getCustomerAccount() {
+        return customerAccount;
+    }
+
+    public void setCustomerAccount(CustomerAccount customerAccount) {
+        this.customerAccount = customerAccount;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    public CustomerStatus getCustomerStatus() {
+        return customerStatus;
+    }
+
+    public void setCustomerStatus(CustomerStatus customerStatus) {
+        this.customerStatus = customerStatus;
     }
 
     @Override

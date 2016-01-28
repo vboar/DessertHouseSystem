@@ -5,13 +5,12 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import top.kass.dao.UserDao;
-import top.kass.model.Book;
-import top.kass.model.Shop;
-import top.kass.model.User;
-import top.kass.model.UserShop;
+import top.kass.model.*;
 
 import javax.transaction.Transactional;
 import java.sql.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -44,7 +43,16 @@ public class UserDaoImpl implements UserDao {
     public Shop test3() {
         Session session = sessionFactory.getCurrentSession();
         Shop shop = (Shop)session.get(Shop.class, 1);
+        Set<UserShop> userShops = shop.getUserShops();
+        Iterator<UserShop> it = userShops.iterator();
         return shop;
+    }
+
+    @Override
+    public Customer test4() {
+        Session session = sessionFactory.getCurrentSession();
+        Customer customer = (Customer)session.get(Customer.class, 1);
+        return customer;
     }
 
 
