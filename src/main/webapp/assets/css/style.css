@@ -1,0 +1,86 @@
+body {
+    overflow-x: auto;
+    overflow-y: scroll;
+    min-width: 1000px;
+}
+
+body, input, label, select, option, textarea, button, fieldset, legend {
+    font-family:  "Avenir Next", Avenir, "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+
+
+.content {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.wrapper {
+    width: 100%;
+    position: relative;
+    top: 50px;
+}
+
+.left-floated {
+    float: left;
+}
+
+.right-floated {
+    float: right;
+}
+
+.clearfix {
+    clear: both;
+}
+
+
+.header {
+    width: 100%;
+    height: 30px;
+    background-color: #f1f1f1;
+    font-size: 13px;
+    color: #666;
+    position: fixed;
+}
+
+.header > .content {
+    position: relative;
+    top: 5px;
+}
+
+.header .right-items {
+    margin: 0;
+}
+
+.header .right-items > li {
+    display: inline-block;
+}
+
+.header .spacer {
+    width: 1px;
+    height: 13px;
+    background-color: #ddd;
+    position: relative;
+    top: 1px;
+    margin: 0 5px;
+}
+
+.header a:link,
+.header a:visited,
+.header a:active {
+    color: #666;
+}
+
+.header .register {
+    color: #e21728 !important;
+}
+
+.header .fa-shopping-cart {
+    font-size: 15px;
+    color: #e21728;
+}

@@ -1,16 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Vboar
-  Date: 2016/1/13
-  Time: 15:46
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>首页 - 哆哆甜品屋</title>
+    <link rel="stylesheet" href="/assets/css/normalize.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
-Hello World!
+<%@include file="common/header.jsp"%>
+
+<div class="wrapper">
+    <div class="content">
+        test
+    </div>
+</div>
+
+<%@include file="common/footer.jsp"%>
 </body>
 </html>
