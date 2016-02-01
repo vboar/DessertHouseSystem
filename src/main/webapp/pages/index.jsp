@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>首页 - 哆哆甜品屋</title>
+    <link rel="shortcut icon" href="/assets/favicon.ico">
     <link rel="stylesheet" href="/assets/css/normalize.css">
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -11,7 +12,7 @@
 
 <div class="wrapper">
     <div class="content">
-        test
+        <img src="/assets/img/logo.png">
     </div>
 </div>
 
