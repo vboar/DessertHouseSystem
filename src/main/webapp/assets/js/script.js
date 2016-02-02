@@ -19,5 +19,5 @@ function toaster(message, type) {
         thisItem.slideUp(function() {
             thisItem.remove();
         });
-    }, 2000);
+    }, 3000);
 }
