@@ -12,9 +12,14 @@ public class AuthController {
         return "auth/register";
     }
 
+    @RequestMapping(value="/login", method= RequestMethod.GET)
+    public String login() {
+        return "auth/login";
+    }
+
     @RequestMapping(value="/admin/login", method= RequestMethod.GET)
     public String adminLogin() {
-        return "auth/admin_login";
+        return "admin/auth/login";
     }
 
 }

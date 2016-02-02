@@ -1,25 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<header class="header">
+<div class="header">
     <div class="content">
-        <div class="left-floated left-items">
-            选择门店： 南京新街口旗舰店
+        <img src="/assets/img/logo.png">
+        <div class="search">
+            <input class="input" id="js-search-input" type="text" placeholder="搜索产品...">
+            <button class="btn-search" id="js-btn-search">搜索</button>
         </div>
-        <ul class="right-floated right-items">
-            <li>
-                <a href="#" class="login">你好, 请登录</a>&nbsp;&nbsp
-                <a href="#" class="register">免费注册</a>
-            </li>
-            <li class="spacer"></li>
-            <li><a href="#"><i class="fa fa-shopping-cart"></i> 购物车</a></li>
-            <li class="spacer"></li>
-            <li><a href="#">我的订单</a></li>
-            <li class="spacer"></li>
-            <li><a href="#">我的哆哆</a></li>
-            <li class="spacer"></li>
-            <li><a href="#">客户服务</a></li>
-            <li class="spacer"></li>
-            <li><a href="#">后台登入</a></li>
-        </ul>
-        <div class="clearfix"></div>
+        <div class="shopping-cart">
+            <button class="btn-cart"><i class="fa fa-shopping-cart"></i> 购物车
+                <span class="number">0</span></button>
+            <button class="btn-order">我的订单</button>
+        </div>
     </div>
-</header>
+</div>
