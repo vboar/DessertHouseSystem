@@ -14,6 +14,7 @@ body, input, label, select, option, textarea, button, fieldset, legend {
 
 a {
     text-decoration: none;
+    color: #666666;
 }
 
 .wrapper {
@@ -233,12 +234,151 @@ a {
 
 
 
+/**
+* login
+*/
+
+.login .header {
+    width: 100%;
+    height: 75px;
+    background-color: #fff;
+    margin-top: 0;
+    padding-top: 20px;
+}
+
+.login > .header .title {
+    font-size: 30px;
+    position: relative;
+    left: 20px;
+    bottom: 10px;
+    color: #585858;
+    font-weight: lighter;
+}
+
+.login-panel {
+    margin: 40px auto 0 auto;
+    width: 300px;
+    background-color: #fff;
+}
+
+.login-panel > .panel-content {
+    padding: 15px 15px 5px 15px;
+}
+
+.login-panel .title {
+    font-weight: normal;
+    margin: 0;
+    display: inline-block;
+}
+
+.login-panel .register {
+    position: relative;
+    top: 3px;
+    color: #d04b4a;
+}
+
+.login-panel .login-form {
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #eeeeee;
+}
+
+.login-panel input {
+    width: 100%;
+    margin-bottom: 15px;
+    height: 35px;
+    outline: none;
+    border: 1px solid #eee;
+    padding: 0 10px;
+    line-height: 1.2em;
+    color: #595959;
+}
+
+.login-panel input:focus {
+    border-color: #939393;
+}
+
+.login-panel .btn-login {
+    padding: 5px 15px;
+    display: inline-block;
+}
+
+.login-panel .forget-password {
+    font-size: 13px;
+    position: relative;
+    top: 5px;
+}
 
 
 
+/**
+* register
+*/
 
+.register .header {
+    width: 100%;
+    height: 75px;
+    background-color: #fff;
+    margin-top: 0;
+    padding-top: 20px;
+}
 
+.register > .header .title {
+    font-size: 30px;
+    position: relative;
+    left: 20px;
+    bottom: 10px;
+    color: #585858;
+    font-weight: lighter;
+}
 
+.register-panel {
+    margin: 40px auto 0 auto;
+    width: 300px;
+    background-color: #fff;
+}
+
+.register-panel > .panel-content {
+    padding: 15px 15px 5px 15px;
+}
+
+.register-panel .title {
+    font-weight: normal;
+    margin: 0;
+    display: inline-block;
+}
+
+.register-panel .login {
+    position: relative;
+    top: 3px;
+    color: #d04b4a;
+}
+
+.register-panel .register-form {
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #eeeeee;
+}
+
+.register-panel input {
+    width: 100%;
+    margin-bottom: 15px;
+    height: 35px;
+    outline: none;
+    border: 1px solid #eee;
+    padding: 0 10px;
+    line-height: 1.2em;
+    color: #595959;
+}
+
+.register-panel input:focus {
+    border-color: #939393;
+}
+
+.register-panel .btn-register {
+    padding: 5px 15px;
+    display: inline-block;
+}
 
 
 
