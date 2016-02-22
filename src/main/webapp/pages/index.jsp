@@ -16,7 +16,14 @@
 
     <div class="content">
         <div class="product-panel">
-            <div class="product-card"></div>
+            <div class="product-card">
+                <img src="${pageContext.request.contextPath}/assets/img/product.jpg" class="product-img">
+                <div class="product-name">芝士花生冻饼</div>
+                <div class="product-price">￥8.80</div>
+                <div class="product-total-sale">总销量 <span class="number">160</span></div>
+                <div class="product-month-sale right-floated">月销量 <span class="number">160</span></div>
+                <div class="clearfix"></div>
+            </div>
             <div class="product-card"></div>
             <div class="product-card"></div>
             <div class="product-card"></div>

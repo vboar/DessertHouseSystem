@@ -170,18 +170,55 @@ a {
 }
 
 .product-card {
-    width: 180px;
+    width: 160px;
     height: 250px;
-    background-color: #eee;
     margin-right: 25px;
     margin-bottom: 25px;
+    padding: 10px;
+}
+
+.product-card:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.product-card > .product-img {
+    width: 160px;
+    height: 160px;
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #eee;
+}
+
+.product-card > .product-name {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.product-card > .product-price {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: #d04b4a;
+
+}
+
+.product-card > .product-total-sale {
+    display: inline-block;
+    font-size: 13px;
+}
+
+.product-card > .product-month-sale {
+    font-size: 13px;
+
 }
 
 
 
-/**
-* footer
-*/
+    /**
+    * footer
+    */
 .footer .content {
     border-top: 1px solid #ddd;
 }
