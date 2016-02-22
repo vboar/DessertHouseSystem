@@ -7,6 +7,8 @@ import top.kass.model.UserShop;
 
 public interface UserDao {
 
+
+
     public User test();
 
     public void test1();

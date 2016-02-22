@@ -36,6 +36,7 @@
         </div>
     </div>
 </body>
+<%@include file="/pages/common/toaster.jsp"%>
 <style>
     body {
         overflow-y: hidden;

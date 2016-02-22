@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <script src="${pageContext.request.contextPath}/assets/js/jquery-2.1.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 </head>
 <body>
 <div class="register">
@@ -28,13 +29,14 @@
                     <input class="input-phone" type="text" name="phone" placeholder="输入手机号" />
                     <input class="input-password" type="password" name="password" placeholder="输入密码" />
                     <input class="input-password-again" type="password" name="passwordAgain" placeholder="再次输入密码" />
-                    <button class="btn btn-register right-floated">注册</button>
+                    <button type="button" class="btn btn-register right-floated" onclick="registerForm()">注册</button>
                     <div class="clearfix"></div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<%@include file="/pages/common/toaster.jsp"%>
 </body>
 <style>
     body {
@@ -42,4 +44,24 @@
         background-color: #f1f1f1;
     }
 </style>
+<script>
+    $(document).ready(function() {
+
+    });
+
+    function registerForm() {
+        $.ajax({
+            type: "POST",
+            url: "/register",
+            data: $('.register-form').serialize(),
+            success: function(data) {
+                if (data["success"] == false) {
+                    toaster(data["error"], "error");
+                } else {
+                    toaster("注册成功！马上自动跳转...", "success");
+                }
+            }
+        });
+    }
+</script>
 </html>
