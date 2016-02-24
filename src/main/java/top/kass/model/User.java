@@ -14,6 +14,7 @@ public class User {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     public int getId() {
         return id;
     }

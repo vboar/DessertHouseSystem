@@ -1,16 +1,16 @@
 package top.kass.model;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "customer_status", schema = "dhs", catalog = "")
 public class CustomerStatus {
+
     private int customerId;
-    private Timestamp startTime;
-    private Timestamp pauseTime;
-    private Timestamp stopTime;
+    private Date startTime;
+    private Date pauseTime;
+    private Date stopTime;
 
     @Id
     @Column(name = "customer_id")
@@ -24,31 +24,34 @@ public class CustomerStatus {
 
     @Basic
     @Column(name = "start_time")
-    public Timestamp getStartTime() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
     @Basic
     @Column(name = "pause_time")
-    public Timestamp getPauseTime() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getPauseTime() {
         return pauseTime;
     }
 
-    public void setPauseTime(Timestamp pauseTime) {
+    public void setPauseTime(Date pauseTime) {
         this.pauseTime = pauseTime;
     }
 
     @Basic
     @Column(name = "stop_time")
-    public Timestamp getStopTime() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getStopTime() {
         return stopTime;
     }
 
-    public void setStopTime(Timestamp stopTime) {
+    public void setStopTime(Date stopTime) {
         this.stopTime = stopTime;
     }
 }

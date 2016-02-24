@@ -1,8 +1,7 @@
 package top.kass.model;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -10,7 +9,7 @@ public class Book {
     private int id;
     private int customerId;
     private int shopId;
-    private Timestamp time;
+    private Date time;
     private double discount;
     private double originalTotal;
     private double actualTotal;
@@ -21,6 +20,7 @@ public class Book {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -51,11 +51,12 @@ public class Book {
 
     @Basic
     @Column(name = "time")
-    public Timestamp getTime() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -91,6 +92,7 @@ public class Book {
 
     @Basic
     @Column(name = "buy_date")
+    @Temporal(TemporalType.DATE)
     public Date getBuyDate() {
         return buyDate;
     }

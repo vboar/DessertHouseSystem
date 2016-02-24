@@ -1,19 +1,18 @@
 package top.kass.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Timestamp;
+import javax.persistence.*;
+import java.util.Date;
 
 public class Payment {
+
     private int id;
     private int customerId;
     private double money;
-    private Timestamp time;
+    private Date time;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -44,11 +43,12 @@ public class Payment {
 
     @Basic
     @Column(name = "time")
-    public Timestamp getTime() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 

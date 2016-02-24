@@ -1,11 +1,12 @@
 package top.kass.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "customer_info", schema = "dhs", catalog = "")
 public class CustomerInfo {
+
     private int customerId;
     private String name;
     private Date birthday;
@@ -35,6 +36,7 @@ public class CustomerInfo {
 
     @Basic
     @Column(name = "birthday")
+    @Temporal(TemporalType.DATE)
     public Date getBirthday() {
         return birthday;
     }

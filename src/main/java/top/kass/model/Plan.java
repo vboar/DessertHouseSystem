@@ -1,15 +1,15 @@
 package top.kass.model;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
 public class Plan {
     private int id;
     private int shopId;
-    private Timestamp startTime;
-    private Timestamp endTime;
+    private Date startTime;
+    private Date endTime;
     private byte status;
     private Set<PlanItem> planItems;
 
@@ -35,21 +35,23 @@ public class Plan {
 
     @Basic
     @Column(name = "start_time")
-    public Timestamp getStartTime() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
     @Basic
     @Column(name = "end_time")
-    public Timestamp getEndTime() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

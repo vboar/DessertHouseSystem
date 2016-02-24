@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "customer_account", schema = "dhs", catalog = "")
 public class CustomerAccount {
+
     private int customerId;
     private String bankId;
     private double balance;

@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 public class Customer {
+
     private int id;
     private int code;
     private String phone;
@@ -16,6 +17,7 @@ public class Customer {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     public int getId() {
         return id;
     }

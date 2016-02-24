@@ -1,7 +1,7 @@
 package top.kass.model;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "plan_item", schema = "dhs", catalog = "")
@@ -17,6 +17,7 @@ public class PlanItem {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -87,6 +88,7 @@ public class PlanItem {
 
     @Basic
     @Column(name = "date")
+    @Temporal(TemporalType.DATE)
     public Date getDate() {
         return date;
     }
