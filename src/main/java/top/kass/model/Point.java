@@ -1,8 +1,11 @@
 package top.kass.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
+/**
+ * Created by Vboar on 2016/1/28.
+ */
 @Entity
 public class Point {
     private int id;
@@ -10,11 +13,10 @@ public class Point {
     private byte type;
     private Consumption consumption;
     private int point;
-    private Date time;
+    private Timestamp time;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -65,13 +67,40 @@ public class Point {
 
     @Basic
     @Column(name = "time")
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Point point1 = (Point) o;
+
+        if (id != point1.id) return false;
+        if (customerId != point1.customerId) return false;
+        if (type != point1.type) return false;
+        if (point != point1.point) return false;
+        if (consumption != null ? !consumption.equals(point1.consumption) : point1.consumption != null)
+            return false;
+        if (time != null ? !time.equals(point1.time) : point1.time != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + customerId;
+        result = 31 * result + (int) type;
+        result = 31 * result + (consumption != null ? consumption.hashCode() : 0);
+        result = 31 * result + point;
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        return result;
+    }
 }

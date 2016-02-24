@@ -2,6 +2,9 @@ package top.kass.model;
 
 import javax.persistence.*;
 
+/**
+ * Created by Vboar on 2016/1/26.
+ */
 @Entity
 public class User {
     private int id;
@@ -14,7 +17,6 @@ public class User {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -71,6 +73,32 @@ public class User {
 
     public void setUserShop(UserShop userShop) {
         this.userShop = userShop;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+        if (role != user.role) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (int) role;
+        return result;
     }
 
 }

@@ -1,8 +1,11 @@
 package top.kass.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
+/**
+ * Created by Vboar on 2016/1/28.
+ */
 @Entity
 public class Sale {
     private int id;
@@ -10,7 +13,7 @@ public class Sale {
     private int userId;
     private Integer customerId;
     private Book book;
-    private Date time;
+    private Timestamp time;
     private Double discount;
     private double originalTotal;
     private double actualTotal;
@@ -67,12 +70,11 @@ public class Sale {
 
     @Basic
     @Column(name = "time")
-    @GeneratedValue
-    public Date getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 
@@ -106,4 +108,41 @@ public class Sale {
         this.actualTotal = actualTotal;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Sale sale = (Sale) o;
+
+        if (id != sale.id) return false;
+        if (shopId != sale.shopId) return false;
+        if (userId != sale.userId) return false;
+        if (Double.compare(sale.originalTotal, originalTotal) != 0) return false;
+        if (Double.compare(sale.actualTotal, actualTotal) != 0) return false;
+        if (customerId != null ? !customerId.equals(sale.customerId) : sale.customerId != null) return false;
+        if (book != null ? !book.equals(sale.book) : sale.book != null) return false;
+        if (time != null ? !time.equals(sale.time) : sale.time != null) return false;
+        if (discount != null ? !discount.equals(sale.discount) : sale.discount != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + shopId;
+        result = 31 * result + userId;
+        result = 31 * result + (customerId != null ? customerId.hashCode() : 0);
+        result = 31 * result + (book != null ? book.hashCode() : 0);
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        result = 31 * result + (discount != null ? discount.hashCode() : 0);
+        temp = Double.doubleToLongBits(originalTotal);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(actualTotal);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }

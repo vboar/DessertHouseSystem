@@ -3,6 +3,9 @@ package top.kass.model;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Created by Vboar on 2016/1/26.
+ */
 @Entity
 public class Shop {
     private int id;
@@ -15,7 +18,6 @@ public class Shop {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -82,4 +84,29 @@ public class Shop {
         this.products = products;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Shop shop = (Shop) o;
+
+        if (id != shop.id) return false;
+        if (status != shop.status) return false;
+        if (name != null ? !name.equals(shop.name) : shop.name != null) return false;
+        if (description != null ? !description.equals(shop.description) : shop.description != null) return false;
+        if (address != null ? !address.equals(shop.address) : shop.address != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (int) status;
+        return result;
+    }
 }

@@ -1,12 +1,14 @@
 package top.kass.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
+/**
+ * Created by Vboar on 2016/1/26.
+ */
 @Entity
 @Table(name = "customer_info", schema = "dhs", catalog = "")
 public class CustomerInfo {
-
     private int customerId;
     private String name;
     private Date birthday;
@@ -36,7 +38,6 @@ public class CustomerInfo {
 
     @Basic
     @Column(name = "birthday")
-    @Temporal(TemporalType.DATE)
     public Date getBirthday() {
         return birthday;
     }
@@ -73,5 +74,33 @@ public class CustomerInfo {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CustomerInfo that = (CustomerInfo) o;
+
+        if (customerId != that.customerId) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
+        if (gender != null ? !gender.equals(that.gender) : that.gender != null) return false;
+        if (province != null ? !province.equals(that.province) : that.province != null) return false;
+        if (city != null ? !city.equals(that.city) : that.city != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = customerId;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (province != null ? province.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        return result;
     }
 }

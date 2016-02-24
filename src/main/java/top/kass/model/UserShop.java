@@ -2,6 +2,9 @@ package top.kass.model;
 
 import javax.persistence.*;
 
+/**
+ * Created by Vboar on 2016/1/26.
+ */
 @Entity
 @Table(name = "user_shop", schema = "dhs")
 public class UserShop {
@@ -36,5 +39,25 @@ public class UserShop {
 
     public void setShop(Shop shop) {
         this.shop = shop;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserShop userShop = (UserShop) o;
+
+        if (userId != userShop.userId) return false;
+        if (shop.getId() != userShop.getShop().getId()) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userId;
+        result = 31 * result + shop.getId();
+        return result;
     }
 }

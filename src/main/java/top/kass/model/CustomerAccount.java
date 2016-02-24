@@ -2,10 +2,12 @@ package top.kass.model;
 
 import javax.persistence.*;
 
+/**
+ * Created by Vboar on 2016/1/26.
+ */
 @Entity
 @Table(name = "customer_account", schema = "dhs", catalog = "")
 public class CustomerAccount {
-
     private int customerId;
     private String bankId;
     private double balance;
@@ -60,5 +62,34 @@ public class CustomerAccount {
 
     public void setVipLevel(VipLevel vipLevel) {
         this.vipLevel = vipLevel;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CustomerAccount that = (CustomerAccount) o;
+
+        if (customerId != that.customerId) return false;
+        if (Double.compare(that.balance, balance) != 0) return false;
+        if (point != that.point) return false;
+        if (vipLevel.getLevel() != that.vipLevel.getLevel()) return false;
+        if (bankId != null ? !bankId.equals(that.bankId) : that.bankId != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = customerId;
+        result = 31 * result + (bankId != null ? bankId.hashCode() : 0);
+        temp = Double.doubleToLongBits(balance);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + point;
+        result = 31 * result + (int) vipLevel.getLevel();
+        return result;
     }
 }

@@ -2,9 +2,11 @@ package top.kass.model;
 
 import javax.persistence.*;
 
+/**
+ * Created by Vboar on 2016/1/26.
+ */
 @Entity
 public class Customer {
-
     private int id;
     private int code;
     private String phone;
@@ -17,7 +19,6 @@ public class Customer {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -94,5 +95,31 @@ public class Customer {
 
     public void setCustomerStatus(CustomerStatus customerStatus) {
         this.customerStatus = customerStatus;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+
+        if (id != customer.id) return false;
+        if (code != customer.code) return false;
+        if (status != customer.status) return false;
+        if (phone != null ? !phone.equals(customer.phone) : customer.phone != null) return false;
+        if (password != null ? !password.equals(customer.password) : customer.password != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + code;
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (int) status;
+        return result;
     }
 }

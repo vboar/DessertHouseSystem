@@ -7,13 +7,10 @@ import org.springframework.stereotype.Repository;
 import top.kass.dao.UserDao;
 import top.kass.model.*;
 
-import javax.transaction.Transactional;
-import java.sql.Date;
 import java.util.Iterator;
 import java.util.Set;
 
 @Repository
-@Transactional
 public class UserDaoImpl implements UserDao {
 
     @Autowired

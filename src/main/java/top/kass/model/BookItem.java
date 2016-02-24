@@ -2,6 +2,9 @@ package top.kass.model;
 
 import javax.persistence.*;
 
+/**
+ * Created by Vboar on 2016/1/28.
+ */
 @Entity
 @Table(name = "book_item", schema = "dhs")
 public class BookItem {
@@ -13,7 +16,6 @@ public class BookItem {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -62,4 +64,32 @@ public class BookItem {
         this.product = product;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BookItem bookItem = (BookItem) o;
+
+        if (id != bookItem.id) return false;
+        if (book.getId() != bookItem.getBook().getId()) return false;
+        if (product.getId() != bookItem.getProduct().getId()) return false;
+        if (number != bookItem.number) return false;
+        if (Double.compare(bookItem.price, price) != 0) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + book.getId();
+        result = 31 * result + product.getId();
+        result = 31 * result + number;
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }

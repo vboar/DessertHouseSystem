@@ -1,18 +1,23 @@
 package top.kass.model;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.sql.Timestamp;
 
+/**
+ * Created by Vboar on 2016/1/28.
+ */
+@Entity
 public class Payment {
-
     private int id;
     private int customerId;
     private double money;
-    private Date time;
+    private Timestamp time;
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -43,13 +48,38 @@ public class Payment {
 
     @Basic
     @Column(name = "time")
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Payment payment = (Payment) o;
+
+        if (id != payment.id) return false;
+        if (customerId != payment.customerId) return false;
+        if (Double.compare(payment.money, money) != 0) return false;
+        if (time != null ? !time.equals(payment.time) : payment.time != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + customerId;
+        temp = Double.doubleToLongBits(money);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+        return result;
+    }
 }
