@@ -17,7 +17,7 @@
                 <form class="login-form">
                     <input class="input-username" type="text" name="username" placeholder="用户名" />
                     <input class="input-password" type="password" name="password" placeholder="密码" />
-                    <button class="btn btn-login right-floated">登录</button>
+                    <button type="button" class="btn btn-login right-floated" onclick="loginForm()">登录</button>
                     <span class="tips">注意：如果忘记密码, 请发送邮件至admin@duoduo.com。</span>
                     <div class="clearfix"></div>
                 </form>
@@ -33,5 +33,31 @@
         background-color: #f1f1f1;
     }
 </style>
+<script>
+    $(document).ready(function() {
 
+    });
+
+    function loginForm() {
+        $.ajax({
+            type: "POST",
+            url: "/admin/login",
+            data: $('.login-form').serialize(),
+            success: function(data) {
+                if (data["success"] == false) {
+                    toaster(data["error"], "error");
+                    $(".input-password").val("");
+                } else {
+                    toaster("登录成功！马上自动跳转...", "success");
+                    setTimeout(function () {
+                        window.location.href = "/";
+                    }, 1000);
+                }
+            },
+            error: function() {
+                toaster("服务器出现问题，请稍微再试！", "error");
+            }
+        });
+    }
+</script>
 </html>

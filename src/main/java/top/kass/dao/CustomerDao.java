@@ -8,4 +8,8 @@ public interface CustomerDao {
 
     public Customer create(String phone, String password);
 
+    public Customer findById(int id);
+
+    public Customer findByPhone(String phone);
+
 }

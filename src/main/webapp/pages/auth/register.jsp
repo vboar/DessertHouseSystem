@@ -59,7 +59,13 @@
                     toaster(data["error"], "error");
                 } else {
                     toaster("注册成功！马上自动跳转...", "success");
+                    setTimeout(function () {
+                        window.location.href = "/supplyInfo";
+                    }, 1000);
                 }
+            },
+            error: function() {
+                toaster("服务器出现问题，请稍微再试！", "error");
             }
         });
     }

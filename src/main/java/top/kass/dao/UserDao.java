@@ -1,21 +1,9 @@
 package top.kass.dao;
 
-import top.kass.model.Customer;
-import top.kass.model.Shop;
 import top.kass.model.User;
-import top.kass.model.UserShop;
 
 public interface UserDao {
 
+    public User findByUsername(String username);
 
-
-    public User test();
-
-    public void test1();
-
-    public UserShop test2();
-
-    public Shop test3();
-
-    public Customer test4();
 }

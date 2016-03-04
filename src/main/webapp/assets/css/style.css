@@ -5,6 +5,7 @@ body {
     overflow-x: auto;
     overflow-y: scroll;
     min-width: 1000px;
+    color: #585858;
 }
 
 body, input, label, select, option, textarea, button, fieldset, legend {
@@ -44,6 +45,30 @@ a {
     color: #fff;
     font-size: 14px;
     border: none;
+}
+
+.title {
+    font-weight: normal;
+}
+
+.normal-input {
+    width: 100%;
+    height: 35px;
+    outline: none;
+    border: 1px solid #eee;
+    padding: 0 10px;
+    line-height: 1.2em;
+    color: #585858;
+    margin-top: 5px;
+}
+
+.normal-input:focus {
+    border: 1px solid #bd4545;
+}
+
+.normal-input-label {
+    display: inline-block;
+    margin-top: 10px;
 }
 
 
@@ -216,9 +241,9 @@ a {
 
 
 
-    /**
-    * footer
-    */
+/**
+* footer
+*/
 .footer .content {
     border-top: 1px solid #ddd;
 }
@@ -288,7 +313,6 @@ a {
     position: relative;
     left: 20px;
     bottom: 10px;
-    color: #585858;
     font-weight: lighter;
 }
 
@@ -328,7 +352,7 @@ a {
     border: 1px solid #eee;
     padding: 0 10px;
     line-height: 1.2em;
-    color: #595959;
+    color: #585858;
 }
 
 .login-panel input:focus {
@@ -365,7 +389,6 @@ a {
     position: relative;
     left: 20px;
     bottom: 10px;
-    color: #585858;
     font-weight: lighter;
 }
 
@@ -405,7 +428,7 @@ a {
     border: 1px solid #eee;
     padding: 0 10px;
     line-height: 1.2em;
-    color: #595959;
+    color: #585858;
 }
 
 .register-panel input:focus {
@@ -421,6 +444,37 @@ a {
 
 
 
+/**
+* supply-info
+*/
+
+.supply-info-panel {
+    padding: 20px;
+}
+
+.supply-info-panel .title {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #c2c2c2;
+}
+
+.supply-info-panel .gender-input {
+    margin-top: 5px;
+}
+
+.supply-info-panel .gender-input label {
+    margin-right: 10px;
+}
+
+.supply-info-panel .gender-input span {
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.supply-info-panel .btn-submit {
+    padding: 5px 15px;
+    margin-top: 10px;
+}
 
 
 
@@ -461,7 +515,7 @@ a {
     border: 1px solid #eee;
     padding: 0 10px;
     line-height: 1.2em;
-    color: #595959;
+    color: #585858;
 }
 
 .admin-login-panel input:focus {

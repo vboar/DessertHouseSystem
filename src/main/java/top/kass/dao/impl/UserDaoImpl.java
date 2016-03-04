@@ -1,14 +1,12 @@
 package top.kass.dao.impl;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import top.kass.dao.UserDao;
-import top.kass.model.*;
-
-import java.util.Iterator;
-import java.util.Set;
+import top.kass.model.User;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -17,40 +15,14 @@ public class UserDaoImpl implements UserDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public User test() {
+    public User findByUsername(String username) {
         Session session = sessionFactory.getCurrentSession();
-        User user = (User)session.get(User.class, 3);
-        return user;
+        Query query = session.createQuery("from User as user where username=:username");
+        query.setString("username", username);
+        if (query.list() == null || query.list().size() == 0) {
+            return null;
+        } else {
+            return (User)query.list().get(0);
+        }
     }
-
-    @Override
-    public void test1() {
-        Session session = sessionFactory.getCurrentSession();
-
-    }
-
-    @Override
-    public UserShop test2() {
-        Session session = sessionFactory.getCurrentSession();
-        UserShop userShop = (UserShop)session.get(UserShop.class, 3);
-        return userShop;
-    }
-
-    @Override
-    public Shop test3() {
-        Session session = sessionFactory.getCurrentSession();
-        Shop shop = (Shop)session.get(Shop.class, 1);
-        Set<UserShop> userShops = shop.getUserShops();
-        Iterator<UserShop> it = userShops.iterator();
-        return shop;
-    }
-
-    @Override
-    public Customer test4() {
-        Session session = sessionFactory.getCurrentSession();
-        Customer customer = (Customer)session.get(Customer.class, 1);
-        return customer;
-    }
-
-
 }

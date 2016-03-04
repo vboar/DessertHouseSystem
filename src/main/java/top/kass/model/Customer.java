@@ -2,9 +2,6 @@ package top.kass.model;
 
 import javax.persistence.*;
 
-/**
- * Created by Vboar on 2016/1/26.
- */
 @Entity
 public class Customer {
     private int id;
@@ -19,6 +16,7 @@ public class Customer {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     public int getId() {
         return id;
     }

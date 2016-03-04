@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@Transactional
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
@@ -37,10 +36,51 @@ public class CustomerServiceImpl implements CustomerService {
             map.put("success", false);
             map.put("error", "该手机号码已经注册了会员！");
         } else {
-            customerDao.create(phone, password);
+            Customer customer = customerDao.create(phone, password);
             map.put("success", true);
+            map.put("customer_id", customer.getId());
+            map.put("customer_name", customer.getCustomerInfo().getName());
         }
         return map;
+    }
+
+    @Override
+    public Map<String, Object> login(String phone, String password) {
+        Map<String, Object> map = new HashMap<>();
+        phone = phone.trim();
+        password = password.trim();
+        if (phone.length() == 0 || password.length() == 0) {
+            map.put("success", false);
+            map.put("error", "请把信息填写完整！");
+        } else if (!Utils.isMobileNumber(phone)) {
+            map.put("success", false);
+            map.put("error", "请输入正确的手机号码！");
+        } else {
+            Customer customer = customerDao.findByPhone(phone);
+            if (customer == null) {
+                map.put("success", false);
+                map.put("error", "手机号或密码错误！");
+            } else {
+                if (!Utils.md5(password).equals(customer.getPassword())) {
+                    map.put("success", false);
+                    map.put("error", "手机号或密码错误！");
+                } else {
+                    map.put("success", true);
+                    map.put("customer_id", customer.getId());
+                    map.put("customer_name", customer.getCustomerInfo().getName());
+                }
+            }
+        }
+        return map;
+    }
+
+    @Override
+    @Transactional
+    public Map<String, Object> supplyInfo(int id, String name, String birthday, int gender,
+                                          String province, String city, int bank) {
+        Map<String, Object> map = new HashMap<>();
+
+        return null;
     }
 
 }

@@ -2,6 +2,7 @@ package top.kass.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,6 +40,13 @@ public class Utils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static int generateCode() {
+        int min = 1000000;
+        int max = 9999999;
+        Random random = new Random();
+        return random.nextInt(max)%(max-min+1) + min;
     }
 
 }
