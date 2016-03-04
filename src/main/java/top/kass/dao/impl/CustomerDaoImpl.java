@@ -93,5 +93,13 @@ public class CustomerDaoImpl implements CustomerDao {
         }
     }
 
+    @Override
+    @Transactional
+    public Customer update(Customer customer) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(customer);
+        return customer;
+    }
+
 
 }

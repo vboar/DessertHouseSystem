@@ -71,6 +71,16 @@ a {
     margin-top: 10px;
 }
 
+.mid-panel {
+    padding: 20px;
+}
+
+.mid-panel .title {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #c2c2c2;
+}
+
 
 
 /**
@@ -448,16 +458,6 @@ a {
 * supply-info
 */
 
-.supply-info-panel {
-    padding: 20px;
-}
-
-.supply-info-panel .title {
-    margin: 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #c2c2c2;
-}
-
 .supply-info-panel .gender-input {
     margin-top: 5px;
 }
@@ -476,6 +476,30 @@ a {
     margin-top: 10px;
 }
 
+/**
+* validate
+*/
+
+.validate-panel .tips {
+    font-size: 14px;
+    color: #bd4545;
+}
+
+.validate-panel .btn-submit {
+    padding: 5px 15px;
+    margin-top: 10px;
+}
+
+.validate-panel .number {
+    font-style: italic;
+    font-size: 16px;
+    font-weight: bold;
+    color: #6c6c6c;
+}
+
+.validate-panel .code-div {
+    margin-bottom: 5px;
+}
 
 
 

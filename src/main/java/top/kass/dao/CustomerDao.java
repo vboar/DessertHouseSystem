@@ -12,4 +12,6 @@ public interface CustomerDao {
 
     public Customer findByPhone(String phone);
 
+    public Customer update(Customer customer);
+
 }

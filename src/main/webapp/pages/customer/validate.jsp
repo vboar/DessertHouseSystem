@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>完善个人信息 - 哆哆甜品屋</title>
@@ -15,23 +16,13 @@
 <div class="wrapper">
 
     <div class="content">
-        <div class="mid-panel supply-info-panel">
-            <h3 class="title">完善个人信息</h3>
-            <label for="js-name-input" class="normal-input-label">姓名</label>
-            <input type="text" id="js-name-input" class="normal-input">
-            <label for="js-birthday-input" class="normal-input-label">生日</label>
-            <input type="text" id="js-birthday-input" class="normal-input">
-            <div class="gender-input">
-                <label class="normal-input-label">性别</label>
-                <input type="radio" name="gender" value="1" checked><span>男</span>
-                <input type="radio" name="gender" value="0"><span>女</span>
-            </div>
-            <label for="js-province-input" class="normal-input-label">省份</label>
-            <input type="text" id="js-province-input" class="normal-input">
-            <label for="js-city-input" class="normal-input-label">城市</label>
-            <input type="text" id="js-city-input" class="normal-input">
-            <label for="js-bank-input" class="normal-input-label">银行卡号</label>
-            <input type="text" id="js-bank-input" class="normal-input">
+        <div class="mid-panel validate-panel">
+            <h3 class="title">激活会员资格</h3>
+            <p class="tips">注意：请一次性充值200元以上以激活会员资格。金额将从您的银行卡中扣取。</p>
+            <div class="code-div">您的会员卡号： <span class="number">${customer.code}</span></div>
+            <div>您的银行卡号： <span class="number">${customer.customerAccount.bankId}</span></div>
+            <label for="js-money-input" class="normal-input-label">充值金额（>=200元）：</label>
+            <input type="text" id="js-money-input" class="normal-input">
             <button class="btn btn-submit right-floated" onclick="submit()">提交</button>
             <div class="clearfix"></div>
         </div>
@@ -59,20 +50,15 @@
     function submit() {
         $.ajax({
             type: "POST",
-            url: "/supplyInfo",
+            url: "/validate",
             data: {
-                name: $("#js-name-input").val(),
-                birthday: $("#js-birthday-input").val(),
-                gender: $("input[name='gender']:checked").val(),
-                province: $("#js-province-input").val(),
-                city: $("#js-city-input").val(),
-                bank: $("#js-bank-input").val()
+
             },
             success: function(data) {
                 if (data["success"] == false) {
                     toaster(data["error"], "error");
                 } else {
-                    toaster("完善信息成功！马上自动跳转...", "success");
+                    toaster("会员激活成功！马上跳转到首页...", "success");
                     setTimeout(function () {
                         window.location.href = "/validate";
                     }, 1000);
@@ -85,3 +71,4 @@
     }
 </script>
 </html>
+

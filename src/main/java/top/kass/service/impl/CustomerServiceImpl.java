@@ -7,7 +7,7 @@ import top.kass.model.Customer;
 import top.kass.service.CustomerService;
 import top.kass.util.Utils;
 
-import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,12 +75,44 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @Transactional
     public Map<String, Object> supplyInfo(int id, String name, String birthday, int gender,
-                                          String province, String city, int bank) {
+                                          String province, String city, String bank) {
         Map<String, Object> map = new HashMap<>();
+        name = name.trim();
+        birthday = birthday.trim();
+        province = province.trim();
+        city = city.trim();
+        bank = bank.trim();
+        if (name.length() == 0 || birthday.length() == 0 || province.length() == 0 ||
+                city.length() == 0 || bank.length() == 0) {
+            map.put("success", false);
+            map.put("error", "请把信息填写完整！");
+            return map;
+        }
 
-        return null;
+        Customer customer = customerDao.findById(id);
+        customer.getCustomerInfo().setName(name);
+        try {
+            customer.getCustomerInfo().setBirthday(Date.valueOf(birthday));
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("error", "生日格式不正确！");
+            return map;
+        }
+        customer.getCustomerInfo().setGender((byte)gender);
+        customer.getCustomerInfo().setCity(city);
+        customer.getCustomerInfo().setProvince(province);
+        customer.getCustomerAccount().setBankId(bank);
+        customer = customerDao.update(customer);
+        System.out.println(customer.getCustomerInfo().getName());
+        map.put("success", true);
+        map.put("customer_name", customer.getCustomerInfo().getName());
+        return map;
+    }
+
+    @Override
+    public Customer getCustomerById(int id) {
+        return customerDao.findById(id);
     }
 
 }
