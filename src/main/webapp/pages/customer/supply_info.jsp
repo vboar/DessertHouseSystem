@@ -5,8 +5,10 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/normalize.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/datetimepicker/css/jquery.datetimepicker.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <script src="${pageContext.request.contextPath}/assets/js/jquery-2.1.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/datetimepicker/js/jquery.datetimepicker.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 </head>
 <body>
@@ -20,7 +22,7 @@
             <label for="js-name-input" class="normal-input-label">姓名</label>
             <input type="text" id="js-name-input" class="normal-input">
             <label for="js-birthday-input" class="normal-input-label">生日</label>
-            <input type="text" id="js-birthday-input" class="normal-input">
+            <input type="text" id="js-birthday-input" class="normal-input date-picker">
             <div class="gender-input">
                 <label class="normal-input-label">性别</label>
                 <input type="radio" name="gender" value="1" checked><span>男</span>

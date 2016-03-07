@@ -1,5 +1,6 @@
 $(document).ready(function () {
     adminLightItem();
+    datePicker();
 });
 
 
@@ -36,5 +37,25 @@ function adminLightItem() {
             }
         }
 
+    }
+}
+
+function datePicker() {
+    try {
+        $('.date-picker').each(function () {
+            $(this).datetimepicker({
+                lang:'ch',
+                timepicker:false,
+                format:'Y-m-d',
+                formatDate:'Y/m/d',
+                minDate: '1916/01/01',
+                maxDate:'+1970/01/01',
+                yearStart: 1916,
+                yearEnd: 2016,
+                scrollInput: false
+            })
+        });
+    } catch (e) {
+        // nothing
     }
 }
