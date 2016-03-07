@@ -15,4 +15,6 @@ public interface CustomerService {
 
     public Customer getCustomerById(int id);
 
+    public Map<String, Object> validate(int id, String money);
+
 }

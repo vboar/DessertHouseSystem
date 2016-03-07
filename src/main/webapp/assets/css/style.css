@@ -23,7 +23,7 @@ a {
 }
 
 .content {
-    width: 1000px;
+    width: 900px;
     margin: 0 auto;
 }
 
@@ -69,6 +69,21 @@ a {
 .normal-input-label {
     display: inline-block;
     margin-top: 10px;
+}
+
+.normal-textarea {
+    width: 100%;
+    outline: none;
+    border: 1px solid #eee;
+    padding: 10px 10px;
+    line-height: 1.2em;
+    color: #585858;
+    margin-top: 5px;
+    resize: none;
+}
+
+.normal-textarea:focus {
+    border: 1px solid #bd4545;
 }
 
 .mid-panel {
@@ -509,6 +524,105 @@ a {
 * admin
 */
 
+.admin-body {
+    background-color: #e3e3e3;
+}
+
+.admin-navbar {
+    height: 60px;
+    background-color: #33678f;
+    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.3);
+}
+
+.admin-navbar .navbar-title {
+    color: #fff;
+    line-height: 60px;
+    font-size: 20px;
+    font-weight: lighter;
+    float: left;
+    cursor: pointer;
+}
+
+.admin-navbar .nav-items {
+    float: left;
+    margin: 0;
+}
+
+.admin-navbar .nav-item {
+    color: #fff;
+    line-height: 60px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0 10px;
+    transition: background-color 0.3s;
+}
+
+.admin-navbar .nav-item:hover {
+    cursor: pointer;
+    background-color: #285171;
+}
+
+.admin-navbar .nav-item.active {
+    background-color: #285171;
+}
+
+.admin-navbar .right-items {
+    float: right;
+}
+
+.admin-navbar .right-item {
+    font-size: 1.5em;
+    color: #d1d1d1;
+    line-height: 60px;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 15px;
+    transition: color 0.4s;
+}
+
+.admin-navbar .right-item:hover {
+    cursor: pointer;
+    color: #fff;
+}
+
+.admin-panel {
+    padding: 20px;
+    margin: 25px auto 20px auto;
+    background-color: #fff;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.1);
+}
+
+.admin-panel > .title {
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #c2c2c2;
+}
+
+.admin-body .normal-input:focus {
+    border: 1px solid #3a75a3;
+}
+
+.admin-body .normal-textarea:focus {
+    border: 1px solid #3a75a3;
+}
+
+.admin-body .btn {
+    padding: 5px 15px;
+}
+
+.admin-body .btn-group {
+    margin-top: 15px;
+}
+
+.admin-body .btn-submit {
+    background-color: #3a75a3;
+}
+
+.admin-body .btn-cancel {
+    background-color: #d76863;
+}
+
+
 /**
 * admin-login
 */
@@ -561,3 +675,13 @@ a {
 .admin-login-panel .login-form {
     margin-bottom: 0;
 }
+
+
+/**
+ * admin-shop
+ */
+.admin-shop-add-panel,
+.admin-shop-edit-panel {
+    width: 500px;
+}
+

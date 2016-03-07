@@ -50,7 +50,7 @@
                 } else {
                     toaster("登录成功！马上自动跳转...", "success");
                     setTimeout(function () {
-                        window.location.href = "/";
+                        window.location.href = "/admin";
                     }, 1000);
                 }
             },

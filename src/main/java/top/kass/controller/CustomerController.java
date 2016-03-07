@@ -46,4 +46,11 @@ public class CustomerController {
         return modelAndView;
     }
 
+    // 激活接口
+    @RequestMapping(value="/validate", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> postValidate(String money, HttpSession session) {
+        return customerService.validate((int)session.getAttribute("id"), money);
+    }
+
 }

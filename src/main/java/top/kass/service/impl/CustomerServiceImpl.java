@@ -2,12 +2,17 @@ package top.kass.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.kass.dao.CustomerDao;
+import top.kass.dao.PaymentDao;
 import top.kass.model.Customer;
 import top.kass.service.CustomerService;
 import top.kass.util.Utils;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +21,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerDao customerDao;
+    @Autowired
+    private PaymentDao paymentDao;
 
     @Override
     public Map<String, Object> register(String phone, String password, String passwordAgain) {
@@ -113,6 +120,47 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getCustomerById(int id) {
         return customerDao.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public Map<String, Object> validate(int id, String money) {
+        Map<String, Object> map = new HashMap<>();
+
+        int moneyNumber = 0;
+        try {
+            moneyNumber = Integer.parseInt(money);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("error", "金额格式不对！");
+            return map;
+        }
+
+        if (moneyNumber < 200) {
+            map.put("success", false);
+            map.put("error", "请把信息填写完整！");
+            return map;
+        }
+
+        Customer customer = customerDao.findById(id);
+        customer.getCustomerAccount().setBalance(
+                customer.getCustomerAccount().getBalance() + moneyNumber);
+        customer.setStatus((byte)1);
+
+        Timestamp startTime = new Timestamp(System.currentTimeMillis());
+        customer.getCustomerStatus().setStartTime(startTime);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.YEAR, 1);
+        Timestamp pauseTime = new Timestamp(calendar.getTime().getTime());
+        customer.getCustomerStatus().setPauseTime(pauseTime);
+
+        customerDao.update(customer);
+        paymentDao.create(id, moneyNumber);
+
+        map.put("success", true);
+        return map;
     }
 
 }

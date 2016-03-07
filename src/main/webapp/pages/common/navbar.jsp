@@ -19,7 +19,7 @@
                 </c:choose>
             </li>
             <li class="spacer"></li>
-            <li><a href="${pageContext.request.contextPath}/shopping-cart"><i class="fa fa-shopping-cart"></i> 购物车</a></li>
+            <li><a href="${pageContext.request.contextPath}/shoppingCart"><i class="fa fa-shopping-cart"></i> 购物车</a></li>
             <li class="spacer"></li>
             <li><a href="#">我的订单</a></li>
             <li class="spacer"></li>

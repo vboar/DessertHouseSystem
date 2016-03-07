@@ -1,17 +1,15 @@
 package top.kass.dao.impl;
 
-
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import top.kass.dao.CustomerDao;
 import top.kass.model.*;
 import top.kass.util.Utils;
-
-import javax.transaction.Transactional;
 
 @Repository
 public class CustomerDaoImpl implements CustomerDao {

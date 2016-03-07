@@ -1,6 +1,7 @@
 $(document).ready(function () {
-
+    adminLightItem();
 });
+
 
 function toaster(message, type) {
     var toaster = $("#toaster");
@@ -20,4 +21,20 @@ function toaster(message, type) {
             thisItem.remove();
         });
     }, 3000);
+}
+
+function adminLightItem() {
+    if ($("#admin-nav-items")) {
+        var items = $("#admin-nav-items").children();
+        for(var i = 0; i < items.length; i++) {
+            var item = $(items[i]);
+            var url = window.location.href;
+            console.log(item.attr("url"));
+            if (url.indexOf(item.attr("url")) != -1) {
+                item.addClass("active");
+                break;
+            }
+        }
+
+    }
 }
