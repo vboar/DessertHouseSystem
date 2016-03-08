@@ -2,9 +2,6 @@ package top.kass.model;
 
 import javax.persistence.*;
 
-/**
- * Created by Vboar on 2016/1/26.
- */
 @Entity
 public class User {
     private int id;

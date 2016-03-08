@@ -6,4 +6,8 @@ public interface UserDao {
 
     public User findByUsername(String username);
 
+    public User findById(int id);
+
+    public User update(User user);
+
 }

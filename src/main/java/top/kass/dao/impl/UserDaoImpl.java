@@ -25,4 +25,23 @@ public class UserDaoImpl implements UserDao {
             return (User)query.list().get(0);
         }
     }
+
+    @Override
+    public User findById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from User as user where id=:id");
+        query.setInteger("id", id);
+        if (query.list() == null || query.list().size() == 0) {
+            return null;
+        } else {
+            return (User)query.list().get(0);
+        }
+    }
+
+    @Override
+    public User update(User user) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(user);
+        return user;
+    }
 }

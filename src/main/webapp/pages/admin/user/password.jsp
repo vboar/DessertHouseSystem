@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>新增店面 - 店面管理 - 管理后台 - 哆哆甜品屋</title>
+    <title>修改密码 - 管理后台 - 哆哆甜品屋</title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/normalize.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css">
@@ -15,16 +15,15 @@
 <div class="wrapper">
     <div class="content">
         <div class="admin-panel">
-            <h3 class="title">新增店面</h3>
-            <label for="js-name-input" class="normal-input-label">店面名称</label>
-            <input type="text" class="normal-input" id="js-name-input" />
-            <label for="js-desc-textarea" class="normal-input-label">店面描述</label>
-            <textarea class="normal-textarea" id="js-desc-textarea" rows=5></textarea>
-            <label for="js-addr-input" class="normal-input-label">店面地址</label>
-            <input type="text" class="normal-input" id="js-addr-input" />
+            <h3 class="title">修改密码</h3>
+            <label for="js-old-input" class="normal-input-label">旧密码</label>
+            <input type="password" class="normal-input" id="js-old-input" />
+            <label for="js-new-input" class="normal-input-label">新密码</label>
+            <input type="password" class="normal-input" id="js-new-input" />
+            <label for="js-again-input" class="normal-input-label">再次输入密码</label>
+            <input type="password" class="normal-input" id="js-again-input" />
             <div class="button-group right-floated">
-                <button class="button btn-cancel" onclick="window.location.href='/admin/shop'">返回</button>
-                <button class="button btn-submit" onclick="submit()">提交</button>
+                <button class="button table-btn btn-submit" onclick="submit()">提交</button>
             </div>
             <div class="clear-fix"></div>
         </div>
@@ -35,7 +34,7 @@
 
 <style>
     .admin-panel {
-        width: 500px;
+        width: 400px;
     }
 </style>
 <script>
@@ -45,21 +44,21 @@
     function submit() {
         $.ajax({
             type: "POST",
-            url: "/admin/shop/add",
+            url: "/admin/password",
             data: {
-                name: $("#js-name-input").val(),
-                description: $("#js-desc-textarea").val(),
-                address: $("#js-addr-input").val()
+                old: $("#js-old-input").val(),
+                password: $("#js-new-input").val(),
+                passwordAgain: $("#js-again-input").val()
             },
             success: function(data) {
                 if (data["success"] == false) {
                     toaster(data["error"], "error");
                 } else {
-                    toaster("新增成功~", "success");
-                    setTimeout(function () {
-                        window.location.href = "/admin/shop";
-                    }, 1000);
+                    toaster("修改密码成功~", "success");
                 }
+                $("#js-old-input").val("");
+                $("#js-new-input").val("");
+                $("#js-again-input").val("");
             },
             error: function() {
                 toaster("服务器出现问题，请稍微再试！", "error");
@@ -69,3 +68,4 @@
 
 </script>
 </html>
+

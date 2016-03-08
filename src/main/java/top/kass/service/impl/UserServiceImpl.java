@@ -45,4 +45,31 @@ public class UserServiceImpl implements UserService {
         }
         return map;
     }
+
+    @Override
+    public Map<String, Object> password(int id, String old, String password, String passwordAgain) {
+        Map<String, Object> map = new HashMap<>();
+
+        old = old.trim();
+        password = password.trim();
+        passwordAgain = passwordAgain.trim();
+        if (old.length() == 0 || password.length() == 0 || passwordAgain.length() == 0) {
+            map.put("success", false);
+            map.put("error", "请把密码填写完整！");
+        } else if (!password.equals(passwordAgain)) {
+            map.put("success", false);
+            map.put("error", "输入的新密码不匹配！");
+        } else {
+            User user = userDao.findById(id);
+            old = Utils.md5(old);
+            if (!user.getPassword().equals(old)) {
+                map.put("success", false);
+                map.put("error", "旧密码不正确！");
+            } else {
+                user.setPassword(Utils.md5(password));
+                map.put("success", true);
+            }
+        }
+        return map;
+    }
 }
