@@ -8,6 +8,7 @@ import top.kass.model.Shop;
 import top.kass.service.ShopService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -64,6 +65,18 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public Shop getShopById(int id) {
         return shopDao.findById(id);
+    }
+
+    public List<Shop> getAllShops() {
+        return shopDao.getAll();
+    }
+
+    @Override
+    public Map<String, Object> deleteShop(int id) {
+        Map<String, Object> map = new HashMap<>();
+        shopDao.delete(id);
+        map.put("success", true);
+        return map;
     }
 
 

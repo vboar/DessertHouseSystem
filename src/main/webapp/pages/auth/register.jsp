@@ -29,8 +29,8 @@
                     <input class="input-phone" type="text" name="phone" placeholder="输入手机号" />
                     <input class="input-password" type="password" name="password" placeholder="输入密码" />
                     <input class="input-password-again" type="password" name="passwordAgain" placeholder="再次输入密码" />
-                    <button type="button" class="btn btn-register right-floated" onclick="registerForm()">注册</button>
-                    <div class="clearfix"></div>
+                    <button type="button" class="button btn-register right-floated" onclick="registerForm()">注册</button>
+                    <div class="clear-fix"></div>
                 </form>
             </div>
         </div>

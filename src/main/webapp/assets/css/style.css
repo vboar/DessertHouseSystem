@@ -35,11 +35,11 @@ a {
     float: right;
 }
 
-.clearfix {
+.clear-fix {
     clear: both;
 }
 
-.btn {
+.button {
     background-color: #d04b4a;
     outline: none;
     color: #fff;
@@ -96,6 +96,28 @@ a {
     border-bottom: 1px solid #c2c2c2;
 }
 
+.table-container {
+    margin-top: 10px;
+}
+
+.table-container table {
+    table-layout: fixed;
+}
+
+.table-container td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-container .button {
+    background-color: #d04b4a;
+    outline: none;
+    color: #fff;
+    font-size: 14px;
+    border: none;
+    padding: 4px 10px !important;
+}
 
 
 /**
@@ -384,6 +406,14 @@ a {
     border-color: #939393;
 }
 
+.login-panel input[type=checkbox] {
+    height: 18px;
+    width: auto;
+    margin-bottom: 0;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
 .login-panel .btn-login {
     padding: 5px 15px;
     display: inline-block;
@@ -596,6 +626,13 @@ a {
     margin: 0;
     padding-bottom: 10px;
     border-bottom: 1px solid #c2c2c2;
+    font-size: 18px !important;
+}
+
+.admin-panel > .title > .button {
+    line-height: 19px;
+    position: relative;
+    bottom: 4px;
 }
 
 .admin-body .normal-input:focus {
@@ -606,11 +643,11 @@ a {
     border: 1px solid #3a75a3;
 }
 
-.admin-body .btn {
+.admin-body .button {
     padding: 5px 15px;
 }
 
-.admin-body .btn-group {
+.admin-body .button-group {
     margin-top: 15px;
 }
 
@@ -660,28 +697,20 @@ a {
     border-color: #939393;
 }
 
+.admin-login-panel input[type=checkbox] {
+    height: 18px;
+    width: auto;
+    margin-bottom: 0;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
 .admin-login-panel .btn-login {
     padding: 5px 10px;
     display: inline-block;
 }
 
-.admin-login-panel .tips {
-    font-size: 13px;
-    color: #9e9e9e;
-    position: relative;
-    bottom: 3px;
-}
-
 .admin-login-panel .login-form {
     margin-bottom: 0;
-}
-
-
-/**
- * admin-shop
- */
-.admin-shop-add-panel,
-.admin-shop-edit-panel {
-    width: 500px;
 }
 

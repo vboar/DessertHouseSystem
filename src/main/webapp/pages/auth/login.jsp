@@ -26,11 +26,11 @@
                     <a href="${pageContext.request.contextPath}/register" class="right-floated register"><i class="fa fa-sign-in"></i> 立即注册</a>
                     <div class="clearfix"></div>
                     <form class="login-form">
-                        <input class="input-login" type="text" name="phone" placeholder="卡号/手机号" value="18020135373"/>
-                        <input class="input-password" type="password" name="password" placeholder="密码" value="1995630"/>
-                        <button type="button" class="btn btn-login right-floated" onclick="loginForm()">登录</button>
-                        <a class="forget-password" href="#">忘记密码？</a>
-                        <div class="clearfix"></div>
+                        <input class="input-login" type="text" name="phone" placeholder="卡号/手机号"/>
+                        <input class="input-password" type="password" name="password" placeholder="密码"/>
+                        <input type="checkbox" id="js-checkbox-remember"/> 记住我
+                        <button type="button" class="button btn-login right-floated" onclick="loginForm()">登录</button>
+                        <div class="clear-fix"></div>
                     </form>
                 </div>
             </div>
@@ -46,10 +46,28 @@
 </style>
 <script>
     $(document).ready(function() {
-
+        fillForm();
     });
 
+    function fillForm() {
+        if (window.localStorage.getItem("remember") == 1) {
+            $("#js-checkbox-remember").prop("checked", true);
+            $(".input-login").val(window.localStorage.getItem("login"));
+            $(".input-password").val(window.localStorage.getItem("password"));
+        }
+    }
+
     function loginForm() {
+        if ($("#js-checkbox-remember").prop("checked") == true) {
+            window.localStorage.setItem("remember", 1);
+            window.localStorage.setItem("login", $(".input-login").val());
+            window.localStorage.setItem("password", $(".input-password").val());
+        } else {
+            window.localStorage.setItem("remember", 0);
+            window.localStorage.setItem("login", "");
+            window.localStorage.setItem("password", "");
+        }
+
         $.ajax({
             type: "POST",
             url: "/login",

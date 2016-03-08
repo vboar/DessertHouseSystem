@@ -14,7 +14,7 @@
 <%@include file="../../common/admin_navbar.jsp"%>
 <div class="wrapper">
     <div class="content">
-        <div class="admin-panel admin-shop-edit-panel">
+        <div class="admin-panel">
             <h3 class="title">编辑店面</h3>
             <input id="js-id-input" hidden value="${shop.id}">
             <label for="js-name-input" class="normal-input-label">店面名称</label>
@@ -23,11 +23,11 @@
             <textarea class="normal-textarea" id="js-desc-textarea" rows=5>${shop.description}</textarea>
             <label for="js-addr-input" class="normal-input-label">店面地址</label>
             <input type="text" class="normal-input" id="js-addr-input" value="${shop.address}"/>
-            <div class="btn-group right-floated">
-                <button class="btn btn-cancel" onclick="window.location.href='/admin/shop'">返回</button>
-                <button class="btn btn-submit" onclick="submit()">提交</button>
+            <div class="button-group right-floated">
+                <button class="button btn-cancel" onclick="window.location.href='/admin/shop'">返回</button>
+                <button class="button btn-submit" onclick="submit()">提交</button>
             </div>
-            <div class="clearfix"></div>
+            <div class="clear-fix"></div>
         </div>
     </div>
 </div>
@@ -35,7 +35,9 @@
 </body>
 
 <style>
-
+    .admin-panel {
+        width: 500px;
+    }
 </style>
 <script>
     $(document).ready(function() {

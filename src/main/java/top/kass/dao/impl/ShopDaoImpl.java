@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import top.kass.dao.ShopDao;
 import top.kass.model.Shop;
 
+import java.util.List;
+
 @Repository
 public class ShopDaoImpl implements ShopDao {
 
@@ -47,6 +49,23 @@ public class ShopDaoImpl implements ShopDao {
         } else {
             return (Shop)query.list().get(0);
         }
+    }
+
+    @Override
+    public List<Shop> getAll() {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from Shop");
+        List<Shop> shopList = (List<Shop>)query.list();
+        return shopList;
+    }
+
+    @Override
+    @Transactional
+    public void delete(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("delete Shop where id=:id");
+        query.setInteger("id", id);
+        query.executeUpdate();
     }
 
 }

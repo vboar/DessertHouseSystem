@@ -23,8 +23,8 @@
             <div>您的银行卡号： <span class="number">${customer.customerAccount.bankId}</span></div>
             <label for="js-money-input" class="normal-input-label">充值金额（>=200元）：</label>
             <input type="number" id="js-money-input" class="normal-input">
-            <button class="btn btn-submit right-floated" onclick="submit()">提交</button>
-            <div class="clearfix"></div>
+            <button class="button btn-submit right-floated" onclick="submit()">提交</button>
+            <div class="clear-fix"></div>
         </div>
     </div>
 

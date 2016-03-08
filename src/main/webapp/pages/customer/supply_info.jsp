@@ -5,10 +5,10 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/normalize.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/datetimepicker/css/jquery.datetimepicker.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/datetimepicker/css/jquery.datetimepicker.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <script src="${pageContext.request.contextPath}/assets/js/jquery-2.1.4.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/datetimepicker/js/jquery.datetimepicker.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/plugins/datetimepicker/js/jquery.datetimepicker.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 </head>
 <body>
@@ -34,8 +34,8 @@
             <input type="text" id="js-city-input" class="normal-input">
             <label for="js-bank-input" class="normal-input-label">银行卡号</label>
             <input type="text" id="js-bank-input" class="normal-input">
-            <button class="btn btn-submit right-floated" onclick="submit()">提交</button>
-            <div class="clearfix"></div>
+            <button class="button btn-submit right-floated" onclick="submit()">提交</button>
+            <div class="clear-fix"></div>
         </div>
     </div>
 

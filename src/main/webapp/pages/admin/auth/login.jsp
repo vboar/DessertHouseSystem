@@ -17,9 +17,9 @@
                 <form class="login-form">
                     <input class="input-username" type="text" name="username" placeholder="用户名" />
                     <input class="input-password" type="password" name="password" placeholder="密码" />
-                    <button type="button" class="btn btn-login right-floated" onclick="loginForm()">登录</button>
-                    <span class="tips">注意：如果忘记密码, 请发送邮件至admin@duoduo.com。</span>
-                    <div class="clearfix"></div>
+                    <input type="checkbox" id="js-checkbox-remember"/> 记住我
+                    <button type="button" class="button btn-login right-floated" onclick="loginForm()">登录</button>
+                    <div class="clear-fix"></div>
                 </form>
             </div>
         </div>
@@ -35,10 +35,28 @@
 </style>
 <script>
     $(document).ready(function() {
-
+        fillForm();
     });
 
+    function fillForm() {
+        if (window.localStorage.getItem("admin_remember") == 1) {
+            $("#js-checkbox-remember").prop("checked", true);
+            $(".input-username").val(window.localStorage.getItem("admin_login"));
+            $(".input-password").val(window.localStorage.getItem("admin_password"));
+        }
+    }
+
     function loginForm() {
+        if ($("#js-checkbox-remember").prop("checked") == true) {
+            window.localStorage.setItem("admin_remember", 1);
+            window.localStorage.setItem("admin_login", $(".input-username").val());
+            window.localStorage.setItem("admin_password", $(".input-password").val());
+        } else {
+            window.localStorage.setItem("admin_remember", 0);
+            window.localStorage.setItem("admin_login", "");
+            window.localStorage.setItem("admin_password", "");
+        }
+
         $.ajax({
             type: "POST",
             url: "/admin/login",
