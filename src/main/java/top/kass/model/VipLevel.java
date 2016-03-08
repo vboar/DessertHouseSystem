@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Vboar on 2016/1/26.
  */
 @Entity
-@Table(name = "vip_level", schema = "dhs", catalog = "")
+@Table(name = "vip_level", schema = "dhs")
 public class VipLevel {
     private byte level;
     private String name;

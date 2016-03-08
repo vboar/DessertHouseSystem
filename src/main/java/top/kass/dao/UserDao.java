@@ -10,4 +10,9 @@ public interface UserDao {
 
     public User update(User user);
 
+    public User create(String username, String name, String password, int role, int shop);
+
+    public User update(int id, String name, String password, int role, int shop);
+
+
 }

@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  * Created by Vboar on 2016/1/26.
  */
 @Entity
-@Table(name = "customer_status", schema = "dhs", catalog = "")
+@Table(name = "customer_status", schema = "dhs")
 public class CustomerStatus {
     private int customerId;
     private Timestamp startTime;
@@ -53,29 +53,5 @@ public class CustomerStatus {
 
     public void setStopTime(Timestamp stopTime) {
         this.stopTime = stopTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CustomerStatus that = (CustomerStatus) o;
-
-        if (customerId != that.customerId) return false;
-        if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
-        if (pauseTime != null ? !pauseTime.equals(that.pauseTime) : that.pauseTime != null) return false;
-        if (stopTime != null ? !stopTime.equals(that.stopTime) : that.stopTime != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = customerId;
-        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-        result = 31 * result + (pauseTime != null ? pauseTime.hashCode() : 0);
-        result = 31 * result + (stopTime != null ? stopTime.hashCode() : 0);
-        return result;
     }
 }

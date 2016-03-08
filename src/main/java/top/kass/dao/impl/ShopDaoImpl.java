@@ -27,7 +27,6 @@ public class ShopDaoImpl implements ShopDao {
         shop.setName(name);
         shop.setDescription(description);
         shop.setAddress(address);
-        shop.setStatus((byte)1);
         session.save(shop);
         return shop;
     }

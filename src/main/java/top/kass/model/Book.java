@@ -24,6 +24,7 @@ public class Book {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     public int getId() {
         return id;
     }

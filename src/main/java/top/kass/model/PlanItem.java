@@ -7,7 +7,7 @@ import java.sql.Date;
  * Created by Vboar on 2016/1/28.
  */
 @Entity
-@Table(name = "plan_item", schema = "dhs", catalog = "")
+@Table(name = "plan_item", schema = "dhs")
 public class PlanItem {
     private int id;
     private Plan plan;
@@ -20,6 +20,7 @@ public class PlanItem {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -96,40 +97,5 @@ public class PlanItem {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PlanItem planItem = (PlanItem) o;
-
-        if (id != planItem.id) return false;
-        if (plan.getId() != planItem.getPlan().getId()) return false;
-        if (product.getId() != planItem.getProduct().getId()) return false;
-        if (Double.compare(planItem.price, price) != 0) return false;
-        if (number != planItem.number) return false;
-        if (remaining != planItem.remaining) return false;
-        if (point != planItem.point) return false;
-        if (date != null ? !date.equals(planItem.date) : planItem.date != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = id;
-        result = 31 * result + plan.getId();
-        result = 31 * result + product.getId();
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + number;
-        result = 31 * result + remaining;
-        result = 31 * result + point;
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        return result;
     }
 }

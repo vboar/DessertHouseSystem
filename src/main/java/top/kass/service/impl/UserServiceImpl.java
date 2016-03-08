@@ -3,6 +3,7 @@ package top.kass.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.kass.dao.UserDao;
+import top.kass.model.Shop;
 import top.kass.model.User;
 import top.kass.service.UserService;
 import top.kass.util.Utils;
@@ -71,5 +72,57 @@ public class UserServiceImpl implements UserService {
             }
         }
         return map;
+    }
+
+    @Override
+    public Map<String, Object> add(String username, String name, String password, int role, int shop) {
+        Map<String, Object> map = new HashMap<>();
+
+        username = username.trim();
+        name = name.trim();
+        password = password.trim();
+
+        if (username.length() == 0 || name.length() == 0 || password.length() == 0) {
+            map.put("success", false);
+            map.put("error", "请把信息填写完整！");
+            return map;
+        }
+
+        if (userDao.findByUsername(username) != null) {
+            map.put("success", false);
+            map.put("error", "用户名已存在！");
+            return map;
+        }
+
+        userDao.create(username, name, password, role, shop);
+
+        map.put("success", true);
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> edit(int id, String name,
+                                    String password, int role, int shop) {
+        Map<String, Object> map = new HashMap<>();
+
+        name = name.trim();
+        password = password.trim();
+
+        if (name.length() == 0 || password.length() == 0) {
+            map.put("success", false);
+            map.put("error", "请把信息填写完整！");
+            return map;
+        }
+
+        userDao.update(id, name, password, role, shop);
+
+        map.put("success", true);
+        return map;
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return userDao.findById(id);
     }
 }

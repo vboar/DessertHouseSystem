@@ -23,7 +23,7 @@
                     <li class="nav-item" onclick="window.location.href='#'">逐月统计</li>
                 </c:when>
             </c:choose>
-            <li class="nav-item" onclick="window.location.href='/admin/password'">修改密码</li>
+            <li class="nav-item" onclick="window.location.href='/admin/password'" url="/admin/password">修改密码</li>
         </ul>
         <span class="right-items">
             <i class="right-item fa fa-home" title="查看前台"></i>

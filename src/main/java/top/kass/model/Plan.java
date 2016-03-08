@@ -18,6 +18,7 @@ public class Plan {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue
     public int getId() {
         return id;
     }
@@ -73,31 +74,5 @@ public class Plan {
 
     public void setPlanItems(Set<PlanItem> planItems) {
         this.planItems = planItems;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Plan plan = (Plan) o;
-
-        if (id != plan.id) return false;
-        if (shopId != plan.shopId) return false;
-        if (status != plan.status) return false;
-        if (startTime != null ? !startTime.equals(plan.startTime) : plan.startTime != null) return false;
-        if (endTime != null ? !endTime.equals(plan.endTime) : plan.endTime != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + shopId;
-        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-        result = 31 * result + (int) status;
-        return result;
     }
 }
