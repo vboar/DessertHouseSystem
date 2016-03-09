@@ -10,6 +10,7 @@ public class Product {
     private int id;
     private String name;
     private String description;
+    private String img;
     private Shop shop;
 
     @Id
@@ -41,6 +42,16 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Basic
+    @Column(name = "img")
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

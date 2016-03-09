@@ -37,7 +37,6 @@ public class ShopServiceImpl implements ShopService {
     }
 
     @Override
-    @Transactional
     public Map<String, Object> edit(int id, String name, String description, String address) {
 
         Map<String, Object> map = new HashMap<>();

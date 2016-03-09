@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import top.kass.model.User;
-import top.kass.model.UserShop;
 import top.kass.service.CustomerService;
 import top.kass.service.UserService;
 

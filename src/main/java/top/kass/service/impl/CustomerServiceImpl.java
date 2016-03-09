@@ -123,7 +123,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @Transactional
     public Map<String, Object> validate(int id, String money) {
         Map<String, Object> map = new HashMap<>();
 
