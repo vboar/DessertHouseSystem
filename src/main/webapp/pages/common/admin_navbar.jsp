@@ -30,8 +30,8 @@
                 url="/admin/password">修改密码</li>
         </ul>
         <span class="right-items">
-            <i class="right-item fa fa-home" title="查看前台"></i>
-            <i class="right-item fa fa-sign-out" title="登出"></i>
+            <i class="right-item fa fa-home" title="查看前台" onclick="window.location.href='/'"></i>
+            <i class="right-item fa fa-sign-out" title="登出" onclick="window.location.href='/logout'"></i>
         </span>
     </div>
 </div>
