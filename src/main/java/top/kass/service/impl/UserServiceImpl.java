@@ -10,6 +10,7 @@ import top.kass.util.Utils;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -102,20 +103,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Object> edit(int id, String name,
-                                    String password, int role, int shop) {
+    public Map<String, Object> edit(int id, String name, String password, int role, int shop) {
         Map<String, Object> map = new HashMap<>();
 
         name = name.trim();
         password = password.trim();
 
-        if (name.length() == 0 || password.length() == 0) {
+        if (name.length() == 0) {
             map.put("success", false);
             map.put("error", "请把信息填写完整！");
             return map;
         }
 
-        userDao.update(id, name, password, role, shop);
+        User user = userDao.findById(id);
+        user.setName(name);
+        user.setRole((byte)role);
+        Shop tempShop = new Shop();
+        tempShop.setId(shop);
+        if (role == 4) {
+            user.setShop(null);
+        } else {
+            user.setShop(tempShop);
+        }
+        if (password.length() != 0) {
+            user.setPassword(Utils.md5(password));
+        }
+        userDao.update(user);
 
         map.put("success", true);
         return map;
@@ -124,5 +137,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(int id) {
         return userDao.findById(id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userDao.getAll();
+    }
+
+    @Override
+    public Map<String, Object> deleteUser(int id) {
+        Map<String, Object> map = new HashMap<>();
+        userDao.delete(id);
+        map.put("success", true);
+        return map;
     }
 }

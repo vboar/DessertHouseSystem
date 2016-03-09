@@ -1,7 +1,6 @@
 package top.kass.dao.impl;
 
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,8 @@ import top.kass.dao.UserDao;
 import top.kass.model.Shop;
 import top.kass.model.User;
 import top.kass.util.Utils;
+
+import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -50,7 +51,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    @Transactional
     public User create(String username, String name, String password, int role, int shop) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -59,22 +59,31 @@ public class UserDaoImpl implements UserDao {
         user.setName(name);
         user.setPassword(Utils.md5(password));
         user.setRole((byte)role);
+        Shop tempShop = new Shop();
+        tempShop.setId(shop);
+        if (role == 4) {
+            user.setShop(null);
+        } else {
+            user.setShop(tempShop);
+        }
         session.save(user);
         return user;
     }
 
     @Override
-    public User update(int id, String name, String password, int role, int shop) {
+    public List<User> getAll() {
         Session session = sessionFactory.getCurrentSession();
-
-        User user = findById(id);
-        user.setName(name);
-        user.setPassword(Utils.md5(password));
-        user.setRole((byte)role);
-        session.save(user);
-
-
-
-        return user;
+        Query query = session.createQuery("from User where role != 1");
+        List<User> userList = query.list();
+        return userList;
     }
+
+    @Override
+    public void delete(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("delete User where id=:id");
+        query.setInteger("id", id);
+        query.executeUpdate();
+    }
+
 }

@@ -26,7 +26,6 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    @Transactional
     public Customer create(String phone, String password) {
 
         Session session = sessionFactory.getCurrentSession();
@@ -92,7 +91,6 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    @Transactional
     public Customer update(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
         session.save(customer);

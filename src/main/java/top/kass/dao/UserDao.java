@@ -2,6 +2,8 @@ package top.kass.dao;
 
 import top.kass.model.User;
 
+import java.util.List;
+
 public interface UserDao {
 
     public User findByUsername(String username);
@@ -12,7 +14,8 @@ public interface UserDao {
 
     public User create(String username, String name, String password, int role, int shop);
 
-    public User update(int id, String name, String password, int role, int shop);
+    public List<User> getAll();
 
+    public void delete(int id);
 
 }

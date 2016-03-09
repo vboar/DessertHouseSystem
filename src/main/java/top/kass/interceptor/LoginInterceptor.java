@@ -32,7 +32,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                 }
             }
             if (!flag) {
-                response.sendRedirect("/login");
+                if (url.startsWith("/admin")) {
+                    response.sendRedirect("/admin/login");
+                } else {
+                    response.sendRedirect("/login");
+                }
                 return false;
             }
         }

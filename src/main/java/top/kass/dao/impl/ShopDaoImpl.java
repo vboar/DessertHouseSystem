@@ -18,7 +18,6 @@ public class ShopDaoImpl implements ShopDao {
     private SessionFactory sessionFactory;
 
     @Override
-    @Transactional
     public Shop create(String name, String description, String address) {
 
         Session session = sessionFactory.getCurrentSession();
@@ -59,7 +58,6 @@ public class ShopDaoImpl implements ShopDao {
     }
 
     @Override
-    @Transactional
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createQuery("delete Shop where id=:id");

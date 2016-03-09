@@ -25,8 +25,10 @@ public class UserController {
 
     // 店员管理页面
     @RequestMapping(value="/admin/user", method= RequestMethod.GET)
-    public String userListPage() {
-        return "admin/user/user_list";
+    public ModelAndView userListPage() {
+        List<User> userList = userService.getAllUsers();
+        ModelAndView modelAndView = new ModelAndView("admin/user/user_list", "userList", userList);
+        return modelAndView;
     }
 
     // 新建店员页面
@@ -67,7 +69,7 @@ public class UserController {
     @RequestMapping(value="/admin/user/delete", method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> deleteUser(int id) {
-        return null;
+        return userService.deleteUser(id);
     }
 
 }

@@ -31,7 +31,7 @@
             <label for="js-shop-select" class="normal-input-label">所属店面</label>
             <select id="js-shop-select" class="normal-input">
                 <c:forEach items="${shopList}" var="item">
-                    <option value="${item.id}" ${item.id == user.userShop.shop.id? "selected": ""}>
+                    <option value="${item.id}" ${item.id == user.shop.id? "selected": ""}>
                     ${item.name}</option>
                 </c:forEach>
             </select>

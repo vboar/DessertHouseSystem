@@ -21,7 +21,7 @@
             <label for="js-name-input" class="normal-input-label">姓名</label>
             <input type="text" class="normal-input" id="js-name-input" />
             <label for="js-password-input" class="normal-input-label">密码</label>
-            <input type="text" class="normal-input" id="js-password-input" />
+            <input type="password" class="normal-input" id="js-password-input" />
             <label for="js-role-select" class="normal-input-label">角色</label>
             <select id="js-role-select" class="normal-input">
                 <option value="2">分店服务员</option>
