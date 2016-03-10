@@ -1,5 +1,7 @@
 package top.kass.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -56,6 +58,7 @@ public class Product {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "shop_id")
+    @JsonIgnore
     public Shop getShop() {
         return shop;
     }

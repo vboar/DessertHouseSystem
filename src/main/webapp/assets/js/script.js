@@ -49,13 +49,13 @@ function datePicker() {
                 format:'Y-m-d',
                 formatDate:'Y/m/d',
                 minDate: '1916/01/01',
-                maxDate:'+1970/01/01',
+                maxDate:'+1970/03/01',
                 yearStart: 1916,
                 yearEnd: 2016,
                 scrollInput: false
             })
         });
     } catch (e) {
-        // nothing
+        console.log(e);
     }
 }
