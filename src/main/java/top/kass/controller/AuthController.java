@@ -81,13 +81,13 @@ public class AuthController {
         return "redirect:/";
     }
 
-    // 修改密码页面
+    // 修改密码页面（后台）
     @RequestMapping(value="/admin/password", method= RequestMethod.GET)
     public String adminPasswordPage() {
         return "admin/auth/password";
     }
 
-    // 修改密码操作
+    // 修改密码操作（后台）
     @RequestMapping(value="/admin/password", method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> adminPassword(String old, String password, String passwordAgain,

@@ -718,3 +718,29 @@ a {
     margin-bottom: 0;
 }
 
+
+
+.edit-plan-table {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.edit-plan-table th,
+.edit-plan-table td {
+    border: 1px solid #d6d6d6;
+    padding: 3px 6px;
+    text-align: center;
+}
+
+.edit-plan-table + .add-button {
+    padding: 6px 8px;
+}
+
+.edit-plan-table .product-select {
+    width: 100%;
+}
+
+.edit-plan-table input,
+.edit-plan-table select {
+    outline: none;
+}

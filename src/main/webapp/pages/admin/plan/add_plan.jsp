@@ -34,21 +34,29 @@
 
             <div class="date-item">
                 <div class="date-text">2016-03-10 星期四</div>
-                <table class="plan-table">
+                <table class="edit-plan-table">
                     <thead>
                     <tr>
-                        <th>选择产品</th>
-                        <th>出售价格</th>
-                        <th>出售数量</th>
-                        <th>获得积分</th>
+                        <th width="40%">选择产品</th>
+                        <th width="15%">出售价格</th>
+                        <th width="15%">出售数量</th>
+                        <th width="15%">获得积分</th>
+                        <th width="15%">删除</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>面包</td>
-                        <td>20</td>
-                        <td>20</td>
-                        <td>5</td>
+                        <td>
+                            <select class="product-select">
+                                <option>1</option>
+                                <option>1</option>
+                                <option>1</option>
+                            </select>
+                        </td>
+                        <td><input type="text"></td>
+                        <td><input type="number"></td>
+                        <td><input type="number"></td>
+                        <td><i class="fa fa-close fa-delete"></i></td>
                     </tr>
                     </tbody>
                 </table>
@@ -88,8 +96,9 @@
     .date-item > .date-text::before {
         content: "- ";
     }
-    .date-item .add-button {
-        padding: 6px 8px;;
+    .date-item .fa-delete {
+        cursor: pointer;
+        color: #757575;
     }
 </style>
 <script>

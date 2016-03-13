@@ -14,6 +14,7 @@ import top.kass.service.ProductService;
 import top.kass.service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -86,6 +87,32 @@ public class ProductController {
     public Map<String, Object> deleteProduct(int id) {
         Map<String, Object> map = productService.deleteProduct(id);
         return map;
+    }
+
+
+
+
+
+    /**
+     * 获得产品列表 json
+     * @param shopId 店面ID，null为全部
+     * @param page 分页页码 从0开始
+     * @param num 每页数量
+     * @param order 排序方式，0为全部、1为销量优先，2为价格优先
+     * @return
+     */
+    @RequestMapping(value="/products", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getProducts(Integer shopId, int page, int num, int order) {
+        Map<String, Object> map = new HashMap<>();
+        return map;
+    }
+
+    // 产品详情页面
+    @RequestMapping(value="/product/detail", method= RequestMethod.GET)
+    public ModelAndView productDetailPage(int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        return modelAndView;
     }
 
 }

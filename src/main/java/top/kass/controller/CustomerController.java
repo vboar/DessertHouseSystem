@@ -53,4 +53,29 @@ public class CustomerController {
         return customerService.validate((int)session.getAttribute("id"), money);
     }
 
+    // 我的哆哆页面
+    @RequestMapping(value="/dashboard", method= RequestMethod.GET)
+    public String dashboard(HttpSession session) {
+        return null;
+    }
+
+    // 个人信息页面
+    @RequestMapping(value="/user/info", method= RequestMethod.GET)
+    public String info(HttpSession session) {
+        return null;
+    }
+
+    // 编辑个人信息页面
+    @RequestMapping(value="/user/info/edit", method= RequestMethod.GET)
+    public String editInfoPage(HttpSession session) {
+        return null;
+    }
+
+    // 编辑个人信息操作
+    @RequestMapping(value="/user/info/edit", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> editInfo(HttpSession session) {
+        return null;
+    }
+
 }
