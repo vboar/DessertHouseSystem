@@ -1,10 +1,9 @@
 package top.kass.controller;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import top.kass.model.Product;
 import top.kass.model.Shop;
@@ -54,8 +53,13 @@ public class PlanController {
 
     // 制定产品计划操作
     @RequestMapping(value="/admin/plan/add", method= RequestMethod.POST)
-    public String addPlan() {
-        return "";
+    @ResponseBody
+    public Map<String, Object> addPlan(@RequestBody String data) {
+        JSONObject object = new JSONObject(data);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", true);
+        return map;
     }
 
     // 编辑产品计划页面

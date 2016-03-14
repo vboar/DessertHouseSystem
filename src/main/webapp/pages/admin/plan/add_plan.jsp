@@ -184,11 +184,11 @@
 
     function generateItem() {
         var html =
-                '<tr>' +
+                '<tr class="item">' +
                 '<td>' + generateSelect() + '</td>' +
-                '<td><input type="text"></td>' +
-                '<td><input type="number"></td>' +
-                '<td><input type="number"></td>' +
+                '<td><input type="text" class="price-input"></td>' +
+                '<td><input type="number" class="number-input"></td>' +
+                '<td><input type="number" class="point-input"></td>' +
                 '<td><i class="fa fa-close fa-delete" onclick="removeItem(this)"></i></td>' +
                 '</tr>';
 
@@ -214,17 +214,50 @@
 
     function submit() {
 
+        var data = new Object();
+        data.startDate = $("#js-start-date-input").val();
+        data.endDate = $("#js-end-date-input").val();
+
+        var items = [];
+
+        $("#date-items").children().each(function () {
+            $(this).find(".item").each(function () {
+                var item = new Object();
+                item.date = $(this).parents(".date-item").attr("date");
+
+                var productId = $($(this).find(".product-select")[0]).val();
+                var price = $($(this).find(".price-input")[0]).val();
+                var number = $($(this).find(".number-input")[0]).val();
+                var point = $($(this).find(".point-input")[0]).val();
+
+                if (price == "" || number == "" || point == "") {
+
+                } else {
+                    item.productId = productId;
+                    item.price = price;
+                    item.number = number;
+                    item.point = point;
+
+                    items.push(item);
+                }
+
+
+            });
+        });
+        data.items = items;
+        console.log(data);
+
         $.ajax({
             type: "POST",
             url: "/admin/plan/add",
-            data: data,
-            processData: false,
-            contentType: false,
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
             success: function(data) {
                 if (data["success"] == false) {
                     toaster(data["error"], "error");
                 } else {
-                    toaster("新增成功~", "success");
+                    toaster("制定成功~", "success");
                     setTimeout(function () {
                         window.location.href = "/admin/product";
                     }, 1000);
