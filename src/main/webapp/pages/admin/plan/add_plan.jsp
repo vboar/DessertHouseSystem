@@ -23,47 +23,49 @@
                 <div class="date-select">
                     <label for="js-start-date-input">起始日期</label>
                     <input type="text" class="normal-input date-picker"
-                           id="js-start-date-input"/>
+                           id="js-start-date-input" value="${dates[0]}"/>
                 </div>
                 <div class="date-select">
                     <label for="js-end-date-input">结束日期</label>
                     <input type="text" class="normal-input date-picker"
-                           id="js-end-date-input"/>
+                           id="js-end-date-input" value="${dates[1]}"/>
                 </div>
             </div>
 
-            <div class="date-item">
-                <div class="date-text">2016-03-10 星期四</div>
-                <table class="edit-plan-table">
-                    <thead>
-                    <tr>
-                        <th width="40%">选择产品</th>
-                        <th width="15%">出售价格</th>
-                        <th width="15%">出售数量</th>
-                        <th width="15%">获得积分</th>
-                        <th width="15%">删除</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                            <select class="product-select">
-                                <option>1</option>
-                                <option>1</option>
-                                <option>1</option>
-                            </select>
-                        </td>
-                        <td><input type="text"></td>
-                        <td><input type="number"></td>
-                        <td><input type="number"></td>
-                        <td><i class="fa fa-close fa-delete"></i></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <button class="button btn-submit right-floated add-button">
-                    <i class="fa fa-plus"></i>
-                </button>
-                <div class="clear-fix"></div>
+            <div id="date-items">
+                <div class="date-item">
+                    <div class="date-text">2016-03-10 星期四</div>
+                    <table class="edit-plan-table">
+                        <thead>
+                        <tr>
+                            <th width="40%">选择产品</th>
+                            <th width="15%">出售价格</th>
+                            <th width="15%">出售数量</th>
+                            <th width="15%">获得积分</th>
+                            <th width="15%">删除</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <select class="product-select">
+                                    <option>1</option>
+                                    <option>1</option>
+                                    <option>1</option>
+                                </select>
+                            </td>
+                            <td><input type="text"></td>
+                            <td><input type="number"></td>
+                            <td><input type="number"></td>
+                            <td><i class="fa fa-close fa-delete"></i></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="button btn-submit right-floated add-button">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <div class="clear-fix"></div>
+                </div>
             </div>
 
             <div class="button-group right-floated">
@@ -93,17 +95,18 @@
         font-size: 17px;
         margin-bottom: 10px;
     }
-    .date-item > .date-text::before {
-        content: "- ";
-    }
     .date-item .fa-delete {
         cursor: pointer;
         color: #757575;
     }
 </style>
 <script>
+    var products;
+
     $(document).ready(function() {
         validateDatePicker();
+        getProductsData();
+        dateInitItem();
     });
     function validateDatePicker() {
         $(".date-picker").each(function() {
@@ -113,10 +116,102 @@
                 if (start > end && start != "" && end != "") {
                     $("#js-start-date-input").val(end);
                     toaster("起始日期不能大于结束日期！", "error");
+                } else {
+                    dateInitItem();
                 }
             });
         });
     }
+    function getProductsData() {
+        $.ajax({
+            type: "POST",
+            url: "/admin/plan/products",
+            async: false,
+            success: function(data) {
+                products = data["products"];
+            },
+            error: function() {
+                toaster("服务器出现问题，请稍微再试！", "error");
+            }
+        });
+    }
+    function dateInitItem() {
+        $("#date-items").empty();
+
+        // 生成日期
+        var startDate = new Date($("#js-start-date-input").val().replace(/-/g, "/"));
+        var endDate = new Date($("#js-end-date-input").val().replace(/-/g, "/"));
+        var dates = new Array();
+        dates.push(startDate);
+        var tempDate = new Date(startDate.valueOf()+ 1*24*60*60*1000);
+        while (tempDate.getTime() < endDate.getTime()) {
+            dates.push(new Date(tempDate));
+            tempDate = new Date(tempDate.valueOf()+ 1*24*60*60*1000);
+        }
+        if (startDate.getDate() != endDate.getDate()) {
+            dates.push(endDate);
+        }
+
+        var html = "";
+        for (var i = 0; i < dates.length; i++) {
+            var d = dates[i];
+            html +=
+                '<div class="date-item" date="' + d.Format("yyyy-MM-dd") + '">' +
+                    '<div class="date-text">' + (d.getMonth()+1) + '月' +
+                        d.getDate() + '日' + ' 星期' + getWeek(d.getDay()) + '</div>' +
+                    '<table class="edit-plan-table">' +
+                        '<thead>' +
+                            '<tr>' +
+                                '<th width="40%">选择产品</th>' +
+                                '<th width="15%">出售价格</th>' +
+                                '<th width="15%">出售数量</th>' +
+                                '<th width="15%">获得积分</th>' +
+                                '<th width="15%">删除</th>' +
+                            '</tr>' +
+                        '</thead>' +
+                        '<tbody>' + generateItem() +
+                        '</tbody>' +
+                    '</table>' +
+                    '<button class="button btn-submit right-floated add-button" onclick="addItem(this)">' +
+                        '<i class="fa fa-plus"></i>' +
+                    '</button>' +
+                    '<div class="clear-fix"></div>' +
+                '</div>';
+        }
+        $("#date-items").append(html);
+
+    }
+
+    function generateItem() {
+        var html =
+                '<tr>' +
+                '<td>' + generateSelect() + '</td>' +
+                '<td><input type="text"></td>' +
+                '<td><input type="number"></td>' +
+                '<td><input type="number"></td>' +
+                '<td><i class="fa fa-close fa-delete" onclick="removeItem(this)"></i></td>' +
+                '</tr>';
+
+        function generateSelect() {
+            var html = '<select class="product-select">';
+            for (var i = 0; i < products.length; i++) {
+                html += '<option value="' + products[i].id + '">' + products[i].name + '</option>';
+            }
+            html += '</select>';
+            return html;
+        }
+
+        return html;
+    }
+
+    function addItem(obj) {
+        $($(obj).prev().find("tbody")[0]).append(generateItem());
+    }
+
+    function removeItem(obj) {
+        $(obj).parents("tr").remove();
+    }
+
     function submit() {
 
         $.ajax({

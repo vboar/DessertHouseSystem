@@ -43,11 +43,12 @@ public class PlanController {
     // 制定产品计划页面
     @RequestMapping(value="/admin/plan/add", method= RequestMethod.GET)
     public ModelAndView addPlanPage(HttpSession session) {
-        // 应该有一个最近一次计划最后的时间作为开始时间，默认结束时间为7天后
         int userId = (int)session.getAttribute("id");
         Shop shop = userService.getUserById(userId).getShop();
+        String[] dates = planService.getDate(shop.getId());
         ModelAndView modelAndView = new ModelAndView("admin/plan/add_plan");
         modelAndView.addObject("shop", shop);
+        modelAndView.addObject("dates", dates);
         return modelAndView;
     }
 
