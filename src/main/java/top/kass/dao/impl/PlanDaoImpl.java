@@ -11,7 +11,6 @@ import top.kass.dao.PlanDao;
 import top.kass.model.Plan;
 import top.kass.model.PlanItem;
 import top.kass.model.Product;
-import top.kass.model.Shop;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -65,10 +64,11 @@ public class PlanDaoImpl implements PlanDao {
         plan.setStartTime(startTime);
         plan.setEndTime(endTime);
         plan.setShopId(shopId);
+        session.save(plan);
 
         JSONArray items = (JSONArray)object.get("items");
 
-        plan.setPlanItems(getPlanItems(items));
+        plan.setPlanItems(getPlanItems(items, plan));
 
         session.save(plan);
         session.flush();
@@ -98,23 +98,23 @@ public class PlanDaoImpl implements PlanDao {
         Plan plan = findById(planId);
 
         JSONArray items = (JSONArray)object.get("items");
-        plan.setPlanItems(getPlanItems(items));
+        plan.setPlanItems(getPlanItems(items, plan));
 
         session.save(plan);
         session.flush();
 
     }
 
-    private Set<PlanItem> getPlanItems(JSONArray items) {
+    private Set<PlanItem> getPlanItems(JSONArray items, Plan plan) {
         Set<PlanItem> planItemSet = new HashSet<>();
 
         for (int i = 0; i < items.length(); i++) {
 
             JSONObject temp = (JSONObject) items.get(i);
-            int productId = (int)temp.get("productId");
-            double price = (double)temp.get("price");
-            int number = (int)temp.get("number");
-            int point = (int)temp.get("point");
+            int productId = Integer.parseInt(temp.get("productId").toString());
+            double price = Double.parseDouble(temp.get("price").toString());
+            int number = Integer.parseInt(temp.get("number").toString());
+            int point = Integer.parseInt(temp.get("point").toString());
 
             String dateString = (String)temp.get("date");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -129,6 +129,7 @@ public class PlanDaoImpl implements PlanDao {
             PlanItem planItem = new PlanItem();
             Product product = new Product();
             product.setId(productId);
+            planItem.setPlan(plan);
             planItem.setProduct(product);
             planItem.setPrice(price);
             planItem.setNumber(number);

@@ -1,5 +1,7 @@
 package top.kass.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -57,6 +59,7 @@ public class Shop {
     }
 
     @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
+    @JsonIgnore
     public Set<User> getUsers() {
         return users;
     }
@@ -66,6 +69,7 @@ public class Shop {
     }
 
     @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL)
+    @JsonIgnore
     public Set<Product> getProducts() {
         return products;
     }

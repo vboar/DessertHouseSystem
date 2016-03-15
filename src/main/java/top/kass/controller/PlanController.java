@@ -37,7 +37,10 @@ public class PlanController {
     @RequestMapping(value="/admin/plan/detail", method= RequestMethod.GET)
     public ModelAndView planDetailPage(int id) {
         ModelAndView modelAndView = new ModelAndView("admin/plan/plan_detail");
-        modelAndView.addObject("planId", id);
+        Plan plan = planService.getPlanById(id);
+        Shop shop = shopService.getShopById(plan.getShopId());
+        modelAndView.addObject("plan", plan);
+        modelAndView.addObject("shop", shop);
         return modelAndView;
     }
 
@@ -96,14 +99,14 @@ public class PlanController {
     }
 
     // 获得某次计划JSON
-    @RequestMapping(value="/admin/plan/products", method= RequestMethod.POST)
+    @RequestMapping(value="/admin/plan/detail", method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> getPlanById(int id) {
         Map<String, Object> map = new HashMap<>();
         Plan plan = planService.getPlanById(id);
-        Shop shop = shopService.getShopById(plan.getShopId());
+        // Shop shop = shopService.getShopById(plan.getShopId());
         map.put("plan", plan);
-        map.put("shop", shop);
+        // map.put("shop", shop);
         return map;
     }
 

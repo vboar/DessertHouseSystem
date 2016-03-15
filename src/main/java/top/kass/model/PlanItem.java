@@ -1,5 +1,7 @@
 package top.kass.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -31,6 +33,7 @@ public class PlanItem {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "plan_id")
+    @JsonIgnore
     public Plan getPlan() {
         return plan;
     }
