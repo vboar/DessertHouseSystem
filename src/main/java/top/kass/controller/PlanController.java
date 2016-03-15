@@ -1,10 +1,10 @@
 package top.kass.controller;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import top.kass.model.Plan;
 import top.kass.model.Product;
 import top.kass.model.Shop;
 import top.kass.service.PlanService;
@@ -35,8 +35,10 @@ public class PlanController {
 
     // 产品计划详情页面
     @RequestMapping(value="/admin/plan/detail", method= RequestMethod.GET)
-    public String planDetailPage() {
-        return "admin/plan/plan_detail";
+    public ModelAndView planDetailPage(int id) {
+        ModelAndView modelAndView = new ModelAndView("admin/plan/plan_detail");
+        modelAndView.addObject("planId", id);
+        return modelAndView;
     }
 
     // 制定产品计划页面
@@ -54,9 +56,10 @@ public class PlanController {
     // 制定产品计划操作
     @RequestMapping(value="/admin/plan/add", method= RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> addPlan(@RequestBody String data) {
-        JSONObject object = new JSONObject(data);
-
+    public Map<String, Object> addPlan(@RequestBody String data, HttpSession session) {
+        int userId = (int)session.getAttribute("id");
+        Shop shop = userService.getUserById(userId).getShop();
+        planService.addPlan(data, shop.getId());
         Map<String, Object> map = new HashMap<>();
         map.put("success", true);
         return map;
@@ -64,17 +67,23 @@ public class PlanController {
 
     // 编辑产品计划页面
     @RequestMapping(value="/admin/plan/edit", method= RequestMethod.GET)
-    public String editPlanPage() {
-        return "admin/plan/edit_plan";
+    public ModelAndView editPlanPage(int id) {
+        ModelAndView modelAndView = new ModelAndView("admin/plan/edit_plan");
+        modelAndView.addObject("planId", id);
+        return modelAndView;
     }
 
     // 编辑产品计划操作
     @RequestMapping(value="/admin/plan/edit", method= RequestMethod.POST)
-    public String editPlan() {
-        return "";
+    @ResponseBody
+    public Map<String, Object>  editPlan(@RequestBody String data) {
+        planService.edit(data);
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", true);
+        return map;
     }
 
-    // 获得本店所有产品
+    // 获得本店所有产品JSON
     @RequestMapping(value="/admin/plan/products", method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> getProducts(HttpSession session) {
@@ -83,6 +92,18 @@ public class PlanController {
         Shop shop = userService.getUserById(userId).getShop();
         Set<Product> productSet = shopService.getShopById(shop.getId()).getProducts();
         map.put("products", productSet);
+        return map;
+    }
+
+    // 获得某次计划JSON
+    @RequestMapping(value="/admin/plan/products", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getPlanById(int id) {
+        Map<String, Object> map = new HashMap<>();
+        Plan plan = planService.getPlanById(id);
+        Shop shop = shopService.getShopById(plan.getShopId());
+        map.put("plan", plan);
+        map.put("shop", shop);
         return map;
     }
 

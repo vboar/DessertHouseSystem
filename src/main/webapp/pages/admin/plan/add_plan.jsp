@@ -46,19 +46,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                <select class="product-select">
-                                    <option>1</option>
-                                    <option>1</option>
-                                    <option>1</option>
-                                </select>
-                            </td>
-                            <td><input type="text"></td>
-                            <td><input type="number"></td>
-                            <td><input type="number"></td>
-                            <td><i class="fa fa-close fa-delete"></i></td>
-                        </tr>
                         </tbody>
                     </table>
                     <button class="button btn-submit right-floated add-button">
@@ -245,7 +232,6 @@
             });
         });
         data.items = items;
-        console.log(data);
 
         $.ajax({
             type: "POST",
@@ -259,7 +245,7 @@
                 } else {
                     toaster("制定成功~", "success");
                     setTimeout(function () {
-                        window.location.href = "/admin/product";
+                        window.location.href = "/admin/plan";
                     }, 1000);
                 }
             },

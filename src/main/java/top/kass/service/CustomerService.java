@@ -17,4 +17,7 @@ public interface CustomerService {
 
     public Map<String, Object> validate(int id, String money);
 
+    public Map<String, Object> editInfo(int id, String name, String birthday, int gender,
+                                        String province, String city);
+
 }

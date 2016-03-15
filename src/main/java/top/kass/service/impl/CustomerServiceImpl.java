@@ -162,4 +162,21 @@ public class CustomerServiceImpl implements CustomerService {
         return map;
     }
 
+    @Override
+    public Map<String, Object> editInfo(int id, String name, String birthday, int gender,
+                                        String province, String city) {
+        Customer customer = customerDao.findById(id);
+        customer.getCustomerInfo().setName(name);
+        customer.getCustomerInfo().setBirthday(Date.valueOf(birthday));
+        customer.getCustomerInfo().setProvince(province);
+        customer.getCustomerInfo().setCity(city);
+        customer.getCustomerInfo().setGender((byte)gender);
+
+        customerDao.update(customer);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", true);
+        return map;
+    }
+
 }
