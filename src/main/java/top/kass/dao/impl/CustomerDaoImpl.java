@@ -94,6 +94,7 @@ public class CustomerDaoImpl implements CustomerDao {
     public Customer update(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
         session.save(customer);
+        session.flush();
         return customer;
     }
 

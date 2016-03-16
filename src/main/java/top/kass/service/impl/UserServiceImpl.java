@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService {
                 map.put("error", "旧密码不正确！");
             } else {
                 user.setPassword(Utils.md5(password));
+                userDao.update(user);
                 map.put("success", true);
             }
         }

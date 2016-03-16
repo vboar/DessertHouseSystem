@@ -234,6 +234,67 @@ a {
     margin-right: -6px;
 }
 
+.dashboard-header {
+    background-color: #d76863;
+}
+
+.dashboard-header .logo {
+    margin: 15px 0;
+}
+
+.dashboard-header .shopping-cart {
+    float: right;
+    position: relative;
+    top: 9px;
+}
+
+.dashboard-header .btn-cart {
+    margin-top: 15px;
+    background-color: #f5f5f5;
+    border: 2px solid #ddd;
+    outline: none;
+    padding: 7px 13px 6px 13px;
+    color: #8c8c8c;
+    font-size: 14px;
+}
+
+.dashboard-left {
+    float: left;
+    width: 150px;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.dashboard-left > #nav > li {
+    text-decoration: none;
+    list-style: none;
+    cursor: pointer;
+    padding: 10px 0px;
+    letter-spacing: 5px;
+}
+
+.dashboard-left > #nav > li > a {
+    display: block;
+}
+
+.right-content {
+    float: right;
+    width: 670px;
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 50px;
+}
+
+.right-content h3 {
+    margin: 5px 0 15px 0;
+}
+
+.btn-normal {
+    padding: 5px 15px;
+    margin-top: 10px;
+}
+
+
 
 
 /**
@@ -507,15 +568,15 @@ a {
 * supply-info
 */
 
-.supply-info-panel .gender-input {
+.gender-input {
     margin-top: 5px;
 }
 
-.supply-info-panel .gender-input label {
+.gender-input label {
     margin-right: 10px;
 }
 
-.supply-info-panel .gender-input span {
+.gender-input span {
     margin-right: 10px;
     margin-left: 5px;
 }

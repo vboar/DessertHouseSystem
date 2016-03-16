@@ -21,9 +21,9 @@
             <li class="spacer"></li>
             <li><a href="${pageContext.request.contextPath}/shoppingCart"><i class="fa fa-shopping-cart"></i> 购物车</a></li>
             <li class="spacer"></li>
-            <li><a href="#">我的订单</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/order">我的订单</a></li>
             <li class="spacer"></li>
-            <li><a href="#">我的哆哆</a></li>
+            <li><a href="${pageContext.request.contextPath}/dashboard">我的哆哆</a></li>
             <c:if test="${sessionScope.get('role') != 5}">
                 <li class="spacer"></li>
                 <c:choose>

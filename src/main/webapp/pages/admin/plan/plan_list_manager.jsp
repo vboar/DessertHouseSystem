@@ -16,10 +16,7 @@
 <div class="wrapper">
     <div class="content">
         <div class="admin-panel">
-            <h3 class="title">产品计划管理
-                <button class="button btn-submit right-floated"
-                        onclick="window.location.href='/admin/plan/add'">制定计划</button>
-            </h3>
+            <h3 class="title">产品计划管理</h3>
 
             <div class="normal-div" id="select-div">
                 <span id="non-check" class="active">未审批</span>

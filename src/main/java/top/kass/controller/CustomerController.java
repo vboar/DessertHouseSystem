@@ -56,26 +56,32 @@ public class CustomerController {
     // 我的哆哆页面
     @RequestMapping(value="/dashboard", method= RequestMethod.GET)
     public String dashboard(HttpSession session) {
-        return null;
+        return "customer/dashboard";
     }
 
     // 个人信息页面
     @RequestMapping(value="/user/info", method= RequestMethod.GET)
-    public String info(HttpSession session) {
-        return null;
+    public ModelAndView info(HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        Customer customer = customerService.getCustomerById(id);
+        ModelAndView modelAndView = new ModelAndView("customer/info");
+        modelAndView.addObject("customer", customer);
+        return modelAndView;
     }
 
-    // 编辑个人信息页面
-    @RequestMapping(value="/user/info/edit", method= RequestMethod.GET)
-    public String editInfoPage(HttpSession session) {
-        return null;
+    // 修改密码页面
+    @RequestMapping(value="/user/password", method= RequestMethod.GET)
+    public String password(HttpSession session) {
+        return "customer/password";
     }
 
-    // 编辑个人信息操作
-    @RequestMapping(value="/user/info/edit", method= RequestMethod.POST)
+    // 修改密码操作
+    @RequestMapping(value="/user/password", method= RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> editInfo(HttpSession session) {
-        return null;
+    public Map<String, Object> postPassword(String old, String password, String passwordAgain,
+                                             HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        return customerService.password(id, old, password, passwordAgain);
     }
 
 }

@@ -20,4 +20,6 @@ public interface CustomerService {
     public Map<String, Object> editInfo(int id, String name, String birthday, int gender,
                                         String province, String city);
 
+    public Map<String, Object> password(int id, String old, String password, String passwordAgain);
+
 }
