@@ -35,12 +35,14 @@ public class PlanController {
 
     // 产品计划详情页面
     @RequestMapping(value="/admin/plan/detail", method= RequestMethod.GET)
-    public ModelAndView planDetailPage(int id) {
+    public ModelAndView planDetailPage(int id, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("admin/plan/plan_detail");
         Plan plan = planService.getPlanById(id);
         Shop shop = shopService.getShopById(plan.getShopId());
+        int role = (int)session.getAttribute("role");
         modelAndView.addObject("plan", plan);
         modelAndView.addObject("shop", shop);
+        modelAndView.addObject("role", role);
         return modelAndView;
     }
 
@@ -72,7 +74,10 @@ public class PlanController {
     @RequestMapping(value="/admin/plan/edit", method= RequestMethod.GET)
     public ModelAndView editPlanPage(int id) {
         ModelAndView modelAndView = new ModelAndView("admin/plan/edit_plan");
-        modelAndView.addObject("planId", id);
+        Plan plan = planService.getPlanById(id);
+        Shop shop = shopService.getShopById(plan.getShopId());
+        modelAndView.addObject("plan", plan);
+        modelAndView.addObject("shop", shop);
         return modelAndView;
     }
 
@@ -107,6 +112,16 @@ public class PlanController {
         // Shop shop = shopService.getShopById(plan.getShopId());
         map.put("plan", plan);
         // map.put("shop", shop);
+        return map;
+    }
+
+    // 更新状态
+    @RequestMapping(value="/admin/plan/status", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateStatus(int id, int status) {
+        Map<String, Object> map = new HashMap<>();
+        planService.updateStatus(id, status);
+        map.put("success", true);
         return map;
     }
 

@@ -91,3 +91,10 @@ Date.prototype.Format = function(fmt) {
     return fmt;
 };
 
+function planStatusTranslate(num) {
+    switch (num) {
+        case 0: return '未审批';
+        case 1: return '已批准';
+        case 2: return '不批准';
+    }
+}

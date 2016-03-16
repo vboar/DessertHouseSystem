@@ -49,5 +49,12 @@ public class PlanServiceImpl implements PlanService {
         return planDao.findById(id);
     }
 
+    @Override
+    public void updateStatus(int id, int status) {
+        Plan plan = planDao.findById(id);
+        plan.setStatus((byte)status);
+        planDao.updateStatus(plan);
+    }
+
 
 }

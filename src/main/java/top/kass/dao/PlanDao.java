@@ -15,4 +15,6 @@ public interface PlanDao {
 
     public void update(String data);
 
+    public void updateStatus(Plan plan);
+
 }

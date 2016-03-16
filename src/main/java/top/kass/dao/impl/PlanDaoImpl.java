@@ -97,15 +97,28 @@ public class PlanDaoImpl implements PlanDao {
 
         Plan plan = findById(planId);
 
+        Query query = session.createSQLQuery("DELETE FROM plan_item WHERE plan_id=?");
+        query.setParameter(0, plan.getId());
+        query.executeUpdate();
+
         JSONArray items = (JSONArray)object.get("items");
         plan.setPlanItems(getPlanItems(items, plan));
+        plan.setStatus((byte)0);
 
         session.save(plan);
         session.flush();
 
     }
 
+    @Override
+    public void updateStatus(Plan plan) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(plan);
+        session.flush();
+    }
+
     private Set<PlanItem> getPlanItems(JSONArray items, Plan plan) {
+
         Set<PlanItem> planItemSet = new HashSet<>();
 
         for (int i = 0; i < items.length(); i++) {

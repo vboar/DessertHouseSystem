@@ -12,4 +12,6 @@ public interface PlanService {
 
     public Plan getPlanById(int id);
 
+    public void updateStatus(int id, int status);
+
 }
