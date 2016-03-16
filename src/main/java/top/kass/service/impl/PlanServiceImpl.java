@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class PlanServiceImpl implements PlanService {
@@ -54,6 +55,16 @@ public class PlanServiceImpl implements PlanService {
         Plan plan = planDao.findById(id);
         plan.setStatus((byte)status);
         planDao.updateStatus(plan);
+    }
+
+    @Override
+    public List<Plan> getPlansByShop(int shopId) {
+        return planDao.getPlansByShop(shopId);
+    }
+
+    @Override
+    public List<Plan> getPlansByStatus(int status) {
+        return planDao.getPlansByStatus(status);
     }
 
 

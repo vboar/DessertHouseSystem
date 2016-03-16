@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import top.kass.model.Shop;
 import top.kass.service.ShopService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +70,16 @@ public class ShopController {
     @ResponseBody
     public Map<String, Object> deleteShop(int id) {
         return shopService.deleteShop(id);
+    }
+
+    // 获得所有店面
+    @RequestMapping(value="/admin/shop/list", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getAllShops() {
+        Map<String, Object> map = new HashMap<>();
+        List<Shop> shopList = shopService.getAllShops();
+        map.put("shopList", shopList);
+        return map;
     }
 
 }

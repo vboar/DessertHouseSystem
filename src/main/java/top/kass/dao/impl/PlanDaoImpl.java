@@ -117,6 +117,28 @@ public class PlanDaoImpl implements PlanDao {
         session.flush();
     }
 
+    @Override
+    public List<Plan> getPlansByShop(int shopId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from Plan where shopId=:shopId order by startTime desc");
+        query.setInteger("shopId", shopId);
+        List<Plan> planList = query.list();
+        return planList;
+    }
+
+    @Override
+    public List<Plan> getPlansByStatus(int status) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query;
+        if (status == 0) {
+            query = session.createQuery("from Plan where status=0 order by startTime desc");
+        } else {
+            query = session.createQuery("from Plan where status<>0 order by startTime desc");
+        }
+        List<Plan> planList = query.list();
+        return planList;
+    }
+
     private Set<PlanItem> getPlanItems(JSONArray items, Plan plan) {
 
         Set<PlanItem> planItemSet = new HashSet<>();

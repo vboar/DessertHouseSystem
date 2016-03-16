@@ -3,6 +3,7 @@ package top.kass.dao;
 import top.kass.model.Plan;
 
 import java.util.Date;
+import java.util.List;
 
 public interface PlanDao {
 
@@ -16,5 +17,9 @@ public interface PlanDao {
     public void update(String data);
 
     public void updateStatus(Plan plan);
+
+    public List<Plan> getPlansByShop(int shopId);
+
+    public List<Plan> getPlansByStatus(int status);
 
 }

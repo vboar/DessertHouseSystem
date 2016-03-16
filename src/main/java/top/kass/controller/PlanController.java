@@ -13,6 +13,7 @@ import top.kass.service.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,9 +29,18 @@ public class PlanController {
 
     // 产品计划管理页面
     @RequestMapping(value="/admin/plan", method= RequestMethod.GET)
-    public String planListPage(HttpSession session) {
+    public ModelAndView planListPage(HttpSession session) {
         int userId = (int)session.getAttribute("id");
-        return "admin/plan/plan_list";
+        int role = (int)session.getAttribute("role");
+        Shop shop = userService.getUserById(userId).getShop();
+        ModelAndView modelAndView;
+        if (role == 4) {
+            modelAndView = new ModelAndView("admin/plan/plan_list_manager");
+        } else {
+            modelAndView = new ModelAndView("admin/plan/plan_list");
+        }
+        modelAndView.addObject("shop", shop);
+        return modelAndView;
     }
 
     // 产品计划详情页面
@@ -100,6 +110,26 @@ public class PlanController {
         Shop shop = userService.getUserById(userId).getShop();
         Set<Product> productSet = shopService.getShopById(shop.getId()).getProducts();
         map.put("products", productSet);
+        return map;
+    }
+
+    // 根据店面ID获取计划
+    @RequestMapping(value="/admin/plan/listByShop", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getPlanListByShop(int id) {
+        Map<String, Object> map = new HashMap<>();
+        List<Plan> planList = planService.getPlansByShop(id);
+        map.put("planList", planList);
+        return map;
+    }
+
+    // 根据状态获取计划
+    @RequestMapping(value="/admin/plan/listByStatus", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getPlanListByStatus(int status) {
+        Map<String, Object> map = new HashMap<>();
+        List<Plan> planList = planService.getPlansByStatus(status);
+        map.put("planList", planList);
         return map;
     }
 
