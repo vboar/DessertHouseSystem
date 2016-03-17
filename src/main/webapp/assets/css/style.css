@@ -144,6 +144,37 @@ a {
     top: 5px;
 }
 
+.navbar .left-items {
+    position: relative;
+}
+
+.navbar .left-items > .selected {
+    cursor: pointer;
+}
+
+.navbar .left-items > .select-panel {
+    position: absolute;
+    background-color: #f9f9f9;
+    width: 175px;
+    top: 25px;
+    display: none;
+}
+.navbar .left-items > .select-panel > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar .left-items > .select-panel li {
+    padding: 3px 10px;
+    cursor: pointer;
+}
+
+.navbar .left-items > .select-panel li:hover {
+    background-color: #d76863;
+    color: #fff;
+}
+
 .navbar .right-items {
     margin: 0;
 }

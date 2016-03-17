@@ -3,7 +3,10 @@
 <header class="navbar">
     <div class="content">
         <div class="left-floated left-items">
-            选择门店： 南京新街口旗舰店
+            <div class="selected" id="js-shop-select"></div>
+            <div class="select-panel" id="js-shop-panel">
+                <ul></ul>
+            </div>
         </div>
         <ul class="right-floated right-items">
             <li>

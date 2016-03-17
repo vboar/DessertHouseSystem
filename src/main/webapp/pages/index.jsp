@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <script src="${pageContext.request.contextPath}/assets/js/jquery-2.1.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 </head>
 <body>
 <%@include file="common/navbar.jsp"%>
