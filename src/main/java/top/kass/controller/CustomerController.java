@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import top.kass.model.Customer;
+import top.kass.model.Point;
 import top.kass.service.CustomerService;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -83,5 +85,26 @@ public class CustomerController {
         int id = (int)session.getAttribute("id");
         return customerService.password(id, old, password, passwordAgain);
     }
+
+    // 我的积分页面
+    @RequestMapping(value="/user/point", method= RequestMethod.GET)
+    public ModelAndView point(HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        Customer customer = customerService.getCustomerById(id);
+        List<Point> pointList = customerService.getPointsByCustomer(id);
+        ModelAndView modelAndView = new ModelAndView("customer/point");
+        modelAndView.addObject("customer", customer);
+        modelAndView.addObject("pointList", pointList);
+        return modelAndView;
+    }
+
+    // 积分兑换操作
+    @RequestMapping(value="/user/point/exchange", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> pointExchange(int point, HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        return customerService.exchangePoint(id, point);
+    }
+
 
 }

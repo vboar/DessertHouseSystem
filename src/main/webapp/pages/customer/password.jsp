@@ -6,10 +6,8 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/normalize.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/datetimepicker/css/jquery.datetimepicker.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <script src="${pageContext.request.contextPath}/assets/js/jquery-2.1.4.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/plugins/datetimepicker/js/jquery.datetimepicker.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 </head>
 <body>

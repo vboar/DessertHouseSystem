@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.kass.dao.CustomerDao;
 import top.kass.dao.PaymentDao;
+import top.kass.dao.PointDao;
 import top.kass.model.Customer;
+import top.kass.model.Point;
 import top.kass.service.CustomerService;
 import top.kass.util.Utils;
 
@@ -14,6 +16,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -23,6 +26,8 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerDao customerDao;
     @Autowired
     private PaymentDao paymentDao;
+    @Autowired
+    private PointDao pointDao;
 
     @Override
     public Map<String, Object> register(String phone, String password, String passwordAgain) {
@@ -204,6 +209,52 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }
         return map;
+    }
+
+    @Override
+    public Map<String, Object> exchangePoint(int id, int point) {
+        Map<String, Object> map = new HashMap<>();
+
+        Customer customer = customerDao.findById(id);
+        int currentPoint = customer.getCustomerAccount().getPoint();
+        double currentBalance = customer.getCustomerAccount().getBalance();
+
+        if (currentPoint < 100) {
+            map.put("success", false);
+            map.put("error", "积分不足100，无法兑换！");
+            return map;
+        }
+
+        if (point < 100) {
+            map.put("success", false);
+            map.put("error", "一次兑换积分需大于100！");
+            return map;
+        }
+
+        if (point > currentPoint) {
+            map.put("success", false);
+            map.put("error", "兑换的积分大于已有的积分，无法兑换！");
+            return map;
+        }
+
+        // 100积分兑换1元
+        customer.getCustomerAccount().setPoint(currentPoint-point);
+        customer.getCustomerAccount().setBalance(currentBalance+point*1.0/100);
+
+        customerDao.update(customer);
+
+        // 积分记录
+        pointDao.create(id, point, 1, null);
+
+        map.put("success", true);
+        map.put("point", customer.getCustomerAccount().getPoint());
+
+        return map;
+    }
+
+    @Override
+    public List<Point> getPointsByCustomer(int id) {
+        return pointDao.findByCustomerId(id);
     }
 
 }

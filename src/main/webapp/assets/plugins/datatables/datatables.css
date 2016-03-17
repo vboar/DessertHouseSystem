@@ -1077,6 +1077,7 @@ th {
 .glyphicon-menu-up:before {
   content: "\e260";
 }
+/*
 * {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -1093,6 +1094,7 @@ html {
 
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -1100,6 +1102,7 @@ body {
   color: #333;
   background-color: #fff;
 }
+*/
 input,
 button,
 select,
@@ -1108,6 +1111,7 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
+/*
 a {
   color: #337ab7;
   text-decoration: none;
@@ -1122,6 +1126,7 @@ a:focus {
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
+*/
 figure {
   margin: 0;
 }
@@ -1425,6 +1430,7 @@ a.bg-danger:focus {
   margin: 40px 0 20px;
   border-bottom: 1px solid #eee;
 }
+/*
 ul,
 ol {
   margin-top: 0;
@@ -1478,6 +1484,7 @@ dd {
     margin-left: 180px;
   }
 }
+*/
 abbr[title],
 abbr[data-original-title] {
   cursor: help;
@@ -4178,12 +4185,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+/*
 .navbar {
   position: relative;
   min-height: 50px;
   margin-bottom: 20px;
   border: 1px solid transparent;
 }
+*/
 @media (min-width: 768px) {
   .navbar {
     border-radius: 4px;

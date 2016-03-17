@@ -273,6 +273,11 @@ a {
     letter-spacing: 5px;
 }
 
+.dashboard-left > #nav > li > a:hover {
+    text-decoration: none;
+    color: #5e5e5e;
+}
+
 .dashboard-left > #nav > li > a {
     display: block;
 }
@@ -286,7 +291,8 @@ a {
 }
 
 .right-content h3 {
-    margin: 5px 0 15px 0;
+    font-size: 1.17em !important;
+    margin: 5px 0 15px 0 !important;
 }
 
 .btn-normal {
@@ -805,3 +811,4 @@ a {
 .edit-plan-table select {
     outline: none;
 }
+

@@ -91,24 +91,33 @@
         window.location.href = "/admin/user/edit?id=" + id;
     }
     function deleteUser(obj) {
-        $.ajax({
-            type: "POST",
-            url: "/admin/user/delete",
-            data: {
-                id: $(obj).parents(".user-item").attr("userId")
-            },
-            success: function(data) {
-                if (data["success"] == false) {
-                    toaster(data["error"], "error");
-                } else {
-                    $(obj).parents(".user-item").remove();
-                    toaster("删除成功~", "success");
+
+        var result = confirm("您是否真的要删除该用户？");
+
+        if (result == 1) {
+            ajaxDelete();
+        }
+
+        function ajaxDelete() {
+            $.ajax({
+                type: "POST",
+                url: "/admin/user/delete",
+                data: {
+                    id: $(obj).parents(".user-item").attr("userId")
+                },
+                success: function(data) {
+                    if (data["success"] == false) {
+                        toaster(data["error"], "error");
+                    } else {
+                        $(obj).parents(".user-item").remove();
+                        toaster("删除成功~", "success");
+                    }
+                },
+                error: function() {
+                    toaster("服务器出现问题，请稍微再试！", "error");
                 }
-            },
-            error: function() {
-                toaster("服务器出现问题，请稍微再试！", "error");
-            }
-        });
+            });
+        }
     }
 </script>
 </html>
