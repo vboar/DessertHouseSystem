@@ -9,9 +9,10 @@
             <button class="btn-search" id="js-btn-search">搜索</button>
         </div>
         <div class="shopping-cart">
-            <button class="btn-cart"><i class="fa fa-shopping-cart"></i> 购物车
+            <button class="btn-cart" onclick="window.location.href='/shoppingCart'">
+                <i class="fa fa-shopping-cart"></i> 购物车
                 <span class="number">0</span></button>
-            <button class="btn-order">我的订单</button>
+            <button class="btn-order" onclick="window.location.href='/user/order'">我的订单</button>
         </div>
     </div>
 </div>

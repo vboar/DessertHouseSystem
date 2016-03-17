@@ -47,6 +47,8 @@ public class CustomerDaoImpl implements CustomerDao {
         customer.setStatus((byte)0);
         session.save(customer);
 
+        session.flush();
+
         CustomerAccount account = new CustomerAccount();
         account.setCustomerId(customer.getId());
         account.setPoint(0);
@@ -62,6 +64,8 @@ public class CustomerDaoImpl implements CustomerDao {
         CustomerStatus status = new CustomerStatus();
         status.setCustomerId(customer.getId());
         customer.setCustomerStatus(status);
+
+        session.flush();
 
         return customer;
     }

@@ -108,6 +108,10 @@ a {
     table-layout: fixed;
 }
 
+.admin-panel table {
+    width: 900px;
+}
+
 .table-container td {
     white-space: nowrap;
     overflow: hidden;
@@ -313,8 +317,8 @@ a {
 }
 
 .product-card {
-    width: 160px;
-    height: 250px;
+    width: 140px;
+    height: 210px;
     margin-right: 25px;
     margin-bottom: 25px;
     padding: 10px;
@@ -326,8 +330,8 @@ a {
 }
 
 .product-card > .product-img {
-    width: 160px;
-    height: 160px;
+    width: 140px;
+    height: 140px;
     display: block;
     margin: 0 auto;
     border: 1px solid #eee;
@@ -344,16 +348,6 @@ a {
     margin-bottom: 5px;
     font-size: 20px;
     color: #d04b4a;
-
-}
-
-.product-card > .product-total-sale {
-    display: inline-block;
-    font-size: 13px;
-}
-
-.product-card > .product-month-sale {
-    font-size: 13px;
 
 }
 

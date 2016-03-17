@@ -1,5 +1,6 @@
 package top.kass.dao.impl;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import top.kass.dao.PaymentDao;
 import top.kass.model.Payment;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Repository
 public class PaymentDaoImpl implements PaymentDao {
@@ -27,5 +29,13 @@ public class PaymentDaoImpl implements PaymentDao {
         session.save(payment);
 
         return payment;
+    }
+
+    @Override
+    public List<Payment> findByCustomerId(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from Payment where customerId=:id order by time desc");
+        query.setInteger("id", id);
+        return query.list();
     }
 }

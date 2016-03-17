@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import top.kass.model.Customer;
+import top.kass.model.Payment;
 import top.kass.model.Point;
 import top.kass.service.CustomerService;
 
@@ -57,8 +58,21 @@ public class CustomerController {
 
     // 我的哆哆页面
     @RequestMapping(value="/dashboard", method= RequestMethod.GET)
-    public String dashboard(HttpSession session) {
-        return "customer/dashboard";
+    public ModelAndView dashboard(HttpSession session) {
+        int id = (int)session.getAttribute("id");
+
+        // 状态的检验、转换
+        customerService.statusRecheck(id);
+
+        Customer customer = customerService.getCustomerById(id);
+
+        if ((int)customer.getStatus() == 3) {
+            return new ModelAndView("common/error");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("customer/dashboard");
+        modelAndView.addObject("customer", customer);
+        return modelAndView;
     }
 
     // 个人信息页面
@@ -106,5 +120,42 @@ public class CustomerController {
         return customerService.exchangePoint(id, point);
     }
 
+    // 我的缴费页面
+    @RequestMapping(value="/user/payment", method= RequestMethod.GET)
+    public ModelAndView payment(HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        Customer customer = customerService.getCustomerById(id);
+        List<Payment> paymentList= customerService.getPaymentsByCustomer(id);
+        ModelAndView modelAndView = new ModelAndView("customer/payment");
+        modelAndView.addObject("customer", customer);
+        modelAndView.addObject("paymentList", paymentList);
+        return modelAndView;
+    }
+
+    // 充值页面
+    @RequestMapping(value="/user/recharge", method= RequestMethod.GET)
+    public ModelAndView rechargePage(HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        Customer customer = customerService.getCustomerById(id);
+        ModelAndView modelAndView = new ModelAndView("customer/recharge");
+        modelAndView.addObject("customer", customer);
+        return modelAndView;
+    }
+
+    // 充值操作
+    @RequestMapping(value="/user/recharge", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> recharge(int money, String password, HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        return customerService.recharge(id, money, password);
+    }
+
+    // 停止账户操作
+    @RequestMapping(value="/user/stop", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> stop(HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        return customerService.stop(id);
+    }
 
 }

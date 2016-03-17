@@ -7,7 +7,9 @@ import top.kass.dao.CustomerDao;
 import top.kass.dao.PaymentDao;
 import top.kass.dao.PointDao;
 import top.kass.model.Customer;
+import top.kass.model.Payment;
 import top.kass.model.Point;
+import top.kass.model.VipLevel;
 import top.kass.service.CustomerService;
 import top.kass.util.Utils;
 
@@ -159,6 +161,24 @@ public class CustomerServiceImpl implements CustomerService {
         Timestamp pauseTime = new Timestamp(calendar.getTime().getTime());
         customer.getCustomerStatus().setPauseTime(pauseTime);
 
+        calendar.add(Calendar.YEAR, 1);
+        Timestamp stopTime = new Timestamp(calendar.getTime().getTime());
+        customer.getCustomerStatus().setStopTime(stopTime);
+
+        VipLevel vipLevel = new VipLevel();
+        int level = 0;
+        if (moneyNumber >= 8888) level = 6;
+        else if (moneyNumber >= 3888) level = 5;
+        else if (moneyNumber >= 1888) level = 4;
+        else if (moneyNumber >= 1288) level = 3;
+        else if (moneyNumber >= 688) level = 2;
+        else if (moneyNumber >= 200) level = 1;
+        else level = 0;
+        if ((int)customer.getCustomerAccount().getVipLevel().getLevel() < level) {
+            vipLevel.setLevel((byte)level);
+            customer.getCustomerAccount().setVipLevel(vipLevel);
+        }
+
         customerDao.update(customer);
         paymentDao.create(id, moneyNumber);
 
@@ -255,6 +275,113 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Point> getPointsByCustomer(int id) {
         return pointDao.findByCustomerId(id);
+    }
+
+    @Override
+    public List<Payment> getPaymentsByCustomer(int id) {
+        return paymentDao.findByCustomerId(id);
+    }
+
+    @Override
+    public Map<String, Object> recharge(int id, int money, String password) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        if (money < 10) {
+            map.put("success", false);
+            map.put("error", "充值金额不足10元！");
+            return map;
+        }
+
+        Customer customer = customerDao.findById(id);
+        if (!Utils.md5(password).equals(customer.getPassword())) {
+            map.put("success", false);
+            map.put("error", "密码错误！");
+            return map;
+        }
+
+        customer.getCustomerAccount().setBalance(
+                customer.getCustomerAccount().getBalance() + money);
+        customer.setStatus((byte)1);
+
+        Timestamp startTime = new Timestamp(System.currentTimeMillis());
+        customer.getCustomerStatus().setStartTime(startTime);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.YEAR, 1);
+        Timestamp pauseTime = new Timestamp(calendar.getTime().getTime());
+        customer.getCustomerStatus().setPauseTime(pauseTime);
+
+        calendar.add(Calendar.YEAR, 1);
+        Timestamp stopTime = new Timestamp(calendar.getTime().getTime());
+        customer.getCustomerStatus().setStopTime(stopTime);
+
+        VipLevel vipLevel = new VipLevel();
+        int level = 0;
+        if (money >= 8888) level = 6;
+        else if (money >= 3888) level = 5;
+        else if (money >= 1888) level = 4;
+        else if (money >= 1288) level = 3;
+        else if (money >= 688) level = 2;
+        else if (money >= 200) level = 1;
+        else level = 0;
+        if ((int)customer.getCustomerAccount().getVipLevel().getLevel() < level) {
+            vipLevel.setLevel((byte)level);
+            customer.getCustomerAccount().setVipLevel(vipLevel);
+        }
+        customerDao.update(customer);
+        paymentDao.create(id, money);
+
+        map.put("success", true);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> stop(int id) {
+        Map<String, Object> map = new HashMap<>();
+        Customer customer = customerDao.findById(id);
+        customer.setStatus((byte)3);
+        customerDao.update(customer);
+        map.put("success", true);
+        return map;
+    }
+
+    @Override
+    public void statusRecheck(int id) {
+        Customer customer = customerDao.findById(id);
+
+        if (customer.getStatus() == 3) {
+            return;
+        }
+
+        Timestamp current = new Timestamp(System.currentTimeMillis());
+        Timestamp pause = customer.getCustomerStatus().getPauseTime();
+        Timestamp stop = customer.getCustomerStatus().getStopTime();
+
+        Calendar calendar = Calendar.getInstance();
+
+        if (stop == null) {
+            calendar.setTime(new Date(pause.getTime()));
+            calendar.add(Calendar.YEAR, 1);
+            customer.getCustomerStatus().setStopTime(new Timestamp(calendar.getTime().getTime()));
+            stop = customer.getCustomerStatus().getStopTime();
+        }
+
+        if (customer.getCustomerAccount().getBalance() < 10
+                && current.compareTo(pause) > 0) {
+            customer.setStatus((byte)2);
+            calendar.setTime(new Date(pause.getTime()));
+            calendar.add(Calendar.YEAR, 1);
+            customer.getCustomerStatus().setStopTime(new Timestamp(calendar.getTime().getTime()));
+        } else if (current.compareTo(pause) < 0) {
+            customer.setStatus((byte)1);
+        }
+        if (current.compareTo(stop) > 0) {
+            customer.setStatus((byte)3);
+        }
+
+        customerDao.update(customer);
     }
 
 }

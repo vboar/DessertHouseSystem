@@ -1,6 +1,7 @@
 package top.kass.service;
 
 import top.kass.model.Customer;
+import top.kass.model.Payment;
 import top.kass.model.Point;
 
 import java.util.List;
@@ -27,5 +28,13 @@ public interface CustomerService {
     public Map<String, Object> exchangePoint(int id, int point);
 
     public List<Point> getPointsByCustomer(int id);
+
+    public List<Payment> getPaymentsByCustomer(int id);
+
+    public Map<String, Object> recharge(int id, int money, String password);
+
+    public Map<String, Object> stop(int id);
+
+    public void statusRecheck(int id);
 
 }

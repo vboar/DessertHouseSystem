@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -17,7 +18,73 @@
     <div class="content">
         <%@include file="../common/dashboard_left.jsp"%>
         <div class="right-content">
-            123
+            <h3 class="title">我的首页</h3>
+
+            <div class="normal-div">我的会员卡号：
+                <span class="number">${customer.code}</span>
+
+                <c:choose>
+                    <c:when test="${customer.status == 0}">
+                        <span class="number">[未激活]</span>
+                        <button class="button" onclick="window.location.href='/validate'">立即激活</button>
+                    </c:when>
+                    <c:when test="${customer.status == 1}">
+                        <span class="number">[有效]</span>
+                        <button class="button" onclick="stop()">停止账户</button>
+                    </c:when>
+                    <c:when test="${customer.status == 2}">
+                        <span class="number">[已暂停]</span>
+                        <button class="button" onclick="window.location.href='/user/recharge'">恢复使用</button>
+                        <button class="button" onclick="stop()">停止账户</button>
+                    </c:when>
+                    <c:when test="${customer.status == 3}">
+                        <span class="number">[已停止]</span>
+                    </c:when>
+                </c:choose>
+            </div>
+
+            <c:if test="${customer.status == 1}">
+                <div class="normal-div">
+                    我的会员级别： <span class="number">${customer.customerAccount.vipLevel.name}</span>
+                    享受优惠： <span class="number">${customer.customerAccount.vipLevel.discount*100}</span> 折
+                </div>
+            </c:if>
+
+            <div class="normal-div">我的账户余额：
+                <span class="number">${customer.customerAccount.balance}
+                    <button class="button" onclick="window.location.href='/user/recharge'">立即充值</button>
+                </span>
+            </div>
+            <div class="normal-div">我的积分剩余：
+                <span class="number">${customer.customerAccount.point}
+                    <button class="button" onclick="window.location.href='/user/point'">积分兑换</button>
+                </span>
+            </div>
+
+            <div class="tips">
+                <c:choose>
+                    <c:when test="${customer.status == 0}">
+                        <div class="normal-div">您目前处于 <span class="number">未激活</span> 状态。
+                            请立即激活您的账户。
+                        </div>
+                    </c:when>
+                    <c:when test="${customer.status == 1}">
+                        <div class="normal-div">您目前处于 <span class="number">有效</span> 状态。
+                            如果到 <span class="number">
+                                <fmt:formatDate value="${customer.customerStatus.pauseTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                            </span> 时您的账户余额不足10元，您的账户将会变成 <span class="number">暂停</span> 状态。
+                        </div>
+                    </c:when>
+                    <c:when test="${customer.status == 2}">
+                        <div class="normal-div">您目前处于 <span class="number">暂停</span> 状态。
+                            如果您不充值余额，您的账户将于 <span class="number">
+                                <fmt:formatDate value="${customer.customerStatus.stopTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                            </span> 停止使用。
+                        </div>
+                    </c:when>
+                </c:choose>
+            </div>
+
         </div>
         <div class="clear-fix"></div>
     </div>
@@ -32,11 +99,42 @@
     body {
         background-color: #f5f5f5;
     }
+    .normal-div > .number {
+        color: #d76863;
+    }
+    button {
+        margin-left: 15px;
+    }
+    .tips {
+        margin-top: 25px;
+    }
 </style>
 <script>
     $(document).ready(function() {
 
     });
+    function stop() {
+        var flag = confirm("您是否真的要停止账户？（不可恢复）");
+        if (flag == true) {
+            $.ajax({
+                type: "POST",
+                url: "/user/stop",
+                success: function(data) {
+                    if (data["success"] == false) {
+                        toaster(data["error"], "error");
+                    } else {
+                        toaster("停止成功~", "success");
+                        setTimeout(function () {
+                            window.location.href = "/dashboard";
+                        }, 1000);
+                    }
+                },
+                error: function() {
+                    toaster("服务器出现问题，请稍微再试！", "error");
+                }
+            });
+        }
+    }
 </script>
 </html>
 
