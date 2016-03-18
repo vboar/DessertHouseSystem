@@ -5,7 +5,7 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/normalize.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/datatables/datatables.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/datatables/datatables.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <script src="${pageContext.request.contextPath}/assets/js/jquery-2.1.4.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/plugins/datatables/datatables.min.js"></script>
@@ -55,9 +55,6 @@
 </body>
 
 <style>
-    .admin-panel {
-        width: 900px;
-    }
     .table-name {
         cursor: pointer;
     }

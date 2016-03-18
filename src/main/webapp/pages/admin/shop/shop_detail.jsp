@@ -33,6 +33,36 @@
                 <button class="button btn-submit right-floated"
                         onclick="window.location.href='/admin/user'">店员管理</button>
             </h3>
+
+            <div class="table-container">
+                <table id="js-user-table" class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th width="10%">编号</th>
+                        <th width="25%">用户名</th>
+                        <th width="25%">姓名</th>
+                        <th width="30%">角色</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${shop.users}" var="item">
+                        <tr class="user-item" userId="${item.id}">
+                            <td>${item.id}</td>
+                            <td>${item.username}</td>
+                            <td>${item.name}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${item.role == 2}">分店服务员</c:when>
+                                    <c:when test="${item.role == 3}">总店服务员</c:when>
+                                    <c:when test="${item.role == 4}">总经理</c:when>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </div>
@@ -40,9 +70,6 @@
 </body>
 
 <style>
-    .admin-panel {
-        width: 900px;
-    }
     .info-panel > span {
         display: block;
         margin: 10px 0;

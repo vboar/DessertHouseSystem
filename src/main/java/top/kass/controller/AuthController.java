@@ -76,8 +76,9 @@ public class AuthController {
 
     @RequestMapping(value="/logout", method= RequestMethod.GET)
     public String logout(HttpSession session) {
-        session.removeAttribute("id");
-        session.removeAttribute("role");
+//        session.removeAttribute("id");
+//        session.removeAttribute("role");
+        session = null;
         return "redirect:/";
     }
 

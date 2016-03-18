@@ -43,9 +43,6 @@
 </body>
 
 <style>
-    .admin-panel {
-        width: 900px;
-    }
     table .button {
         margin-right: 5px;
     }

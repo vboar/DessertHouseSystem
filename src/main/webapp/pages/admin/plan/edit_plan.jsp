@@ -149,7 +149,7 @@
             dateItems.each(function () {
                 if ($(this).attr("date") == date) {
                     $($(this).find("tbody")[0]).append(
-                            generateItem(item.id, item.product.name, item.price, item.number, item.point)
+                            generateItem(item.id, item.product.id, item.price, item.number, item.point)
                     );
                 }
             });

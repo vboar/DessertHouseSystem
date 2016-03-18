@@ -3,7 +3,7 @@
 <header class="navbar">
     <div class="content">
         <div class="left-floated left-items">
-            <div class="selected" id="js-shop-select"></div>
+            <div class="selected" id="js-navbar-shop-select"></div>
             <div class="select-panel" id="js-shop-panel">
                 <ul></ul>
             </div>

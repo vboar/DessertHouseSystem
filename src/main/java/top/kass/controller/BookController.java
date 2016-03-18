@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import top.kass.model.PlanItem;
+import top.kass.model.Product;
 import top.kass.model.Shop;
 import top.kass.service.PlanService;
+import top.kass.service.ProductService;
 import top.kass.vo.ShoppingCart;
 import top.kass.vo.ShoppingCartItem;
 
@@ -23,6 +25,22 @@ public class BookController {
 
     @Autowired
     private PlanService planService;
+    @Autowired
+    private ProductService productService;
+
+    // 产品页面
+    @RequestMapping(value="/product", method= RequestMethod.GET)
+    public ModelAndView productPage(int id) {
+        ModelAndView modelAndView = new ModelAndView("order/product");
+
+        Product product = productService.getProductById(id);
+        List<PlanItem> planItems = planService.getPlanItemsByProduct(id);
+
+        modelAndView.addObject("product", product);
+        modelAndView.addObject("planItems", planItems);
+
+        return modelAndView;
+    }
 
     // 放入购物车操作
     @RequestMapping(value="/shoppingCart/add", method= RequestMethod.POST)
@@ -54,6 +72,13 @@ public class BookController {
                 boolean flag = false;
                 for (ShoppingCartItem item: shoppingCart.getItems()) {
                     if (item.getProductId() == productId) {
+
+                        if (item.getNumber() + num > remaining) {
+                            map.put("success", false);
+                            map.put("error", "库存不足!");
+                            return map;
+                        }
+
                         item.setNumber(item.getNumber() + num);
                         flag = true;
                         break;
@@ -65,6 +90,7 @@ public class BookController {
                     temp.setNumber(num);
                     temp.setProductName(planItem.getProduct().getName());
                     temp.setProductPrice(planItem.getPrice());
+                    temp.setProductPoint(planItem.getPoint());
                     shoppingCart.getItems().add(temp);
                 }
                 break;
@@ -79,11 +105,15 @@ public class BookController {
             ShoppingCartItem item = new ShoppingCartItem();
             item.setProductId(productId);
             item.setProductName(planItem.getProduct().getName());
-            item.setProductId(planItem.getProduct().getId());
+            item.setProductPrice(planItem.getPrice());
+            item.setProductPoint(planItem.getPoint());
             item.setNumber(num);
             items.add(item);
             shoppingCart.setItems(items);
+            list.add(shoppingCart);
         }
+
+        System.out.println(list.size());
 
         map.put("success", true);
         return map;
@@ -91,8 +121,11 @@ public class BookController {
 
     // 购物车页面
     @RequestMapping(value="/shoppingCart", method= RequestMethod.GET)
-    public ModelAndView shoppingCartPage() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView shoppingCartPage(HttpSession session) {
+        List<ShoppingCart> list = (List<ShoppingCart>)session.getAttribute("shoppingCart");
+        ModelAndView modelAndView = new ModelAndView("order/shopping_cart");
+        modelAndView.addObject("list", list);
+
         return modelAndView;
     }
 
@@ -164,7 +197,6 @@ public class BookController {
         Map<String, Object> map = new HashMap<>();
         return map;
     }
-
 
 
 }

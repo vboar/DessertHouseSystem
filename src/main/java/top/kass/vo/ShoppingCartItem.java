@@ -7,6 +7,7 @@ public class ShoppingCartItem implements Serializable {
     private int productId;
     private String productName;
     private double productPrice;
+    private int productPoint;
     private int number;
 
     public int getProductId() {
@@ -41,4 +42,11 @@ public class ShoppingCartItem implements Serializable {
         this.number = number;
     }
 
+    public int getProductPoint() {
+        return productPoint;
+    }
+
+    public void setProductPoint(int productPoint) {
+        this.productPoint = productPoint;
+    }
 }

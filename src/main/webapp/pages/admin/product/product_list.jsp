@@ -5,7 +5,7 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/favicon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/normalize.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/datatables/datatables.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/plugins/datatables/datatables.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
     <script src="${pageContext.request.contextPath}/assets/js/jquery-2.1.4.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/plugins/datatables/datatables.min.js"></script>
@@ -22,7 +22,7 @@
             </h3>
 
             <div class="normal-div">店面：
-                <a class="a-click" href="/admin/shop/detail?id=${shop.id}">${shop.name}</a></div>
+                ${shop.name}
             <div class="table-container">
                 <table id="js-shop-table" class="table table-striped table-bordered">
                     <thead>
@@ -57,9 +57,6 @@
 </body>
 
 <style>
-    .admin-panel {
-        width: 900px;
-    }
     .product-icon {
         width: 30px;
         height: 30px;

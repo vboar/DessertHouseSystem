@@ -3,6 +3,8 @@ package top.kass.dao.impl;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.mapping.Index;
+import org.hibernate.transform.Transformers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import top.kass.dao.PlanDao;
 import top.kass.model.Plan;
 import top.kass.model.PlanItem;
 import top.kass.model.Product;
+import top.kass.vo.IndexProduct;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -148,6 +151,73 @@ public class PlanDaoImpl implements PlanDao {
         query.setInteger("productId", productId);
         query.setString("date", date);
         return (PlanItem) query.list().get(0);
+    }
+
+    @Override
+    public List<IndexProduct> findByShopAndSearch(int shopId, String key) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query;
+
+        SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String current = sdf.format(date);
+
+        List list;
+        List<IndexProduct> products = new ArrayList<>();
+
+        if (key == null) {
+
+            query = session.createSQLQuery("SELECT plan_item.product_id AS id, " +
+                    "product.name AS name, " +
+                    "product.img AS imgPath, " +
+                    "MIN(plan_item.price) AS minPrice " +
+                    "FROM plan_item LEFT JOIN plan ON plan_item.plan_id = plan.id " +
+                    "LEFT JOIN product ON plan_item.product_id = product.id " +
+                    "WHERE plan.shop_id=? AND date>=? GROUP BY plan_item.product_id");
+            query.setParameter(0, shopId);
+            query.setParameter(1, current);
+            query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+            list = query.list();
+
+        } else {
+
+            query = session.createSQLQuery("SELECT plan_item.product_id AS id, " +
+                    "product.name AS name, " +
+                    "product.img AS imgPath, " +
+                    "MIN(plan_item.price) AS minPrice " +
+                    "FROM plan_item LEFT JOIN plan ON plan_item.plan_id = plan.id " +
+                    "LEFT JOIN product ON plan_item.product_id = product.id " +
+                    "WHERE plan.shop_id=? AND date>=? AND product.name LIKE '%"
+                    + key + "%'GROUP BY plan_item.product_id");
+            query.setParameter(0, shopId);
+            query.setParameter(1, current);
+            query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+            list = query.list();
+
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            Map map = (Map)list.get(i);
+            IndexProduct product = new IndexProduct();
+            product.setId((int)map.get("id"));
+            product.setName((String)map.get("name"));
+            product.setImgPath((String)map.get("imgPath"));
+            product.setMinPrice((double)map.get("minPrice"));
+            products.add(product);
+        }
+
+        return products;
+    }
+
+    @Override
+    public List<PlanItem> getByProduct(int productId) {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("from PlanItem where product=:productId and date>=current_date()" +
+                " and plan.status=1 order by date desc");
+        query.setInteger("productId", productId);
+        return query.list();
     }
 
     private Set<PlanItem> getPlanItems(JSONArray items, Plan plan) {

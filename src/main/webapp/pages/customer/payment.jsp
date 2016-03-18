@@ -29,7 +29,7 @@
 
             <h3 class="title">缴费记录</h3>
             <div class="table-container">
-                <table id="js-plan-table" class="table table-striped table-bordered">
+                <table id="js-payment-table" class="table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th width="50%">时间</th>

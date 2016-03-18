@@ -7,6 +7,7 @@ import top.kass.dao.PlanDao;
 import top.kass.model.Plan;
 import top.kass.model.PlanItem;
 import top.kass.service.PlanService;
+import top.kass.vo.IndexProduct;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -71,6 +72,16 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public PlanItem getPlanItem(int productId, String date) {
         return planDao.findByProductAndDate(productId, date);
+    }
+
+    @Override
+    public List<IndexProduct> getProductsByShopAndSearch(int shopId, String key) {
+        return planDao.findByShopAndSearch(shopId, key);
+    }
+
+    @Override
+    public List<PlanItem> getPlanItemsByProduct(int productId) {
+        return planDao.getByProduct(productId);
     }
 
 

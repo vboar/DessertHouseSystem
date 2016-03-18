@@ -6,8 +6,7 @@
         </a>
         <div class="shopping-cart">
             <button class="btn-cart" onclick="window.location.href='/shoppingCart'">
-                <i class="fa fa-shopping-cart"></i> 购物车
-                <span class="number">0</span></button>
+                <i class="fa fa-shopping-cart"></i> 购物车</button>
         </div>
     </div>
 </div>

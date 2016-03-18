@@ -27,6 +27,7 @@ public class ShopDaoImpl implements ShopDao {
         shop.setDescription(description);
         shop.setAddress(address);
         session.save(shop);
+        session.flush();
         return shop;
     }
 
@@ -34,6 +35,7 @@ public class ShopDaoImpl implements ShopDao {
     public Shop update(Shop shop) {
         Session session = sessionFactory.getCurrentSession();
         session.save(shop);
+        session.flush();
         return shop;
     }
 

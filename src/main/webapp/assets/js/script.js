@@ -104,7 +104,7 @@ function navbarLeftItems() {
 
     var shopList;
 
-    $("#js-shop-select").text("选择门店： " + window.localStorage.getItem("shopName"));
+    $("#js-navbar-shop-select").text("选择门店： " + window.localStorage.getItem("shopName"));
 
     $.ajax({
         type: "POST",
@@ -122,7 +122,7 @@ function navbarLeftItems() {
     });
 
     var open = false;
-    $("#js-shop-select").click(function() {
+    $("#js-navbar-shop-select").click(function() {
         if (open == false) {
             open = true;
             $("#js-shop-panel").show();
@@ -135,7 +135,7 @@ function navbarLeftItems() {
         $(this).click(function() {
             open = false;
             $("#js-shop-panel").hide();
-            $("#js-shop-select").text("选择门店： " + $(this).text());
+            $("#js-navbar-shop-select").text("选择门店： " + $(this).text());
             window.localStorage.setItem("shopId",  $(this).attr("shopId"));
             window.localStorage.setItem("shopName", $(this).text());
 
