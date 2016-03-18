@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.kass.dao.PlanDao;
 import top.kass.model.Plan;
+import top.kass.model.PlanItem;
 import top.kass.service.PlanService;
 
 import java.sql.Timestamp;
@@ -65,6 +66,11 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public List<Plan> getPlansByStatus(int status) {
         return planDao.getPlansByStatus(status);
+    }
+
+    @Override
+    public PlanItem getPlanItem(int productId, String date) {
+        return planDao.findByProductAndDate(productId, date);
     }
 
 

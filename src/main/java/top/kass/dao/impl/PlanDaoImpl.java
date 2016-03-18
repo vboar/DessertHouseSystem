@@ -139,6 +139,17 @@ public class PlanDaoImpl implements PlanDao {
         return planList;
     }
 
+    @Override
+    public PlanItem findByProductAndDate(int productId, String date) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("from PlanItem where " +
+                "product=:productId and date=:date");
+        query.setInteger("productId", productId);
+        query.setString("date", date);
+        return (PlanItem) query.list().get(0);
+    }
+
     private Set<PlanItem> getPlanItems(JSONArray items, Plan plan) {
 
         Set<PlanItem> planItemSet = new HashSet<>();

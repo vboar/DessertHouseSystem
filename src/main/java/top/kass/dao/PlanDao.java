@@ -1,6 +1,7 @@
 package top.kass.dao;
 
 import top.kass.model.Plan;
+import top.kass.model.PlanItem;
 
 import java.util.Date;
 import java.util.List;
@@ -21,5 +22,7 @@ public interface PlanDao {
     public List<Plan> getPlansByShop(int shopId);
 
     public List<Plan> getPlansByStatus(int status);
+
+    public PlanItem findByProductAndDate(int productId, String date);
 
 }

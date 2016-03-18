@@ -1,6 +1,7 @@
 package top.kass.service;
 
 import top.kass.model.Plan;
+import top.kass.model.PlanItem;
 
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface PlanService {
     public List<Plan> getPlansByShop(int shopId);
 
     public List<Plan> getPlansByStatus(int status);
+
+    public PlanItem getPlanItem(int productId, String date);
 
 }
