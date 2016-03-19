@@ -6,12 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import top.kass.model.Book;
 import top.kass.model.PlanItem;
 import top.kass.model.Product;
 import top.kass.model.Shop;
 import top.kass.service.BookService;
 import top.kass.service.PlanService;
 import top.kass.service.ProductService;
+import top.kass.service.ShopService;
 import top.kass.vo.ShoppingCart;
 import top.kass.vo.ShoppingCartItem;
 
@@ -30,6 +32,8 @@ public class BookController {
     private ProductService productService;
     @Autowired
     private BookService bookService;
+    @Autowired
+    private ShopService shopService;
 
     // 产品页面
     @RequestMapping(value="/product", method= RequestMethod.GET)
@@ -217,5 +221,35 @@ public class BookController {
         return map;
     }
 
+    // 我的订单页面
+    @RequestMapping(value="/user/order", method= RequestMethod.GET)
+    public ModelAndView orderPage(HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        // 过期订单
+        bookService.checkBookStatus(id);
+        ModelAndView modelAndView = new ModelAndView("customer/order");
+        List<Book> list = bookService.getBooksByCustomer(id);
+        modelAndView.addObject("list", list);
+        return modelAndView;
+    }
+
+    // 取消订单操作
+    // 预订操作
+    @RequestMapping(value="/user/order/cancel", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> book(int id) {
+        return bookService.cancelBook(id);
+    }
+
+    // 订单详情页面
+    @RequestMapping(value="/user/order/detail", method= RequestMethod.GET)
+    public ModelAndView orderPage(int id) {
+        ModelAndView modelAndView = new ModelAndView("customer/order_detail");
+        Book book = bookService.getBookById(id);
+        Shop shop = shopService.getShopById(book.getShopId());
+        modelAndView.addObject("book", book);
+        modelAndView.addObject("shop", shop);
+        return modelAndView;
+    }
 
 }

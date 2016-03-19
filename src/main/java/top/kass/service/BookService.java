@@ -12,4 +12,10 @@ public interface BookService {
 
     public List<Book> getBooksByCustomer(int customerId);
 
+    public Map<String, Object> cancelBook(int id);
+
+    public Book getBookById(int id);
+
+    public void checkBookStatus(int customerId);
+
 }

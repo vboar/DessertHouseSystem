@@ -22,8 +22,6 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
-    @Autowired
-    private BookService bookService;
 
     // 注册完完善个人信息
     @RequestMapping(value="/supplyInfo", method= RequestMethod.GET)
@@ -160,16 +158,6 @@ public class CustomerController {
     public Map<String, Object> stop(HttpSession session) {
         int id = (int)session.getAttribute("id");
         return customerService.stop(id);
-    }
-
-    // 我的订单页面
-    @RequestMapping(value="/user/order", method= RequestMethod.GET)
-    public ModelAndView orderPage(HttpSession session) {
-        int id = (int)session.getAttribute("id");
-        ModelAndView modelAndView = new ModelAndView("customer/order");
-        List<Book> list = bookService.getBooksByCustomer(id);
-        modelAndView.addObject("list", list);
-        return modelAndView;
     }
 
 }

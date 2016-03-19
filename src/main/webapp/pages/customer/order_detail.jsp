@@ -19,49 +19,55 @@
     <div class="content">
         <%@include file="../common/dashboard_left.jsp"%>
         <div class="right-content">
-            <h3 class="title">我的订单</h3>
+            <h3 class="title">我的订单&nbsp;
+                <span class="status-span">
+                    <c:choose>
+                        <c:when test="${book.status == 0}">[已预订]</c:when>
+                        <c:when test="${book.status == 1}">[已购买]</c:when>
+                        <c:when test="${book.status == 2}">[已取消]</c:when>
+                        <c:when test="${book.status == 3}">[已过期]</c:when>
+                    </c:choose>
+                </span>
+            </h3>
+            <div class="right-floated button-group">
+                <c:if test="${item.status == 0}">
+                    <button class="button" onclick="cancel(this)">取消</button>
+                </c:if>
+                <button class="button" onclick="window.location.href='/user/order'">返回</button>
+            </div>
+            <div class="normal-div">门店：${shop.name}</div>
+            <div class="normal-div">预定时间：
+                <fmt:formatDate value="${book.createTime}"
+                pattern="yyyy-MM-dd HH:mm:ss"/>
+            </div>
+            <div class="normal-div">购买日期：${book.buyDate}</div>
+            <div class="normal-div">折扣：${book.discount}</div>
+            <div class="normal-div">原始价格：${book.originalTotal}</div>
+            <div class="normal-div">折后价格：${book.actualTotal}</div>
+            <div class="normal-div" style="margin-bottom: 20px;">赠送积分：${book.totalPoint}</div>
 
+
+            <h3 class="title">产品列表</h3>
             <div class="table-container">
                 <table id="js-table" class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th width="7%">编号</th>
-                        <th width="25%">下订单时间</th>
-                        <th width="15%">购买日期</th>
-                        <th width="13%">折后价格</th>
-                        <th width="13%">订单状态</th>
-                        <th width="20%">操作</th>
+                        <th width="40%">产品</th>
+                        <th width="30%">单价</th>
+                        <th width="30%">数量</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${list}" var="item">
+                    <c:forEach items="${book.bookItems}" var="item">
                         <tr>
-                            <td>${item.id}</td>
-                            <td><fmt:formatDate value="${item.createTime}"
-                                                pattern="yyyy-MM-dd HH:mm:ss"/></td>
-                            <td>${item.buyDate}</td>
-                            <td>${item.actualTotal}</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${item.status == 0}">已预订</c:when>
-                                    <c:when test="${item.status == 1}">已购买</c:when>
-                                    <c:when test="${item.status == 2}">已取消</c:when>
-                                    <c:when test="${item.status == 3}">已过期</c:when>
-                                </c:choose>
-                            </td>
-                            <td>
-                                <button class="button" onclick="window.location.href
-                                    ='/user/order/detail?id=${item.id}'">详细</button>
-                                <c:if test="${item.status == 0}">
-                                    <button class="button" onclick="cancel(this)">取消</button>
-                                </c:if>
-                            </td>
+                            <td><a href="/product?id=${item.product.id}">${item.product.name}</a></td>
+                            <td>${item.price}</td>
+                            <td>${item.number}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
             </div>
-
 
         </div>
     </div>
@@ -73,6 +79,13 @@
 <style>
     body {
         background-color: #f5f5f5;
+    }
+    .status-span {
+        color: #d76863;
+    }
+    .button-group {
+        position: relative;
+        bottom: 35px;
     }
 </style>
 <script>

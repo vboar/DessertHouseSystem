@@ -11,6 +11,8 @@ import top.kass.service.PlanService;
 import top.kass.vo.ShoppingCart;
 import top.kass.vo.ShoppingCartItem;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +48,37 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getBooksByCustomer(int customerId) {
         return bookDao.getByCustomerId(customerId);
+    }
+
+    @Override
+    public Map<String, Object> cancelBook(int id) {
+        Book book = bookDao.findById(id);
+        book.setStatus((byte)2);
+        bookDao.update(book);
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", true);
+        return map;
+    }
+
+    @Override
+    public Book getBookById(int id) {
+        return bookDao.findById(id);
+    }
+
+    @Override
+    public void checkBookStatus(int customerId) {
+        List<Book> list = bookDao.getByCustomerId(customerId);
+        for (Book book: list) {
+            java.util.Date uDate = new java.util.Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String sDate = sdf.format(uDate);
+            Date date = Date.valueOf(sDate);
+            if (date.compareTo(book.getBuyDate()) > 0) {
+                book.setStatus((byte)3);
+                bookDao.update(book);
+                // TODO 过期订单缴费
+            }
+        }
     }
 
 }
