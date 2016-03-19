@@ -8,7 +8,8 @@ import javax.servlet.http.HttpSession;
 
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-    private static final String[] IGNORE_URI = {"/", "/login", "/register", "/admin/login"};
+    private static final String[] IGNORE_URI = {"/", "/login", "/register", "/admin/login", "/getProducts"
+        , "/getShops"};
     private static final String[] UNLOGIN_URI = {"/login", "/register", "/admin/login"};
 
     @Override

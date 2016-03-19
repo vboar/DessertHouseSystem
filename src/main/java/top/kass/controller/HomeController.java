@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import top.kass.model.Shop;
 import top.kass.service.PlanService;
+import top.kass.service.ShopService;
 import top.kass.vo.IndexProduct;
 
 import javax.servlet.http.HttpSession;
@@ -20,13 +21,15 @@ public class HomeController {
 
     @Autowired
     private PlanService planService;
+    @Autowired
+    private ShopService shopService;
 
     @RequestMapping(value="/", method= RequestMethod.GET)
     public String index() {
         return "index";
     }
 
-    // 获得产品、查找茶品
+    // 获得产品、查找产品
     @RequestMapping(value="/getProducts", method= RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> addPlan(int shopId, String key) {
@@ -35,6 +38,16 @@ public class HomeController {
         List<IndexProduct> list = planService.getProductsByShopAndSearch(shopId, key);
         map.put("list", list);
 
+        return map;
+    }
+
+    // 获得所有店面
+    @RequestMapping(value="/getShops", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getAllShops() {
+        Map<String, Object> map = new HashMap<>();
+        List<Shop> shopList = shopService.getAllShops();
+        map.put("shopList", shopList);
         return map;
     }
 

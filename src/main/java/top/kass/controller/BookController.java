@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import top.kass.model.PlanItem;
 import top.kass.model.Product;
 import top.kass.model.Shop;
+import top.kass.service.BookService;
 import top.kass.service.PlanService;
 import top.kass.service.ProductService;
 import top.kass.vo.ShoppingCart;
@@ -27,6 +28,8 @@ public class BookController {
     private PlanService planService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private BookService bookService;
 
     // 产品页面
     @RequestMapping(value="/product", method= RequestMethod.GET)
@@ -179,6 +182,9 @@ public class BookController {
                 for (ShoppingCartItem item: shoppingCart.getItems()) {
                     if (item.getProductId() == productId) {
                         shoppingCart.getItems().remove(item);
+                        if (shoppingCart.getItems().size() == 0) {
+                            list.remove(shoppingCart);
+                        }
                         break;
                     }
                 }
@@ -195,6 +201,19 @@ public class BookController {
     @ResponseBody
     public Map<String, Object> book(int shopId, String date, HttpSession session) {
         Map<String, Object> map = new HashMap<>();
+        int customerId = (int)session.getAttribute("id");
+        List<ShoppingCart> list = (List<ShoppingCart>)session.getAttribute("shoppingCart");
+        ShoppingCart shoppingCart = new ShoppingCart();
+        for (ShoppingCart cart: list) {
+            if (cart.getDate().equals(date) && cart.getShopId() == shopId) {
+                shoppingCart = cart;
+                break;
+            }
+        }
+        map = bookService.createBook(customerId, shoppingCart);
+        if ((boolean)map.get("success")) {
+            list.remove(shoppingCart);
+        }
         return map;
     }
 

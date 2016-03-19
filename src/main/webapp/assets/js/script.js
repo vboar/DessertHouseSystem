@@ -108,7 +108,7 @@ function navbarLeftItems() {
 
     $.ajax({
         type: "POST",
-        url: "/admin/shop/list",
+        url: "/getShops",
         async: false,
         success: function(data) {
             shopList = data.shopList;

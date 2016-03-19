@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import top.kass.model.Book;
 import top.kass.model.Customer;
 import top.kass.model.Payment;
 import top.kass.model.Point;
+import top.kass.service.BookService;
 import top.kass.service.CustomerService;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +22,8 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private BookService bookService;
 
     // 注册完完善个人信息
     @RequestMapping(value="/supplyInfo", method= RequestMethod.GET)
@@ -156,6 +160,16 @@ public class CustomerController {
     public Map<String, Object> stop(HttpSession session) {
         int id = (int)session.getAttribute("id");
         return customerService.stop(id);
+    }
+
+    // 我的订单页面
+    @RequestMapping(value="/user/order", method= RequestMethod.GET)
+    public ModelAndView orderPage(HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        ModelAndView modelAndView = new ModelAndView("customer/order");
+        List<Book> list = bookService.getBooksByCustomer(id);
+        modelAndView.addObject("list", list);
+        return modelAndView;
     }
 
 }

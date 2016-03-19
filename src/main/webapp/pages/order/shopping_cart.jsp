@@ -39,18 +39,19 @@
                             </thead>
                             <tbody>
                             <c:forEach items="${item.items}" var="temp">
-                                <tr>
-                                    <td>${temp.productName}</td>
+                                <tr productId="${temp.productId}">
+                                    <td><a href="/product?id=${temp.productId}">${temp.productName}</a></td>
                                     <td>${temp.productPrice}</td>
                                     <td>${temp.number}</td>
                                     <td>${temp.productPoint}</td>
-                                    <td><button class="button">删除</button></td>
+                                    <td><button class="button" onclick="deleteItem(this)">删除</button></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
+                        <button class="button right-floated" onclick="book(this)">立即预订</button>
+                        <div class="clear-fix" style="margin-bottom: 10px;"></div>
                     </div>
-
                 </div>
             </c:forEach>
         </div>
@@ -75,11 +76,60 @@
 </style>
 <script>
     $(document).ready(function() {
-        initItem();
+
     });
 
-    function initItem() {
+    function deleteItem(obj) {
+        var id = $(obj).parents("tr").attr("productId");
+        var date = $(obj).parents(".cart-item").attr("date");
 
+        $.ajax({
+            type: "POST",
+            url: "/shoppingCart/delete",
+            data: {
+                productId: id,
+                date: date
+            },
+            success: function(data) {
+                if (data["success"] == false) {
+                    toaster(data["error"], "error");
+                } else {
+                    toaster("删除成功~", "success");
+                    $(obj).parents("tr").remove();
+                }
+            },
+            error: function() {
+                toaster("服务器出现问题，请稍微再试！", "error");
+            }
+        });
+
+    }
+
+    function book(obj) {
+        var shopId = $(obj).parents(".cart-item").attr("shopId");
+        var date = $(obj).parents(".cart-item").attr("date");
+
+        $.ajax({
+            type: "POST",
+            url: "/product/book",
+            data: {
+                shopId: shopId,
+                date: date
+            },
+            success: function(data) {
+                if (data["success"] == false) {
+                    toaster(data["error"], "error");
+                } else {
+                    toaster("预订成功~", "success");
+                    setTimeout(function () {
+                        window.location.href = "/user/order?id=" + data.id;
+                    }, 1000);
+                }
+            },
+            error: function() {
+                toaster("服务器出现问题，请稍微再试！", "error");
+            }
+        });
     }
 </script>
 </html>

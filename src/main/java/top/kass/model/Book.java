@@ -13,12 +13,13 @@ public class Book {
     private int id;
     private int customerId;
     private int shopId;
-    private int userId;
+    private Integer userId;
     private Timestamp createTime;
     private Timestamp saleTime;
     private double discount;
     private double originalTotal;
     private double actualTotal;
+    private int totalPoint;
     private Date buyDate;
     private byte status;
 
@@ -57,11 +58,11 @@ public class Book {
 
     @Basic
     @Column(name = "user_id")
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -112,6 +113,16 @@ public class Book {
 
     public void setActualTotal(double actualTotal) {
         this.actualTotal = actualTotal;
+    }
+
+    @Basic
+    @Column(name = "total_point")
+    public int getTotalPoint() {
+        return totalPoint;
+    }
+
+    public void setTotalPoint(int totalPoint) {
+        this.totalPoint = totalPoint;
     }
 
     @Basic
