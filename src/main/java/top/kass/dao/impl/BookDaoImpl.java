@@ -109,5 +109,19 @@ public class BookDaoImpl implements BookDao {
         }
     }
 
+    @Override
+    public List<Book> getTodayByCustomerId(int customerId) {
+        Session session = sessionFactory.getCurrentSession();
+        java.util.Date date = new java.util.Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dateS = sdf.format(date);
+        System.out.println("aaa " + dateS);
+        Query query = session.createQuery("from Book where customerId=:customerId and buyDate=:date " +
+                "and status=0 order by createTime desc");
+        query.setInteger("customerId", customerId);
+        query.setString("date", dateS);
+        return query.list();
+    }
+
 
 }

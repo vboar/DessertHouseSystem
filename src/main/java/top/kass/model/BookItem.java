@@ -1,5 +1,7 @@
 package top.kass.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -27,6 +29,7 @@ public class BookItem {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "book_id")
+    @JsonIgnore
     public Book getBook() {
         return book;
     }

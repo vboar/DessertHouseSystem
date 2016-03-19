@@ -11,6 +11,7 @@ import top.kass.service.CustomerService;
 import top.kass.service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,9 +77,10 @@ public class AuthController {
 
     @RequestMapping(value="/logout", method= RequestMethod.GET)
     public String logout(HttpSession session) {
-//        session.removeAttribute("id");
-//        session.removeAttribute("role");
-        session = null;
+        Enumeration<String> em = session.getAttributeNames();
+        while (em.hasMoreElements()) {
+            session.removeAttribute(em.nextElement().toString());
+        }
         return "redirect:/";
     }
 

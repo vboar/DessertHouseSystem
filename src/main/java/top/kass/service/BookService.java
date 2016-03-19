@@ -18,4 +18,6 @@ public interface BookService {
 
     public void checkBookStatus(int customerId);
 
+    public List<Book> getTodayBooksByCustomer(int customerId);
+
 }

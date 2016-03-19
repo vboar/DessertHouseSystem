@@ -37,4 +37,6 @@ public interface CustomerService {
 
     public void statusRecheck(int id);
 
+    public Customer getCustomerByCode(int code);
+
 }

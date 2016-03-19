@@ -15,4 +15,6 @@ public interface BookDao {
 
     public Book findById(int id);
 
+    public List<Book> getTodayByCustomerId(int customerId);
+
 }

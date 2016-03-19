@@ -102,5 +102,17 @@ public class CustomerDaoImpl implements CustomerDao {
         return customer;
     }
 
+    @Override
+    public Customer findByCode(int code) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("from Customer as customer where code=:code");
+        query.setInteger("code", code);
+        if (query.list() == null || query.list().size() == 0) {
+            return null;
+        } else {
+            return (Customer)query.list().get(0);
+        }
+    }
+
 
 }

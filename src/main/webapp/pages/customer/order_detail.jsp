@@ -43,7 +43,8 @@
             <div class="normal-div">购买日期：${book.buyDate}</div>
             <div class="normal-div">折扣：${book.discount}</div>
             <div class="normal-div">原始价格：${book.originalTotal}</div>
-            <div class="normal-div">折后价格：${book.actualTotal}</div>
+            <div class="normal-div">折后价格：<fmt:formatNumber value="${book.actualTotal}"
+                                                           pattern="##.##" minFractionDigits="2"/></div>
             <div class="normal-div" style="margin-bottom: 20px;">赠送积分：${book.totalPoint}</div>
 
 

@@ -40,7 +40,7 @@
                             <td><fmt:formatDate value="${item.createTime}"
                                                 pattern="yyyy-MM-dd HH:mm:ss"/></td>
                             <td>${item.buyDate}</td>
-                            <td>${item.actualTotal}</td>
+                            <td><fmt:formatNumber value="${item.actualTotal}" pattern="##.##" minFractionDigits="2"/></td>
                             <td>
                                 <c:choose>
                                     <c:when test="${item.status == 0}">已预订</c:when>

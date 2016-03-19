@@ -384,4 +384,9 @@ public class CustomerServiceImpl implements CustomerService {
         customerDao.update(customer);
     }
 
+    @Override
+    public Customer getCustomerByCode(int code) {
+        return customerDao.findByCode(code);
+    }
+
 }

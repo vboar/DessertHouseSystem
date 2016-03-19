@@ -14,4 +14,6 @@ public interface CustomerDao {
 
     public Customer update(Customer customer);
 
+    public Customer findByCode(int code);
+
 }

@@ -12,7 +12,8 @@
                         url="/admin/user">店员管理</li>
                 </c:when>
                 <c:when test="${sessionScope.get('role') == 2}">
-                    <li class="nav-item" onclick="window.location.href='/admin/sale'">销售</li>
+                    <li class="nav-item" onclick="window.location.href='/admin/sale/order'"
+                        url="/admin/sale">销售</li>
                     <li class="nav-item" onclick="window.location.href='#'">查询会员</li>
                 </c:when>
                 <c:when test="${sessionScope.get('role') == 3}">

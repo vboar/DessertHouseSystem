@@ -1,0 +1,82 @@
+package top.kass.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import top.kass.model.Book;
+import top.kass.model.Customer;
+import top.kass.model.Shop;
+import top.kass.model.User;
+import top.kass.service.BookService;
+import top.kass.service.CustomerService;
+import top.kass.service.SaleService;
+import top.kass.service.UserService;
+
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Controller
+public class SaleController {
+
+    @Autowired
+    private BookService bookService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private SaleService saleService;
+
+    // 已预订的销售页面
+    @RequestMapping(value="/admin/sale/order", method= RequestMethod.GET)
+    public ModelAndView orderSalePage(HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        User user = userService.getUserById(id);
+        Shop shop = user.getShop();
+        ModelAndView modelAndView = new ModelAndView("admin/sale/order_sale");
+        modelAndView.addObject("shop", shop);
+        return modelAndView;
+    }
+
+    // 直接购买的销售页面
+    @RequestMapping(value="/admin/sale/buy", method= RequestMethod.GET)
+    public ModelAndView salePage(HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        User user = userService.getUserById(id);
+        Shop shop = user.getShop();
+        ModelAndView modelAndView = new ModelAndView("admin/sale/sale");
+        modelAndView.addObject("shop", shop);
+        modelAndView.addObject(null, null);
+        return modelAndView;
+    }
+
+    // 获得客户的订单
+    @RequestMapping(value="/admin/sale/getBooks", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getBooks(int code) {
+        Map<String, Object> map = new HashMap<>();
+        Customer customer = customerService.getCustomerByCode(code);
+        List<Book> bookList;
+        if (customer == null) {
+            bookList = new ArrayList<>();
+        }
+        bookList = bookService.getTodayBooksByCustomer(customer.getId());
+        map.put("bookList", bookList);
+        return map;
+    }
+
+    // 预订的支付/销售操作
+    @RequestMapping(value="/admin/sale/payForBook", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> payForBook(int id, int type) {
+        Map<String, Object> map = new HashMap<>();
+        return saleService.payForBook(id, type);
+    }
+
+}

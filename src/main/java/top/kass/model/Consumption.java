@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 public class Consumption {
     private int id;
     private int customerId;
-    private byte type;
     private Book book;
     private double money;
     private byte payType;
@@ -36,16 +35,6 @@ public class Consumption {
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
-    }
-
-    @Basic
-    @Column(name = "type")
-    public byte getType() {
-        return type;
-    }
-
-    public void setType(byte type) {
-        this.type = type;
     }
 
     @OneToOne

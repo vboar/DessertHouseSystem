@@ -81,4 +81,9 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Override
+    public List<Book> getTodayBooksByCustomer(int customerId) {
+        return bookDao.getTodayByCustomerId(customerId);
+    }
+
 }

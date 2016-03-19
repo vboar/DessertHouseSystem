@@ -60,7 +60,7 @@ public class HomeController {
                 url = "/admin/shop";
                 break;
             case 2: // 分店服务员
-                url = "/admin/sale";
+                url = "/admin/sale/order";
                 break;
             case 3: // 总店服务员
                 url = "/admin/plan";
