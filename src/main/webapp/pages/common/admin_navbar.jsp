@@ -14,19 +14,22 @@
                 <c:when test="${sessionScope.get('role') == 2}">
                     <li class="nav-item" onclick="window.location.href='/admin/sale/order'"
                         url="/admin/sale">销售</li>
-                    <li class="nav-item" onclick="window.location.href='#'">查询会员</li>
+                    <li class="nav-item" onclick="window.location.href='/admin/customer'"
+                        url="/admin/customer">查询会员</li>
                 </c:when>
                 <c:when test="${sessionScope.get('role') == 3}">
                     <li class="nav-item" onclick="window.location.href='/admin/plan'"
                         url="/admin/plan">产品计划管理</li>
                     <li class="nav-item" onclick="window.location.href='/admin/product'"
                         url="/admin/product">产品管理</li>
-                    <li class="nav-item" onclick="window.location.href='#'">查询会员</li>
+                    <li class="nav-item" onclick="window.location.href='/admin/customer'"
+                        url="/admin/customer">查询会员</li>
                 </c:when>
                 <c:when test="${sessionScope.get('role') == 4}">
                     <li class="nav-item" onclick="window.location.href='/admin/plan'"
                         url="/admin/plan">产品计划管理</li>
-                    <li class="nav-item" onclick="window.location.href='#'">逐月统计</li>
+                    <li class="nav-item" onclick="window.location.href='/admin/statistics'"
+                        url="/admin/statistics">逐月统计</li>
                 </c:when>
             </c:choose>
             <li class="nav-item" onclick="window.location.href='/admin/password'"

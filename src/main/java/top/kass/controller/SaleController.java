@@ -6,14 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import top.kass.model.Book;
-import top.kass.model.Customer;
-import top.kass.model.Shop;
-import top.kass.model.User;
-import top.kass.service.BookService;
-import top.kass.service.CustomerService;
-import top.kass.service.SaleService;
-import top.kass.service.UserService;
+import top.kass.model.*;
+import top.kass.service.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -32,6 +26,8 @@ public class SaleController {
     private CustomerService customerService;
     @Autowired
     private SaleService saleService;
+    @Autowired
+    private ConsumptionService consumptionService;
 
     // 已预订的销售页面
     @RequestMapping(value="/admin/sale/order", method= RequestMethod.GET)
@@ -77,6 +73,16 @@ public class SaleController {
     public Map<String, Object> payForBook(int id, int type) {
         Map<String, Object> map = new HashMap<>();
         return saleService.payForBook(id, type);
+    }
+
+    // 我的消费页面
+    @RequestMapping(value="/user/consume", method= RequestMethod.GET)
+    public ModelAndView payment(HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        List<Consumption> consumptionList = consumptionService.getConsumptionsByCustomer(id);
+        ModelAndView modelAndView = new ModelAndView("customer/consume");
+        modelAndView.addObject("consumptionList", consumptionList);
+        return modelAndView;
     }
 
 }

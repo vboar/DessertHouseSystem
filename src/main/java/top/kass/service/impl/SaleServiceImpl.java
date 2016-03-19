@@ -2,10 +2,7 @@ package top.kass.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.kass.dao.BookDao;
-import top.kass.dao.ConsumptionDao;
-import top.kass.dao.CustomerDao;
-import top.kass.dao.PaymentDao;
+import top.kass.dao.*;
 import top.kass.model.Book;
 import top.kass.model.Consumption;
 import top.kass.model.Customer;
@@ -24,6 +21,8 @@ public class SaleServiceImpl implements SaleService {
     private CustomerDao customerDao;
     @Autowired
     private ConsumptionDao consumptionDao;
+    @Autowired
+    private PointDao pointDao;
 
     @Override
     public Map<String, Object> payForBook(int id, int type) {
@@ -60,6 +59,9 @@ public class SaleServiceImpl implements SaleService {
         book.setStatus((byte)1);
         book.setSaleTime(new Timestamp(System.currentTimeMillis()));
         bookDao.update(book);
+
+        // 积分记录
+        pointDao.create(customer.getId(), book.getTotalPoint(), 0, consumption.getId());
 
         map.put("success", true);
         return map;

@@ -73,10 +73,10 @@ public class BookServiceImpl implements BookService {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String sDate = sdf.format(uDate);
             Date date = Date.valueOf(sDate);
-            if (date.compareTo(book.getBuyDate()) > 0) {
+            if (date.compareTo(book.getBuyDate()) > 0 && book.getStatus() == 0) {
                 book.setStatus((byte)3);
                 bookDao.update(book);
-                // TODO 过期订单缴费
+                // TODO 过期订单 强行消费
             }
         }
     }
