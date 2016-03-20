@@ -38,4 +38,14 @@ public class StatisticServiceImpl implements StatisticService {
         return statisticDao.getCustomerConsume(month);
     }
 
+    @Override
+    public Map<String, Object> getProducts(String month) {
+        return statisticDao.getProducts(month);
+    }
+
+    @Override
+    public Map<String, Object> getSales(String month) {
+        return statisticDao.getSales(month);
+    }
+
 }

@@ -14,4 +14,8 @@ public interface StatisticService {
 
     public Map<String, Object> getCustomerConsume(String month);
 
+    public Map<String, Object> getProducts(String month);
+
+    public Map<String, Object> getSales(String month);
+
 }

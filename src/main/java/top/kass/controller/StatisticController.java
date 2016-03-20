@@ -21,7 +21,6 @@ public class StatisticController {
     @RequestMapping(value="/admin/statistics/customer", method= RequestMethod.GET)
     public ModelAndView customerPage() {
 
-
         ModelAndView modelAndView = new ModelAndView("admin/statistic/customer");
 
         return modelAndView;
@@ -55,6 +54,36 @@ public class StatisticController {
     @ResponseBody
     public Map<String, Object> customerConsume(String month) {
         return statisticService.getCustomerConsume(month);
+    }
+
+    // 统计 - 预订销售
+    @RequestMapping(value="/admin/statistics/sale", method= RequestMethod.GET)
+    public ModelAndView salePage() {
+
+        ModelAndView modelAndView = new ModelAndView("admin/statistic/sale");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/admin/statistics/sale/getSales", method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> saleGetSales(String month) {
+        return statisticService.getSales(month);
+    }
+
+    // 统计 - 热卖产品
+    @RequestMapping(value="/admin/statistics/product", method= RequestMethod.GET)
+    public ModelAndView productPage() {
+
+        ModelAndView modelAndView = new ModelAndView("admin/statistic/product");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/admin/statistics/product/getProducts", method= RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> productGetProducts(String month) {
+        return statisticService.getProducts(month);
     }
 
 }
