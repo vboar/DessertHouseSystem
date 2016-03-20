@@ -2,6 +2,7 @@ package top.kass.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +29,8 @@ public class SaleController {
     private SaleService saleService;
     @Autowired
     private ConsumptionService consumptionService;
+    @Autowired
+    private PlanService planService;
 
     // 已预订的销售页面
     @RequestMapping(value="/admin/sale/order", method= RequestMethod.GET)
@@ -46,9 +49,10 @@ public class SaleController {
         int id = (int)session.getAttribute("id");
         User user = userService.getUserById(id);
         Shop shop = user.getShop();
+        List<PlanItem> planItemList = planService.getTodayPlanItemsByShop(shop.getId());
         ModelAndView modelAndView = new ModelAndView("admin/sale/sale");
         modelAndView.addObject("shop", shop);
-        modelAndView.addObject(null, null);
+        modelAndView.addObject("planItemList", planItemList);
         return modelAndView;
     }
 
@@ -73,6 +77,17 @@ public class SaleController {
     public Map<String, Object> payForBook(int id, int type) {
         Map<String, Object> map = new HashMap<>();
         return saleService.payForBook(id, type);
+    }
+
+    // 现场销售操作
+    @RequestMapping(value="/admin/sale/pay", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> addPlan(@RequestBody String data, HttpSession session) {
+        int id = (int)session.getAttribute("id");
+        User user = userService.getUserById(id);
+        int shopId = user.getShop().getId();
+        Map<String, Object> map = saleService.pay(data, shopId);
+        return map;
     }
 
     // 我的消费页面

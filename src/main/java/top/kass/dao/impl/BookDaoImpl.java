@@ -3,10 +3,13 @@ package top.kass.dao.impl;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import top.kass.dao.BookDao;
 import top.kass.dao.CustomerDao;
+import top.kass.dao.PlanDao;
 import top.kass.model.Book;
 import top.kass.model.BookItem;
 import top.kass.model.Customer;
@@ -29,6 +32,8 @@ public class BookDaoImpl implements BookDao {
     private SessionFactory sessionFactory;
     @Autowired
     private CustomerDao customerDao;
+    @Autowired
+    private PlanDao planDao;
 
     @Override
     public Book create(int customerId, ShoppingCart shoppingCart) {
@@ -67,6 +72,10 @@ public class BookDaoImpl implements BookDao {
             totalPoint += item.getProductPoint()*item.getNumber();
 
             items.add(bookItem);
+
+            // 预订商品减库存
+            planDao.updatePlanItem(product.getId(), shoppingCart.getDate(), item.getNumber());
+
         }
 
         book.setBookItems(items);
@@ -74,6 +83,54 @@ public class BookDaoImpl implements BookDao {
         book.setTotalPoint(totalPoint);
         book.setActualTotal(originalTotal*book.getDiscount());
         book.setStatus((byte)0);
+
+        session.save(book);
+        session.flush();
+
+        return book;
+    }
+
+    @Override
+    public Book createBySale(int customerId, int shopId, JSONArray items) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Customer customer = customerDao.findById(customerId);
+
+        Book book = new Book();
+        book.setCustomerId(customerId);
+        book.setShopId(shopId);
+        book.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        book.setDiscount(customer.getCustomerAccount().getVipLevel().getDiscount());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        book.setBuyDate(new Date(System.currentTimeMillis()));
+        session.save(book);
+        session.flush();
+
+        double originalTotal = 0;
+        int totalPoint = 0;
+        Set<BookItem> bookItems = new HashSet<>();
+        for (int i = 0; i < items.length(); i++) {
+            BookItem bookItem = new BookItem();
+            JSONObject item = (JSONObject)items.get(i);
+            bookItem.setBook(book);
+            bookItem.setNumber((int)item.get("number"));
+            bookItem.setPrice((double)item.get("price"));
+            Product product = new Product();
+            product.setId(Integer.parseInt(item.get("productId").toString()));
+            bookItem.setProduct(product);
+            originalTotal += ((double)item.get("price"))*((int)item.get("number"));
+            totalPoint += ((int)item.get("point"))*((int)item.get("number"));
+            bookItems.add(bookItem);
+
+            // 预订商品减库存
+            planDao.updatePlanItem(product.getId(), sdf.format(new java.util.Date()), (int)item.get("number"));
+        }
+
+        book.setBookItems(bookItems);
+        book.setOriginalTotal(originalTotal);
+        book.setTotalPoint(totalPoint);
+        book.setActualTotal(originalTotal*book.getDiscount());
+        book.setStatus((byte)1);
 
         session.save(book);
         session.flush();

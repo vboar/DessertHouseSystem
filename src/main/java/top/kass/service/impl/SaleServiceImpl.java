@@ -1,11 +1,14 @@
 package top.kass.service.impl;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.kass.dao.*;
 import top.kass.model.Book;
 import top.kass.model.Consumption;
 import top.kass.model.Customer;
+import top.kass.service.ConsumptionService;
 import top.kass.service.SaleService;
 
 import java.sql.Timestamp;
@@ -23,6 +26,8 @@ public class SaleServiceImpl implements SaleService {
     private ConsumptionDao consumptionDao;
     @Autowired
     private PointDao pointDao;
+    @Autowired
+    private PlanDao planDao;
 
     @Override
     public Map<String, Object> payForBook(int id, int type) {
@@ -47,6 +52,47 @@ public class SaleServiceImpl implements SaleService {
         consumption.setTime(new Timestamp(System.currentTimeMillis()));
         consumptionDao.createOrUpdate(consumption);
 
+        // 卡支付扣钱
+        if (type == 1) {
+            customer.getCustomerAccount().setBalance(
+                    customer.getCustomerAccount().getBalance()-book.getActualTotal());
+        }
+        customer.getCustomerAccount().setPoint(
+                customer.getCustomerAccount().getPoint()+book.getTotalPoint());
+        customerDao.update(customer);
+
+        book.setStatus((byte)1);
+        book.setSaleTime(new Timestamp(System.currentTimeMillis()));
+        bookDao.update(book);
+
+        // 积分记录
+        pointDao.create(customer.getId(), book.getTotalPoint(), 0, consumption.getId());
+
+        map.put("success", true);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> pay(String data, int shopId) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        JSONObject object = new JSONObject(data);
+        int customerId = (int)object.get("customerId");
+        Customer customer = customerDao.findById(customerId);
+        int type = (int)object.get("type");
+        JSONArray items = (JSONArray)object.get("items");
+
+        Book book = bookDao.createBySale(customerId, shopId, items);
+
+        Consumption consumption = new Consumption();
+        consumption.setPayType((byte)type);
+        consumption.setBook(book);
+        consumption.setCustomerId(customerId);
+        consumption.setMoney(book.getActualTotal());
+        consumption.setPoint(book.getTotalPoint());
+        consumption.setTime(new Timestamp(System.currentTimeMillis()));
+        consumptionDao.createOrUpdate(consumption);
         // 卡支付扣钱
         if (type == 1) {
             customer.getCustomerAccount().setBalance(

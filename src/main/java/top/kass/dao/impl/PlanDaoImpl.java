@@ -220,6 +220,32 @@ public class PlanDaoImpl implements PlanDao {
         return query.list();
     }
 
+    @Override
+    public List<PlanItem> getTodayByShop(int shopId) {
+        Session session = sessionFactory.getCurrentSession();
+
+        Query query = session.createQuery("from PlanItem where plan.shopId=:shopId and date=current_date()" +
+                " and plan.status=1 order by date desc");
+        query.setInteger("shopId", shopId);
+        return query.list();
+    }
+
+    @Override
+    public void updatePlanItem(int productId, String date, int number) {
+        System.out.println("aaa");
+        System.out.println(productId);
+        System.out.println(date);
+        System.out.println(number);
+        Session session = sessionFactory.getCurrentSession();
+        Query query  = session.createSQLQuery("UPDATE plan_item " +
+                "SET remaining=remaining-? WHERE product_id=? AND date=?");
+        query.setInteger(0, number);
+        query.setInteger(1, productId);
+        query.setString(2, date);
+        query.executeUpdate();
+        session.flush();
+    }
+
     private Set<PlanItem> getPlanItems(JSONArray items, Plan plan) {
 
         Set<PlanItem> planItemSet = new HashSet<>();

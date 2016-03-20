@@ -29,6 +29,7 @@ public class PointDaoImpl implements PointDao {
         if (consumptionId  != null) {
             Consumption consumption = new Consumption();
             consumption.setId(consumptionId);
+            temp.setConsumption(consumption);
         }
         temp.setTime(new Timestamp(System.currentTimeMillis()));
 

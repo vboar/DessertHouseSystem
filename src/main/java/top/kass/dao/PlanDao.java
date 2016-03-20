@@ -30,4 +30,8 @@ public interface PlanDao {
 
     public List<PlanItem> getByProduct(int productId);
 
+    public List<PlanItem> getTodayByShop(int shopId);
+
+    public void updatePlanItem(int productId, String date, int number);
+
 }

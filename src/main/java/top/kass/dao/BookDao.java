@@ -1,5 +1,6 @@
 package top.kass.dao;
 
+import org.json.JSONArray;
 import top.kass.model.Book;
 import top.kass.vo.ShoppingCart;
 
@@ -16,5 +17,7 @@ public interface BookDao {
     public Book findById(int id);
 
     public List<Book> getTodayByCustomerId(int customerId);
+
+    public Book createBySale(int customerId, int shopId, JSONArray items);
 
 }

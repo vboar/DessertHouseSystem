@@ -28,4 +28,6 @@ public interface PlanService {
 
     public List<PlanItem> getPlanItemsByProduct(int productId);
 
+    public List<PlanItem> getTodayPlanItemsByShop(int shopId);
+
 }

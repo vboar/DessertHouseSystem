@@ -84,5 +84,10 @@ public class PlanServiceImpl implements PlanService {
         return planDao.getByProduct(productId);
     }
 
+    @Override
+    public List<PlanItem> getTodayPlanItemsByShop(int shopId) {
+        return planDao.getTodayByShop(shopId);
+    }
+
 
 }
