@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import top.kass.model.Book;
-import top.kass.model.Customer;
-import top.kass.model.Payment;
-import top.kass.model.Point;
+import top.kass.model.*;
 import top.kass.service.BookService;
+import top.kass.service.ConsumptionService;
 import top.kass.service.CustomerService;
+import top.kass.service.PaymentService;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +22,10 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private ConsumptionService consumptionService;
+    @Autowired
+    private PaymentService paymentService;
 
     // 注册完完善个人信息
     @RequestMapping(value="/supplyInfo", method= RequestMethod.GET)
@@ -158,6 +162,26 @@ public class CustomerController {
     public Map<String, Object> stop(HttpSession session) {
         int id = (int)session.getAttribute("id");
         return customerService.stop(id);
+    }
+
+    // 查询会员页面
+    @RequestMapping(value="/admin/customer", method= RequestMethod.GET)
+    public String adminCustomerPage() {
+        return "admin/customer/customer";
+    }
+
+    // 查询会员操作
+    @RequestMapping(value="/admin/customer", method= RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getCustomer(int code) {
+        Map<String, Object> map = new HashMap<>();
+        Customer customer = customerService.getCustomerByCode(code);
+        List<Consumption> consumptionList = consumptionService.getConsumptionsByCustomer(customer.getId());
+        List<Payment> paymentList = paymentService.getPaymentByCustomer(customer.getId());
+        map.put("customer", customer);
+        map.put("consumptionList", consumptionList);
+        map.put("paymentList", paymentList);
+        return map;
     }
 
 }

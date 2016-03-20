@@ -148,3 +148,12 @@ function navbarLeftItems() {
         });
     });
 }
+
+function getCustomerStatus(status) {
+    switch (status) {
+        case 0: return '未激活';
+        case 1: return '有效';
+        case 2: return '已暂停';
+        case 3: return '已停止';
+    }
+}

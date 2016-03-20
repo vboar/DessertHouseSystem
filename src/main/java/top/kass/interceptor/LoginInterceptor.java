@@ -25,6 +25,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                     return false;
                 }
             }
+
+            if (url.startsWith("/admin") && (int)session.getAttribute("role") == 5) {
+                response.sendRedirect("/");
+                return false;
+            }
+
         } else {
             boolean flag = false;
             for (String s : IGNORE_URI) {
