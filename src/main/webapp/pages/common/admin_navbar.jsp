@@ -28,7 +28,7 @@
                 <c:when test="${sessionScope.get('role') == 4}">
                     <li class="nav-item" onclick="window.location.href='/admin/plan'"
                         url="/admin/plan">产品计划管理</li>
-                    <li class="nav-item" onclick="window.location.href='/admin/statistics'"
+                    <li class="nav-item" onclick="window.location.href='/admin/statistics/customer'"
                         url="/admin/statistics">逐月统计</li>
                 </c:when>
             </c:choose>
