@@ -215,7 +215,7 @@ public class PlanDaoImpl implements PlanDao {
         Session session = sessionFactory.getCurrentSession();
 
         Query query = session.createQuery("from PlanItem where product=:productId and date>=current_date()" +
-                " and plan.status=1 order by date desc");
+                " and plan.status=1 order by date asc");
         query.setInteger("productId", productId);
         return query.list();
     }

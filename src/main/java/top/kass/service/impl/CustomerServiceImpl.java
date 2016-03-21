@@ -355,6 +355,10 @@ public class CustomerServiceImpl implements CustomerService {
             return;
         }
 
+        if (customer.getStatus() == 0 && customer.getCustomerStatus().getPauseTime() == null) {
+            return;
+        }
+
         Timestamp current = new Timestamp(System.currentTimeMillis());
         Timestamp pause = customer.getCustomerStatus().getPauseTime();
         Timestamp stop = customer.getCustomerStatus().getStopTime();

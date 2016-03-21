@@ -3,10 +3,7 @@ package top.kass.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.kass.dao.*;
-import top.kass.model.Book;
-import top.kass.model.Consumption;
-import top.kass.model.Customer;
-import top.kass.model.PlanItem;
+import top.kass.model.*;
 import top.kass.service.BookService;
 import top.kass.service.PlanService;
 import top.kass.vo.ShoppingCart;
@@ -32,6 +29,8 @@ public class BookServiceImpl implements BookService {
     private CustomerDao customerDao;
     @Autowired
     private PointDao pointDao;
+    @Autowired
+    private PlanDao planDao;
 
     @Override
     public Map<String, Object> createBook(int customerId, ShoppingCart shoppingCart) {
@@ -63,6 +62,16 @@ public class BookServiceImpl implements BookService {
         Book book = bookDao.findById(id);
         book.setStatus((byte)2);
         bookDao.update(book);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = book.getBuyDate();
+
+        for (BookItem item: book.getBookItems()) {
+            // 取消加库存
+            planDao.updatePlanItem(item.getProduct().getId(),
+                    sdf.format(date), -item.getNumber());
+        }
+
+
         Map<String, Object> map = new HashMap<>();
         map.put("success", true);
         return map;
